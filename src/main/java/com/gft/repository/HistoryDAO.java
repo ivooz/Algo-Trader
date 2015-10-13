@@ -10,5 +10,11 @@ import java.util.ArrayList;
  */
 public interface HistoryDAO {
 
-    public ArrayList<StockHistory> obtainHistoryForPeriod(Stock stock, int days);
+    /**
+     *
+     * @param stock
+     * @param days including the current day (5 = 4 previous days + today)
+     * @return
+     */
+    public ArrayList<StockHistory> obtainStockHistoryForPeriod(Stock stock, int days);
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Created by iozi on 13/10/2015.
  */
-public interface ScoreUpdateService {
+public interface StatisticsUpdateService {
 
     /**
      * Updates algorith standings for a given stock in a give day
@@ -16,5 +16,5 @@ public interface ScoreUpdateService {
      * @param date
      * @param historyDAO source of history records
      */
-    public void updateScores(Stock stock, Date date,HistoryDAO historyDAO);
+    public void updateStatistics(Stock stock, Date date, HistoryDAO historyDAO);
 }
