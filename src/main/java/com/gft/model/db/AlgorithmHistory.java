@@ -1,4 +1,4 @@
-package com.gft.model;
+package com.gft.model.db;
 
 import java.util.Date;
 
@@ -7,6 +7,7 @@ import java.util.Date;
  */
 public class AlgorithmHistory {
 
+    private long id;
     private final Algorithm algorithm;
     private final Date date;
     private final double aggregateGain;

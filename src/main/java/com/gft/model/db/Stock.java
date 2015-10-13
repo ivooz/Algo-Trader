@@ -1,4 +1,6 @@
-package com.gft.model;
+package com.gft.model.db;
+
+import java.util.List;
 
 /**
  * Created by iozi on 13/10/2015.
@@ -7,7 +9,7 @@ public class Stock {
 
     private String ticker;
     private String fullName;
-    //TODO more information about stock
+    private List<Algorithm> algorithms;
     //TODO OneToMany Relation with algorithm
 
     public String getFullName() {

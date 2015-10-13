@@ -1,4 +1,4 @@
-package com.gft.model;
+package com.gft.model.db;
 
 import java.math.BigDecimal;
 
@@ -7,6 +7,7 @@ import java.math.BigDecimal;
  */
 public class Algorithm {
 
+    private long id;
     private final Stock stock;
     private final String name;
     private double aggregateGain;
@@ -48,5 +49,13 @@ public class Algorithm {
 
     public void setPriceBought(BigDecimal priceBought) {
         this.priceBought = priceBought;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

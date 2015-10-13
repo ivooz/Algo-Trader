@@ -1,4 +1,4 @@
-package com.gft.model;
+package com.gft.model.db;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -8,6 +8,7 @@ import java.util.Date;
  */
 public class StockHistory {
 
+    private long id;
     private final Date date;
     private final Stock stock;
     private final BigDecimal openingPrice;
@@ -26,6 +27,18 @@ public class StockHistory {
         this.volume = volume;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
     public Stock getStock() {
         return stock;
     }
@@ -36,6 +49,14 @@ public class StockHistory {
 
     public BigDecimal getClosingPrice() {
         return closingPrice;
+    }
+
+    public BigDecimal getLowPrice() {
+        return lowPrice;
+    }
+
+    public BigDecimal getHighPrice() {
+        return highPrice;
     }
 
     public long getVolume() {
