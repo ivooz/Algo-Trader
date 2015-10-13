@@ -12,14 +12,18 @@ public class StockHistory {
     private final Stock stock;
     private final BigDecimal openingPrice;
     private final BigDecimal closingPrice;
-    private final long turnover;
+    private final BigDecimal lowPrice;
+    private final BigDecimal highPrice;
+    private final long volume;
 
-    public StockHistory(Date date, Stock stock, BigDecimal openingPrice, BigDecimal closingPrice, long turnover) {
+    public StockHistory(Date date, Stock stock, BigDecimal openingPrice, BigDecimal closingPrice, BigDecimal lowPrice, BigDecimal highPrice, long volume) {
         this.date = date;
         this.stock = stock;
         this.openingPrice = openingPrice;
         this.closingPrice = closingPrice;
-        this.turnover = turnover;
+        this.lowPrice = lowPrice;
+        this.highPrice = highPrice;
+        this.volume = volume;
     }
 
     public Stock getStock() {
@@ -34,7 +38,7 @@ public class StockHistory {
         return closingPrice;
     }
 
-    public long getTurnover() {
-        return turnover;
+    public long getVolume() {
+        return volume;
     }
 }

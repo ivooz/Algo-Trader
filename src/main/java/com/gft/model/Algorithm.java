@@ -7,17 +7,23 @@ import java.math.BigDecimal;
  */
 public class Algorithm {
 
-    private String name;
+    private final Stock stock;
+    private final String name;
     private double aggregateGain;
     private double absoluteGain;
     private BigDecimal priceBought;
 
-    public String getName() {
-        return name;
+    public Algorithm(Stock stock, String name) {
+        this.stock = stock;
+        this.name = name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Stock getStock() {
+        return stock;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public double getAggregateGain() {
