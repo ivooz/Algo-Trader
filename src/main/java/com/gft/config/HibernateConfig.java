@@ -23,6 +23,5 @@ public class HibernateConfig {
         factory.setEntityManagerFactory(emf);
         return factory;
     }
-    
 }
 
