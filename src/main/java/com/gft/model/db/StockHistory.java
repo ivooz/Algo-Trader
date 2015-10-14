@@ -40,6 +40,7 @@ public class StockHistory {
         this.lowPrice = lowPrice;
         this.highPrice = highPrice;
         this.volume = volume;
+
     }
 
     public long getId() {

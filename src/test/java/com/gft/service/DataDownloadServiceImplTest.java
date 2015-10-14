@@ -61,7 +61,7 @@ public class DataDownloadServiceImplTest {
         });
     }
 
-    @Test
+//    @Test save company bandwidth ;)
     public void testDownloadingHistoricalData() {
         stocks.stream().forEach(s -> {
             try {

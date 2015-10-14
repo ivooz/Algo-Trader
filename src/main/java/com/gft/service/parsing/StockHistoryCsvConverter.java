@@ -1,6 +1,8 @@
 package com.gft.service.parsing;
 
 import com.gft.model.db.StockHistory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.supercsv.cellprocessor.ParseBigDecimal;
 import org.supercsv.cellprocessor.ParseDate;
@@ -21,6 +23,8 @@ import java.util.List;
 @Service
 public class StockHistoryCsvConverter {
 
+    private static final Logger logger = LoggerFactory.getLogger(StockHistoryCsvConverter.class);
+
     private static final CellProcessor[] PROCESSORS = new CellProcessor[]{
             new ParseDate("yyyy-mm-dd"), // Date
             new ParseBigDecimal(), // Open
@@ -32,8 +36,10 @@ public class StockHistoryCsvConverter {
     };
 
     private static final String[] FIELD_MAPPING = {"date","openingPrice","highPrice","lowPrice","closingPrice","volume",null};
+    public static final String FAILED_TO_READ_CSV = "Failed to read CSV";
 
     public List<StockHistory> convertToStockHistory(String csv) throws ParsingException {
+        logger.info("Converting CSV into list of StockHistory");
         ArrayList<StockHistory> historyList = new ArrayList<>();
         try(ICsvBeanReader beanReader = new CsvBeanReader(new StringReader(csv), CsvPreference.STANDARD_PREFERENCE)) {
             String[] header = beanReader.getHeader(true);
@@ -42,7 +48,8 @@ public class StockHistoryCsvConverter {
                 historyList.add(stockHistory);
             }
         } catch (IOException ex) {
-            throw new ParsingException("Failed to read CSV",ex);
+            logger.error(FAILED_TO_READ_CSV,ex);
+            throw new ParsingException(FAILED_TO_READ_CSV,ex);
         }
         return historyList;
     }
