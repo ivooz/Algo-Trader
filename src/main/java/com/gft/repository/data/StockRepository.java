@@ -1,10 +1,14 @@
 package com.gft.repository.data;
 
-import com.gft.model.db.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.gft.model.db.Stock;
 
 /**
  * Created by iozi on 13/10/2015.
  */
-public interface StockRepository extends JpaRepository<Stock, Long> {
+@Repository
+public interface StockRepository extends JpaRepository<Stock, String> {
+
 }
