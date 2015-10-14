@@ -16,30 +16,44 @@
 
 package com.gft.config;
 
-import com.thoughtworks.xstream.XStream;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import com.gft.model.db.Stock;
+import com.gft.repository.data.StockRepository;
 
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan("com.gft")
-public class Application extends SpringBootServletInitializer {
+@SpringBootApplication
+@EnableJpaRepositories("com.gft")
+@EnableTransactionManagement
+@EntityScan("com.gft")
 
+public class Application extends SpringBootServletInitializer {
+	@Autowired
+  static  StockRepository st;
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(Application.class);
 	}
 
 	public static void main(String[] args) throws Exception {
+
+
 		SpringApplication.run(Application.class, args);
+		st.saveAndFlush(new Stock());
 	}
+
+
+	
 }
