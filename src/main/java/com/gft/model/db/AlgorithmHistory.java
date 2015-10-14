@@ -54,4 +54,6 @@ public class AlgorithmHistory {
 	public double getAbsoluteGain() {
 		return absoluteGain;
 	}
+
+
 }

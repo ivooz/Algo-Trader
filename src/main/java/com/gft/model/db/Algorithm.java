@@ -68,4 +68,12 @@ public class Algorithm {
     public void setId(long id) {
         this.id = id;
     }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
