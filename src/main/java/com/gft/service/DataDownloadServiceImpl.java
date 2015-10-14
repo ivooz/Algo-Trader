@@ -75,8 +75,7 @@ public class DataDownloadServiceImpl implements DataDownloadService {
 
     private String loadStockInfo(String prefix, String suffix, Stock stock) throws IOException {
         urlBuilder.setLength(0);
-        URL stockDataUrl = new URL(urlBuilder.append(prefix).append(stock.getTicker())
-                .append(suffix).toString());
+        URL stockDataUrl = new URL(urlBuilder.append(prefix).append(stock.getTicker()).append(suffix).toString());
         try(InputStream contentStream = stockDataUrl.openStream()) {
             return IOUtils.toString(contentStream);
         }

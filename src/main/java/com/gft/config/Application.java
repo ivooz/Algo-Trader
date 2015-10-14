@@ -26,34 +26,28 @@ import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.gft.model.db.Stock;
 import com.gft.repository.data.StockRepository;
 
 @Configuration
+@EnableScheduling
 @EnableAutoConfiguration
 @ComponentScan("com.gft")
 @SpringBootApplication
 @EnableJpaRepositories("com.gft")
 @EnableTransactionManagement
 @EntityScan("com.gft")
-
 public class Application extends SpringBootServletInitializer {
-	@Autowired
-  static  StockRepository st;
+
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(Application.class);
 	}
 
 	public static void main(String[] args) throws Exception {
-
-
 		SpringApplication.run(Application.class, args);
-		st.saveAndFlush(new Stock());
 	}
-
-
-	
 }

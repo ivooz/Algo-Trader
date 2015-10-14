@@ -16,14 +16,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/public/**")
-				.addResourceLocations("/public/");
+		registry.addResourceHandler("/public/**").addResourceLocations("/public/");
 	}
 	
 	@Bean
 	ServletRegistrationBean h2servletRegistration() {
-		ServletRegistrationBean registrationBean = new ServletRegistrationBean(
-				new WebServlet());
+		ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
 		registrationBean.addUrlMappings("/console/*");
 		return registrationBean;
 	}

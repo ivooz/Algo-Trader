@@ -1,7 +1,10 @@
 package com.gft.service;
 
+import com.gft.service.parsing.ParsingException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,32 +22,39 @@ import static junit.framework.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Application.class})
-public class ExampleTest {
+public class TickerHinterTest {
+
+	private static final Logger logger = LoggerFactory.getLogger(TickerHinterTest.class);
+
 	@Autowired
 	private JdbcTemplate namedJdbcTemplate;
 	@Autowired
-	StockRepository st;
+	StockRepository stockRepository;
 	@Autowired
-	AlgorithmRepository ar;
+	AlgorithmRepository algorithmRepository;
 	@Autowired
-	NewTickerHinter th;
+	NewTickerHinter tickerHinter;
+
 	@Test
 	public void test() throws ClassNotFoundException {
-
 		Generator gen = new Generator();
-		st.save(gen.GenerateStocks(10));
-
-		assertNotNull(st.findAll());
+		stockRepository.save(gen.generateStocks(10));
+		assertNotNull(stockRepository.findAll());
 	}
+
 	@Test
 	public void hinterTest() throws ClassNotFoundException {
-
 		Stock stock = new Stock();
 		stock.setTicker("MSFT");
-
-		st.save(stock);
-		st.flush();
-		String json = th.HintNotPickedTickers();
+		stockRepository.save(stock);
+		stockRepository.flush();
+		String json = null;
+		try {
+			json = tickerHinter.hintNotPickedTickers();
+		} catch (ParsingException ex) {
+			logger.error("TEST FAILED",ex);
+			fail();
+		}
 		assertFalse(json.contains("MSFT"));
 		assertTrue(json.contains("MICT"));
 	}
