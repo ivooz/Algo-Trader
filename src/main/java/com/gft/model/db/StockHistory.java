@@ -62,4 +62,12 @@ public class StockHistory {
     public long getVolume() {
         return volume;
     }
+
+	@Override
+	public String toString() {
+		return "StockHistory [id=" + id + ", date=" + date + ", stock=" + stock + ", openingPrice=" + openingPrice
+				+ ", closingPrice=" + closingPrice + ", lowPrice=" + lowPrice + ", highPrice=" + highPrice + ", volume="
+				+ volume + "]";
+	}
+    
 }

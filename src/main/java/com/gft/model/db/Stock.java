@@ -27,4 +27,10 @@ public class Stock {
     public void setTicker(String ticker) {
         this.ticker = ticker;
     }
+
+	@Override
+	public String toString() {
+		return "Stock [ticker=" + ticker + ", fullName=" + fullName + ", algorithms=" + algorithms + "]";
+	}
+    
 }
