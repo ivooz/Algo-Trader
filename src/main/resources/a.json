@@ -1,0 +1,33 @@
+{
+  "list": {
+    "meta": {
+      "type": "resource-list",
+      "start": 0,
+      "count": 1
+    },
+    "resources": [
+      {
+        "resource": {
+          "classname": "Quote",
+          "fields": {
+            "change": "-0.055000",
+            "chg_percent": "-0.117022",
+            "day_high": "47.090000",
+            "day_low": "46.560001",
+            "issuer_name": "Microsoft Corporation",
+            "issuer_name_lang": "Microsoft Corporation",
+            "name": "Microsoft Corporation",
+            "price": "46.945000",
+            "symbol": "MSFT",
+            "ts": "1444749588",
+            "type": "equity",
+            "utctime": "2015-10-13T15:19:48+0000",
+            "volume": "6291750",
+            "year_high": "50.050000",
+            "year_low": "39.720000"
+          }
+        }
+      }
+    ]
+  }
+}

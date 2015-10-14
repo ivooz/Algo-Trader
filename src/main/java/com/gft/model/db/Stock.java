@@ -1,5 +1,6 @@
 package com.gft.model.db;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,8 +10,12 @@ public class Stock {
 
     private String ticker;
     private String fullName;
-    private List<Algorithm> algorithms;
+    private List<Algorithm> algorithms = new ArrayList<>();
     //TODO OneToMany Relation with algorithm
+
+    public Stock(String ticker) {
+        this.ticker = ticker;
+    }
 
     public String getFullName() {
         return fullName;

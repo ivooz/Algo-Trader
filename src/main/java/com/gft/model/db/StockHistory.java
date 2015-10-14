@@ -9,13 +9,16 @@ import java.util.Date;
 public class StockHistory {
 
     private long id;
-    private final Date date;
-    private final Stock stock;
-    private final BigDecimal openingPrice;
-    private final BigDecimal closingPrice;
-    private final BigDecimal lowPrice;
-    private final BigDecimal highPrice;
-    private final long volume;
+    private Stock stock;
+    private Date date;
+    private BigDecimal openingPrice;
+    private BigDecimal closingPrice;
+    private BigDecimal lowPrice;
+    private BigDecimal highPrice;
+    private long volume;
+
+    public StockHistory() {
+    }
 
     public StockHistory(Date date, Stock stock, BigDecimal openingPrice, BigDecimal closingPrice, BigDecimal lowPrice, BigDecimal highPrice, long volume) {
         this.date = date;
@@ -43,6 +46,10 @@ public class StockHistory {
         return stock;
     }
 
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
     public BigDecimal getOpeningPrice() {
         return openingPrice;
     }
@@ -61,5 +68,29 @@ public class StockHistory {
 
     public long getVolume() {
         return volume;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setOpeningPrice(BigDecimal openingPrice) {
+        this.openingPrice = openingPrice;
+    }
+
+    public void setClosingPrice(BigDecimal closingPrice) {
+        this.closingPrice = closingPrice;
+    }
+
+    public void setLowPrice(BigDecimal lowPrice) {
+        this.lowPrice = lowPrice;
+    }
+
+    public void setHighPrice(BigDecimal highPrice) {
+        this.highPrice = highPrice;
+    }
+
+    public void setVolume(long volume) {
+        this.volume = volume;
     }
 }
