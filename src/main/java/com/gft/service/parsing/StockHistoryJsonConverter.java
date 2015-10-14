@@ -2,6 +2,8 @@ package com.gft.service.parsing;
 
 import com.gft.model.db.StockHistory;
 import com.jayway.restassured.path.json.JsonPath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,7 +15,10 @@ import java.util.Date;
 @Service
 public class StockHistoryJsonConverter {
 
+    private static final Logger logger = LoggerFactory.getLogger(StockHistoryJsonConverter.class);
+
     public StockHistory fromJson(String json) {
+        logger.info("Converting json into StockHistory object");
         JsonPath jsonPath = new JsonPath(json);
         StockHistory stockHistory = new StockHistory();
         stockHistory.setClosingPrice(new BigDecimal(jsonPath.getDouble("list.resources[0].resource.fields.price")));
