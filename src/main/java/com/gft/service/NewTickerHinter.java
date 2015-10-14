@@ -35,12 +35,11 @@ public class NewTickerHinter {
 		String File = "src/main/resources/Data/companylist.csv";
 		List<String> AvailableTickers = new ArrayList<String>();
 
-		final String[] header = new String[]{"Ticker", null, null, null,
-				null, null, null, null, null};
+		final String[] header = new String[]{"Ticker", null, null, null, null,
+				null, null, null, null};
 
-		final CellProcessor[] processors = new CellProcessor[]{
-				new NotNull(), null, null, null, null, null, null, null,
-				null};
+		final CellProcessor[] processors = new CellProcessor[]{new NotNull(),
+				null, null, null, null, null, null, null, null};
 
 		Stock customer;
 		try (ICsvBeanReader beanReader = new CsvBeanReader(new FileReader(File),
@@ -49,14 +48,13 @@ public class NewTickerHinter {
 			beanReader.getHeader(true);
 			while ((customer = beanReader.read(Stock.class, header,
 					processors)) != null) {
-		
+
 				AvailableTickers.add(customer.getTicker());
 
-		
 			}
-		}  catch (IOException e) {
-			logger.error(FAILED_TO_READ_CSV,e);
-            throw new ParsingException(FAILED_TO_READ_CSV,e);	
+		} catch (IOException e) {
+			logger.error(FAILED_TO_READ_CSV, e);
+			throw new ParsingException(FAILED_TO_READ_CSV, e);
 		}
 
 		return AvailableTickers;
@@ -70,8 +68,7 @@ public class NewTickerHinter {
 	public String HintNotPickedTickers() {
 		List<String> TickersNotPicked = null;
 		try {
-			TickersNotPicked = new ArrayList<String>(
-					ReadAllAvailableStocks());
+			TickersNotPicked = new ArrayList<String>(ReadAllAvailableStocks());
 		} catch (ParsingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

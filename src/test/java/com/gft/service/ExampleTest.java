@@ -37,16 +37,15 @@ public class ExampleTest {
 		assertNotNull(st.findAll());
 	}
 	@Test
-	public void hinterTest() throws ClassNotFoundException{
-	
-		
+	public void hinterTest() throws ClassNotFoundException {
+
 		Stock stock = new Stock();
 		stock.setTicker("MSFT");
-		
+
 		st.save(stock);
 		st.flush();
-	String json = th.HintNotPickedTickers();
-	assertFalse(json.contains("MSFT"));
-	assertTrue(json.contains("MICT"));
+		String json = th.HintNotPickedTickers();
+		assertFalse(json.contains("MSFT"));
+		assertTrue(json.contains("MICT"));
 	}
-	}
+}
