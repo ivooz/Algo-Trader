@@ -10,5 +10,5 @@ import com.gft.model.db.Stock;
  */
 @Repository
 public interface StockRepository extends JpaRepository<Stock, String> {
-    public Stock findByTicker(String ticker) ;
+
 }

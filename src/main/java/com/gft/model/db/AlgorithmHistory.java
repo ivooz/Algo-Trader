@@ -14,43 +14,44 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class AlgorithmHistory {
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
-    public long getId() {
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	private final Date date;
+	@OneToOne(targetEntity = Algorithm.class)
+	private final Algorithm algorithm;
+	private final double aggregateGain;
+	private final double absoluteGain;
+	public long getId() {
 		return id;
 	}
-
 
 	public void setId(long id) {
 		this.id = id;
 	}
-    @OneToOne(targetEntity=Algorithm.class)
-	private final Algorithm algorithm;
-    public Algorithm getAlgorithm() {
+
+	public Algorithm getAlgorithm() {
 		return algorithm;
 	}
 
-	private final Date date;
-    private final double aggregateGain;
-    private final double absoluteGain;
+	public AlgorithmHistory(Algorithm algorithm, Date date,
+			double aggregateGain, double absoluteGain) {
+		this.algorithm = algorithm;
+		this.date = date;
+		this.aggregateGain = aggregateGain;
+		this.absoluteGain = absoluteGain;
+	}
 
-    public AlgorithmHistory(Algorithm algorithm, Date date, double aggregateGain, double absoluteGain) {
-        this.algorithm = algorithm;
-        this.date = date;
-        this.aggregateGain = aggregateGain;
-        this.absoluteGain = absoluteGain;
-    }
+	public Date getDate() {
+		return date;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public double getAggregateGain() {
+		return aggregateGain;
+	}
 
-    public double getAggregateGain() {
-        return aggregateGain;
-    }
-
-    public double getAbsoluteGain() {
-        return absoluteGain;
-    }
+	public double getAbsoluteGain() {
+		return absoluteGain;
+	}
 }

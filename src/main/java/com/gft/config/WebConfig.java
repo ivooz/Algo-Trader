@@ -12,26 +12,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 
 @Configuration
-
-
-
 public class WebConfig extends WebMvcConfigurerAdapter {
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/public/**")
-                .addResourceLocations("/public/");
-    }
-    @Bean
-    
-    ServletRegistrationBean h2servletRegistration(){
-
-        ServletRegistrationBean registrationBean = new ServletRegistrationBean( new WebServlet());
-
-        registrationBean.addUrlMappings("/console/*");
-
-        return registrationBean;
-
-    }
-    
-
+	
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/public/**")
+				.addResourceLocations("/public/");
+	}
+	
+	@Bean
+	ServletRegistrationBean h2servletRegistration() {
+		ServletRegistrationBean registrationBean = new ServletRegistrationBean(
+				new WebServlet());
+		registrationBean.addUrlMappings("/console/*");
+		return registrationBean;
+	}
 }

@@ -6,16 +6,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne; 
+import javax.persistence.ManyToOne; 
 @Entity
 public class Algorithm {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
-    @OneToOne(targetEntity=Stock.class)
-    private final Stock stock;
-    private final String name;
+    @ManyToOne(targetEntity=Stock.class)
+    private  Stock stock;
+    private  String name;
     private double aggregateGain;
     private double absoluteGain;
     private BigDecimal priceBought;
@@ -26,8 +26,7 @@ public class Algorithm {
     }
 
     public Algorithm() {
-	this.stock=new Stock();
-	this.name="";
+	
 	}
 
 	public Stock getStock() {
