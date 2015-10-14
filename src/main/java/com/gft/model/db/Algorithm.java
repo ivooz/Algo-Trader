@@ -2,14 +2,20 @@ package com.gft.model.db;
 
 import java.math.BigDecimal;
 
-/**
- * Created by iozi on 13/10/2015.
- */
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne; 
+@Entity
 public class Algorithm {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
-    private final Stock stock;
-    private final String name;
+    @ManyToOne(targetEntity=Stock.class)
+    private  Stock stock;
+    private  String name;
     private double aggregateGain;
     private double absoluteGain;
     private BigDecimal priceBought;
@@ -19,7 +25,11 @@ public class Algorithm {
         this.name = name;
     }
 
-    public Stock getStock() {
+    public Algorithm() {
+	
+	}
+
+	public Stock getStock() {
         return stock;
     }
 
@@ -54,7 +64,7 @@ public class Algorithm {
     public long getId() {
         return id;
     }
-
+	
     public void setId(long id) {
         this.id = id;
     }
