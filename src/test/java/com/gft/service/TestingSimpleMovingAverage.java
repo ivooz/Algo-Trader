@@ -1,6 +1,8 @@
 package com.gft.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,8 +27,8 @@ public class TestingSimpleMovingAverage {
 	SimpleMovingAverage simpleMovingAverage;
 	
 	@Autowired
-	@Qualifier()
-	ArrayList<SimpleMovingAverage> getSimpleMovingAverages;
+	@Qualifier("simpleMovingAverages")
+	ArrayList<SimpleMovingAverage> simpleMovingAverages;
 	
 	@Test
 	public void checkingCorrectnessOfSimpleMovingAverageForRaisingPrice() {
@@ -50,7 +52,7 @@ public class TestingSimpleMovingAverage {
 	
 	@Test
 	public void checkingCorrectnessOfInjectionArrayBean(){
-		System.out.println(getSimpleMovingAverages.size());
+		assertNotNull(simpleMovingAverages);
 	}
 	
 }

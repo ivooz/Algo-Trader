@@ -3,19 +3,34 @@ package com.gft.model.db;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import org.springframework.boot.orm.jpa.EntityScan;
+
 /**
  * Created by iozi on 13/10/2015.
  */
-public class StockHistory {
 
+@Entity
+public class StockHistory {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
-    private final Date date;
-    private final Stock stock;
-    private final BigDecimal openingPrice;
-    private final BigDecimal closingPrice;
-    private final BigDecimal lowPrice;
-    private final BigDecimal highPrice;
-    private final long volume;
+    private Date date;
+    @OneToOne(targetEntity=Stock.class)
+    private Stock stock;
+    private BigDecimal openingPrice;
+    private BigDecimal closingPrice;
+    private BigDecimal lowPrice;
+    private BigDecimal highPrice;
+    private long volume;
+
+    public StockHistory() {
+    }
 
     public StockHistory(Date date, Stock stock, BigDecimal openingPrice, BigDecimal closingPrice, BigDecimal lowPrice, BigDecimal highPrice, long volume) {
         this.date = date;
@@ -25,6 +40,7 @@ public class StockHistory {
         this.lowPrice = lowPrice;
         this.highPrice = highPrice;
         this.volume = volume;
+
     }
 
     public long getId() {
@@ -63,7 +79,33 @@ public class StockHistory {
         return volume;
     }
 
-	@Override
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public void setOpeningPrice(BigDecimal openingPrice) {
+        this.openingPrice = openingPrice;
+    }
+
+    public void setClosingPrice(BigDecimal closingPrice) {
+        this.closingPrice = closingPrice;
+    }
+
+    public void setLowPrice(BigDecimal lowPrice) {
+        this.lowPrice = lowPrice;
+    }
+
+    public void setHighPrice(BigDecimal highPrice) {
+        this.highPrice = highPrice;
+    }
+
+    public void setVolume(long volume) {
+        this.volume = volume;
+    }	@Override
 	public String toString() {
 		return "StockHistory [id=" + id + ", date=" + date + ", stock=" + stock + ", openingPrice=" + openingPrice
 				+ ", closingPrice=" + closingPrice + ", lowPrice=" + lowPrice + ", highPrice=" + highPrice + ", volume="

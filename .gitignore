@@ -30,3 +30,7 @@ dependency-reduced-pom.xml
 *.idea
 
 README.html
+
+# Logging
+
+*.log

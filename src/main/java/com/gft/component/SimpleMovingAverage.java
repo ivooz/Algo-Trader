@@ -3,7 +3,10 @@ package com.gft.component;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.gft.repository.data.InsufficientDataException;
+import com.gft.service.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import com.gft.model.Action;
@@ -30,8 +33,15 @@ public class SimpleMovingAverage implements PredictionAlgorithm {
 	public Action predict(Date date, Stock stock, HistoryDAO historyDAO){
  
 		SimpleAverage simpleAverage = new SimpleAverage();
-		BigDecimal average = simpleAverage.compute(historyDAO.obtainStockHistoryForPeriod(stock, interval));
-		ArrayList<StockHistory> listOfStock = historyDAO.obtainStockHistoryForPeriod(stock, interval);
+		BigDecimal average = null;
+		List<StockHistory> listOfStock = null;
+		try {
+			average = simpleAverage.compute(historyDAO.obtainStockHistoryForPeriod(stock, interval));
+			listOfStock = historyDAO.obtainStockHistoryForPeriod(stock, interval);
+		} catch (InsufficientDataException | DataAccessException e) {
+			//TODO handle exceptions
+			e.printStackTrace();
+		}
 		if (average.compareTo(listOfStock.get(listOfStock.size() - 1).getClosingPrice()) == -1) { // average is smaller than price
 			return Action.BUY;
 		} else if (average.compareTo(listOfStock.get(listOfStock.size() - 1).getClosingPrice()) == 1) {

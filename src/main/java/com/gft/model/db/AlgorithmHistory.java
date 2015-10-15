@@ -2,33 +2,58 @@ package com.gft.model.db;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
 /**
  * Created by iozi on 13/10/2015.
  */
+
+@Entity
 public class AlgorithmHistory {
 
-    private long id;
-    private final Algorithm algorithm;
-    private final Date date;
-    private final double aggregateGain;
-    private final double absoluteGain;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	private final Date date;
+	@OneToOne(targetEntity = Algorithm.class)
+	private final Algorithm algorithm;
+	private final double aggregateGain;
+	private final double absoluteGain;
+	public long getId() {
+		return id;
+	}
 
-    public AlgorithmHistory(Algorithm algorithm, Date date, double aggregateGain, double absoluteGain) {
-        this.algorithm = algorithm;
-        this.date = date;
-        this.aggregateGain = aggregateGain;
-        this.absoluteGain = absoluteGain;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public Algorithm getAlgorithm() {
+		return algorithm;
+	}
 
-    public double getAggregateGain() {
-        return aggregateGain;
-    }
+	public AlgorithmHistory(Algorithm algorithm, Date date,
+							double aggregateGain, double absoluteGain) {
+		this.algorithm = algorithm;
+		this.date = date;
+		this.aggregateGain = aggregateGain;
+		this.absoluteGain = absoluteGain;
+	}
 
-    public double getAbsoluteGain() {
-        return absoluteGain;
-    }
+	public Date getDate() {
+		return date;
+	}
+
+	public double getAggregateGain() {
+		return aggregateGain;
+	}
+
+	public double getAbsoluteGain() {
+		return absoluteGain;
+	}
+
+
 }

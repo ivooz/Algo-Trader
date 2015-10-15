@@ -3,13 +3,14 @@ package com.gft.component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.gft.model.db.StockHistory;
 
 public class SimpleAverage {
 	public SimpleAverage(){}
 	
-	public BigDecimal compute(ArrayList<StockHistory> listOfStockHistory){
+	public BigDecimal compute(List<StockHistory> listOfStockHistory){
 	
 		BigDecimal average = new BigDecimal(0);
 		for(StockHistory stockHistory: listOfStockHistory){
