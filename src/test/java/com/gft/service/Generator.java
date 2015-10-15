@@ -34,6 +34,18 @@ public class Generator {
         }
         return stocks;
     }
+    
+    public List<Stock> generateStocks(List<String> listOfStocksName){
+    	
+    	ArrayList<Stock> stocks = new ArrayList<Stock>();
+    	for(String name: listOfStocksName){
+    		Stock s = new Stock();
+    		s.setFullName(name);
+    		s.setTicker(name + "Ticker");
+    		stocks.add(s);
+    	}
+    	return stocks;
+    }
 }
 
 

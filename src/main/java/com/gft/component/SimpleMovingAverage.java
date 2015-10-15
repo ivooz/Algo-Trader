@@ -40,7 +40,7 @@ public class SimpleMovingAverage implements PredictionAlgorithm {
 			listOfStock = historyDAO.obtainStockHistoryForPeriod(stock, interval);
 		} catch (InsufficientDataException | DataAccessException e) {
 			//TODO handle exceptions
-			e.printStackTrace();
+			return Action.HOLD;
 		}
 		if (average.compareTo(listOfStock.get(listOfStock.size() - 1).getClosingPrice()) == -1) { // average is smaller than price
 			return Action.BUY;
