@@ -1,12 +1,7 @@
 package com.gft.model.db;
 
+import javax.persistence.*;
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 /**
  * Created by iozi on 13/10/2015.
