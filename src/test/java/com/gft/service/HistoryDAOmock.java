@@ -1,16 +1,12 @@
 package com.gft.service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
 import com.gft.repository.HistoryDAO;
+import com.gft.repository.data.InsufficientDataException;
+
+import java.math.BigDecimal;
+import java.util.*;
 
 public class HistoryDAOmock implements HistoryDAO {
 
@@ -75,4 +71,13 @@ public class HistoryDAOmock implements HistoryDAO {
 		return stocksInPeriod;
 	}
 
+	@Override
+	public Date getCurrentDate(Stock stock) throws InsufficientDataException, DataAccessException {
+		return new Date();
+	}
+
+	@Override
+	public int getHistorySize(Stock stock) throws InsufficientDataException, DataAccessException {
+		return 0;
+	}
 }

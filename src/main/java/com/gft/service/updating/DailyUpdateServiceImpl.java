@@ -1,9 +1,10 @@
-package com.gft.service;
+package com.gft.service.updating;
 
-import com.gft.model.db.StockHistory;
 import com.gft.repository.DatabaseHistoryDao;
-import com.gft.repository.data.StockHistoryRepository;
 import com.gft.repository.data.StockRepository;
+import com.gft.service.DataAccessException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -19,6 +20,8 @@ import java.util.Date;
 @Scope(value =  WebApplicationContext.SCOPE_REQUEST)
 public class DailyUpdateServiceImpl implements DailyUpdateService {
 
+    private static final Logger logger = LoggerFactory.getLogger(DailyUpdateServiceImpl.class);
+
     @Autowired
     StockRepository stockRepository;
 
@@ -29,11 +32,19 @@ public class DailyUpdateServiceImpl implements DailyUpdateService {
     @Qualifier("databaseHistoryDao")
     DatabaseHistoryDao databaseHistoryDao;
 
+    @Autowired
+    StockUpdateService stockUpdateService;
+
     @Override
     public void updateStocks() {
         final Date today = new Date();
         stockRepository.findAll().parallelStream().forEach(stock -> {
-            statisticsUpdateService.updateStatistics(stock, today , databaseHistoryDao);
+            try {
+                stockUpdateService.updateStock(stock);
+                statisticsUpdateService.updateStatistics(stock, today, databaseHistoryDao);
+            } catch (DataAccessException e) {
+                logger.error("Unable to update data for stock" + stock.getTicker());
+            }
         });
     }
 }

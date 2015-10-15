@@ -1,5 +1,10 @@
 package com.gft.service;
 
+import com.gft.config.Application;
+import com.gft.model.db.Stock;
+import com.gft.repository.data.AlgorithmRepository;
+import com.gft.repository.data.StockRepository;
+import com.gft.service.creating.NewTickerHinter;
 import com.gft.service.parsing.ParsingException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,11 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.gft.config.Application;
-import com.gft.model.db.Stock;
-import com.gft.repository.data.AlgorithmRepository;
-import com.gft.repository.data.StockRepository;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import static junit.framework.Assert.*;
 
@@ -22,6 +23,7 @@ import static junit.framework.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Application.class})
+@WebAppConfiguration
 public class TickerHinterTest {
 
 	private static final Logger logger = LoggerFactory.getLogger(TickerHinterTest.class);

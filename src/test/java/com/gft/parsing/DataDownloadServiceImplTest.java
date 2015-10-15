@@ -1,28 +1,29 @@
-package com.gft.service;
+package com.gft.parsing;
 
 import com.gft.config.Application;
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
+import com.gft.service.DataAccessException;
+import com.gft.service.downloading.DataDownloadService;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * Created by iozi on 13/10/2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Application.class})
+@WebAppConfiguration
 public class DataDownloadServiceImplTest {
 
     @Autowired
@@ -53,7 +54,7 @@ public class DataDownloadServiceImplTest {
                 assertNotNull(stockHistory.getClosingPrice());
                 assertNotNull(stockHistory.getLowPrice());
                 assertNotNull(stockHistory.getHighPrice());
-                assertNotEquals(0,stockHistory.getVolume());
+                assertNotEquals(0, stockHistory.getVolume());
             } catch (DataAccessException e) {
                 e.printStackTrace();
                 fail();
@@ -66,7 +67,7 @@ public class DataDownloadServiceImplTest {
         stocks.stream().forEach(s -> {
             try {
                 List<StockHistory> stockHistoryList = sut.downloadHistoricalData(s);
-                assertNotEquals(0,stockHistoryList.size());
+                assertNotEquals(0, stockHistoryList.size());
                 stockHistoryList.stream().forEach(stockHistory -> {
                     assertNotNull(stockHistory);
                     assertNotNull(stockHistory.getDate());
@@ -81,5 +82,19 @@ public class DataDownloadServiceImplTest {
                 fail();
             }
         });
+    }
+
+    @Test
+    public void testDownloadingNewStockData() {
+        try {
+            Stock stock = sut.downloadNewStock("YHOO");
+            assertEquals("Yahoo! Inc.", stock.getFullName());
+            assertEquals("YHOO", stock.getTicker());
+            assertEquals("equity", stock.getType());
+        } catch (DataAccessException e) {
+            e.printStackTrace();
+            fail();
+        }
+
     }
 }
