@@ -14,8 +14,8 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Stock {
-	@Id
-	@Column(name="Ticker", unique=true)
+    @Id
+    @Column(name="Ticker", unique=true)
     private String ticker;
     private String fullName;
     @OneToMany(targetEntity=Algorithm.class)
@@ -23,14 +23,14 @@ public class Stock {
     //TODO OneToMany Relation with algorithm
 
     public List<Algorithm> getAlgorithms() {
-		return algorithms;
-	}
+        return algorithms;
+    }
 
-	public void setAlgorithms(List<Algorithm> algorithms) {
-		this.algorithms = algorithms;
-	}
+    public void setAlgorithms(List<Algorithm> algorithms) {
+        this.algorithms = algorithms;
+    }
 
-	public String getFullName() {
+    public String getFullName() {
         return fullName;
     }
 
@@ -41,9 +41,13 @@ public class Stock {
     public String getTicker() {
         return ticker;
     }
- 
+
     public void setTicker(String ticker) {
         this.ticker = ticker;
     }
-
+	@Override
+	public String toString() {
+		return "Stock [ticker=" + ticker + ", fullName=" + fullName + ", algorithms=" + algorithms + "]";
+	}
+    
 }

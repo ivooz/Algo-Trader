@@ -6,7 +6,6 @@ import com.gft.model.db.StockHistory;
 import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,13 +66,13 @@ public class HistoryDaoTest {
                 List<StockHistory> historyList = memoryHistoryDao.obtainStockHistoryForPeriod(stock,11);
                 //Fail if not thrown
                 fail();
-            } catch (InvalidArgumentException | InsufficientDataException | DataAccessException ex) {
+            } catch (InsufficientDataException | DataAccessException ex) {
             }
         }
         try {
             List<StockHistory> historyList = memoryHistoryDao.obtainStockHistoryForPeriod(stock,10);
             assertEquals(10,historyList.size());
-        } catch (InvalidArgumentException | InsufficientDataException | DataAccessException ex) {
+        } catch (InsufficientDataException | DataAccessException ex) {
             logger.error("Test failed!",ex);
             fail();
         }
@@ -85,7 +84,7 @@ public class HistoryDaoTest {
         try {
             memoryHistoryDao.obtainStockHistoryForPeriod(stock,1);
             stockHistories = databaseHistoryDao.obtainStockHistoryForPeriod(stock, 10);
-        } catch (InvalidArgumentException | InsufficientDataException | DataAccessException ex) {
+        } catch (InsufficientDataException | DataAccessException ex) {
             logger.error("Test failed!",ex);
             fail();
         }

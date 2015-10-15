@@ -15,7 +15,7 @@ import com.gft.model.db.Stock;
  */
 @Repository
 public interface StockRepository extends JpaRepository<Stock, String> {
-public static final String Querys = "SELECT s.ticker FROM Stock s";
+	public static final String Querys = "SELECT s.ticker FROM Stock s";
 	@Query(Querys)
 	@Fetch(FetchMode.SELECT)
 	public List<String> findTickers();

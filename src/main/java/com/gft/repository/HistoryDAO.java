@@ -4,7 +4,6 @@ import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
 import com.gft.repository.data.InsufficientDataException;
 import com.gft.service.DataAccessException;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.List;
 
@@ -21,5 +20,5 @@ public interface HistoryDAO {
      * @param days including the current day (5 = 4 previous days + today)
      * @return
      */
-    List<StockHistory> obtainStockHistoryForPeriod(Stock stock, int days) throws InsufficientDataException, DataAccessException, InvalidArgumentException;
+    List<StockHistory> obtainStockHistoryForPeriod(Stock stock, int days) throws InsufficientDataException, DataAccessException;
 }

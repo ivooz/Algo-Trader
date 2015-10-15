@@ -36,7 +36,7 @@ public class AlgorithmHistory {
 	}
 
 	public AlgorithmHistory(Algorithm algorithm, Date date,
-			double aggregateGain, double absoluteGain) {
+							double aggregateGain, double absoluteGain) {
 		this.algorithm = algorithm;
 		this.date = date;
 		this.aggregateGain = aggregateGain;

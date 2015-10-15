@@ -6,7 +6,6 @@ import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockHistoryRepository;
 import com.gft.service.DataAccessException;
 import com.gft.service.DataDownloadService;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -50,7 +48,7 @@ public class MemoryHistoryDao implements HistoryDAO {
      */
     @Override
     public List<StockHistory> obtainStockHistoryForPeriod(Stock stock, int days) throws InsufficientDataException,
-            DataAccessException, InvalidArgumentException {
+            DataAccessException {
         if (historyList == null) {
             historyList = dataDownloadService.downloadHistoricalData(stock);
             historyList.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
@@ -58,7 +56,7 @@ public class MemoryHistoryDao implements HistoryDAO {
             stockHistoryRepository.save(historyList);
         }
         if (days <= 0) {
-            throw new InvalidArgumentException(new String[]{"Requested interval cannot be smaller than 1!", String.valueOf(days)});
+            throw new DataAccessException("Requested interval cannot be smaller than 2!");
         }
         if (timesInvoked - days + 1 < 0) {
             logger.error(INSUFFICIENT_INTERVAL);
