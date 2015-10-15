@@ -1,18 +1,15 @@
 package com.gft.component;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import com.gft.repository.data.InsufficientDataException;
-import com.gft.service.DataAccessException;
-import org.springframework.stereotype.Component;
-
 import com.gft.model.Action;
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
 import com.gft.repository.HistoryDAO;
+import com.gft.repository.data.InsufficientDataException;
+import com.gft.service.DataAccessException;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 
 public class SimpleMovingAverage implements PredictionAlgorithm {
@@ -27,7 +24,6 @@ public class SimpleMovingAverage implements PredictionAlgorithm {
 	}
 	
 	public SimpleMovingAverage() {
-
 	}
 	
 	public Action predict(Date date, Stock stock, HistoryDAO historyDAO){
@@ -40,7 +36,7 @@ public class SimpleMovingAverage implements PredictionAlgorithm {
 			listOfStock = historyDAO.obtainStockHistoryForPeriod(stock, interval);
 		} catch (InsufficientDataException | DataAccessException e) {
 			//TODO handle exceptions
-			e.printStackTrace();
+			return Action.HOLD;
 		}
 		if (average.compareTo(listOfStock.get(listOfStock.size() - 1).getClosingPrice()) == -1) { // average is smaller than price
 			return Action.BUY;

@@ -1,11 +1,10 @@
 package com.gft.component;
 
+import com.gft.model.db.StockHistory;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.List;
-
-import com.gft.model.db.StockHistory;
 
 public class SimpleAverage {
 	public SimpleAverage(){}

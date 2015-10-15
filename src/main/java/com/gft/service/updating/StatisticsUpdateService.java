@@ -1,4 +1,4 @@
-package com.gft.service;
+package com.gft.service.updating;
 
 import com.gft.model.db.Stock;
 import com.gft.repository.HistoryDAO;

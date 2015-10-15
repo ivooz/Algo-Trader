@@ -5,6 +5,7 @@ import com.gft.model.db.StockHistory;
 import com.gft.repository.data.InsufficientDataException;
 import com.gft.service.DataAccessException;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,4 +22,19 @@ public interface HistoryDAO {
      * @return
      */
     List<StockHistory> obtainStockHistoryForPeriod(Stock stock, int days) throws InsufficientDataException, DataAccessException;
+
+    /**
+     * Invoke to obtain the date of the latest day in the history (i.e. "today")
+     *
+     * @return
+     */
+    Date getCurrentDate(Stock stock) throws InsufficientDataException, DataAccessException;
+
+    /**
+     * @param stock
+     * @return size of the available history i.e. number of days
+     * @throws InsufficientDataException
+     * @throws DataAccessException
+     */
+    int getHistorySize(Stock stock) throws InsufficientDataException, DataAccessException;
 }

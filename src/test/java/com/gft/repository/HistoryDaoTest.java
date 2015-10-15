@@ -6,6 +6,7 @@ import com.gft.model.db.StockHistory;
 import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,10 +18,11 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Date;
 import java.util.List;
 
 import static junit.framework.Assert.*;
-import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.*;
 
 /**
  * Created by iozi on 14/10/2015.
@@ -89,5 +91,31 @@ public class HistoryDaoTest {
             fail();
         }
         assertEquals(10, stockHistories.size());
+    }
+
+    @Test
+    public void testCurrentDaysMemoryHistoryDao() {
+        try {
+            Date date = memoryHistoryDao.getCurrentDate(stock);
+            List<StockHistory> stockHistories = memoryHistoryDao.obtainStockHistoryForPeriod(stock, 1);
+            assertTrue(DateUtils.isSameDay(stockHistories.get(0).getDate(), date));
+            stockHistories = memoryHistoryDao.obtainStockHistoryForPeriod(stock, 1);
+            assertFalse(DateUtils.isSameDay(stockHistories.get(0).getDate(), date));
+        } catch (InsufficientDataException | DataAccessException ex) {
+            logger.error("Test failed!", ex);
+            fail();
+        }
+    }
+
+    @Test
+    public void testCurrentDaysDatabaseHistoryDao() {
+        try {
+            memoryHistoryDao.obtainStockHistoryForPeriod(stock, 1);
+            assertTrue(DateUtils.isSameDay(databaseHistoryDao.getCurrentDate(stock),
+                    databaseHistoryDao.obtainStockHistoryForPeriod(stock, 1).get(0).getDate()));
+        } catch (InsufficientDataException | DataAccessException ex) {
+            logger.error("Test failed!", ex);
+            fail();
+        }
     }
 }

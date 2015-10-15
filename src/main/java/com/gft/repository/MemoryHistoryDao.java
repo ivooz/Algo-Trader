@@ -5,7 +5,7 @@ import com.gft.model.db.StockHistory;
 import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockHistoryRepository;
 import com.gft.service.DataAccessException;
-import com.gft.service.DataDownloadService;
+import com.gft.service.downloading.DataDownloadService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -44,19 +45,13 @@ public class MemoryHistoryDao implements HistoryDAO {
      * @return
      * @throws InsufficientDataException
      * @throws DataAccessException
-     * @throws InvalidArgumentException
      */
     @Override
     public List<StockHistory> obtainStockHistoryForPeriod(Stock stock, int days) throws InsufficientDataException,
             DataAccessException {
-        if (historyList == null) {
-            historyList = dataDownloadService.downloadHistoricalData(stock);
-            historyList.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-            logger.info("Saving downloaded history");
-            stockHistoryRepository.save(historyList);
-        }
+        historyNullGuard(stock);
         if (days <= 0) {
-            throw new DataAccessException("Requested interval cannot be smaller than 2!");
+            throw new DataAccessException("Requested interval cannot be smaller than 1!");
         }
         if (timesInvoked - days + 1 < 0) {
             logger.error(INSUFFICIENT_INTERVAL);
@@ -67,4 +62,27 @@ public class MemoryHistoryDao implements HistoryDAO {
         timesInvoked++;
         return requestedInterval;
     }
+
+    @Override
+    public Date getCurrentDate(Stock stock) throws InsufficientDataException, DataAccessException {
+        historyNullGuard(stock);
+        return historyList.get(timesInvoked).getDate();
+    }
+
+    @Override
+    public int getHistorySize(Stock stock) throws InsufficientDataException, DataAccessException {
+        historyNullGuard(stock);
+        return historyList.size();
+    }
+
+    private void historyNullGuard(Stock stock) throws DataAccessException {
+        if (historyList == null) {
+            historyList = dataDownloadService.downloadHistoricalData(stock);
+            historyList.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+            logger.info("Saving downloaded history");
+            stockHistoryRepository.save(historyList);
+        }
+    }
+
+
 }
