@@ -16,7 +16,10 @@
 
 package com.gft.config;
 
-import com.thoughtworks.xstream.XStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -24,10 +27,9 @@ import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.gft.component.PredictionAlgorithm;
+import com.gft.component.SimpleMovingAverage;
 
 @Configuration
 @EnableAutoConfiguration
@@ -42,4 +44,33 @@ public class Application extends SpringBootServletInitializer {
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Application.class, args);
 	}
+	
+	@Bean
+	public List<Integer> simpleMovingAverageIntervals() {
+		return Arrays.asList(5,10,15,20,25,50,100,200);
+	}
+	
+	@Bean(name="getSimpleMovingAverages")
+	public List<SimpleMovingAverage> getSimpleMovingAverages(List<Integer> simpleMovingAverageIntervals){
+		ArrayList<SimpleMovingAverage>  simpleMovingAverages = new ArrayList<SimpleMovingAverage>();
+		
+		for(int interval: simpleMovingAverageIntervals){
+			SimpleMovingAverage simpleMovingAverage = new SimpleMovingAverage();
+			simpleMovingAverage.setInterval(interval);
+			simpleMovingAverage.setName("SimpleMovingAverage"+interval);
+			simpleMovingAverages.add(simpleMovingAverage);
+		}
+		return simpleMovingAverages;
+	}
+	
+	@Bean
+	public SimpleMovingAverage simpleMovingAverage(){
+		SimpleMovingAverage simpleMovingAverage = new SimpleMovingAverage();
+		simpleMovingAverage.setInterval(5);
+		simpleMovingAverage.setName("SimpleMovingAverage");
+		return simpleMovingAverage;	
+	}
+	
+	
+	
 }

@@ -21,12 +21,8 @@ public class HistoryDAOmock implements HistoryDAO {
 	}
 
 	private StockHistory getStockHistoryWithMockData(Date date, Stock stock, BigDecimal price, long volume) {
-		BigDecimal openingPrice = price;
-		BigDecimal closingPrice = price;
-		BigDecimal lowPrice = price;
-		BigDecimal highPrice = price;
 
-		return new StockHistory(date, stock, openingPrice, closingPrice, lowPrice, highPrice, volume);
+		return new StockHistory(date, stock, price, price, price, price, volume);
 	}
 	
 	public void setRisingPrice(int days) {

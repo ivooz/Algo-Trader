@@ -11,7 +11,7 @@ import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
 import com.gft.repository.HistoryDAO;
 
-@Component
+
 public class SimpleMovingAverage implements PredictionAlgorithm {
 
 	int interval;
@@ -21,21 +21,14 @@ public class SimpleMovingAverage implements PredictionAlgorithm {
 
 		this.interval = interval;
 		name = "SimpleMovingAverage" + interval;
-
 	}
 	
 	public SimpleMovingAverage() {
 
-		this.interval = 15;
-		name = "SimpleMovingAverage" + interval;
-
 	}
 	
-
 	public Action predict(Date date, Stock stock, HistoryDAO historyDAO){
-
-		Action action;
-
+ 
 		SimpleAverage simpleAverage = new SimpleAverage();
 		BigDecimal average = simpleAverage.compute(historyDAO.obtainStockHistoryForPeriod(stock, interval));
 		ArrayList<StockHistory> listOfStock = historyDAO.obtainStockHistoryForPeriod(stock, interval);
