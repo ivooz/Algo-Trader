@@ -37,6 +37,7 @@ public class DailyUpdateServiceImpl implements DailyUpdateService {
 
     @Override
     public void updateStocks() {
+        logger.info("Starting stock updates");
         final Date today = new Date();
         stockRepository.findAll().parallelStream().forEach(stock -> {
             try {

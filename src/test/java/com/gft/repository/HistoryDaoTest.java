@@ -100,7 +100,6 @@ public class HistoryDaoTest {
             List<StockHistory> stockHistories = memoryHistoryDao.obtainStockHistoryForPeriod(stock, 1);
             assertTrue(DateUtils.isSameDay(stockHistories.get(0).getDate(), date));
             stockHistories = memoryHistoryDao.obtainStockHistoryForPeriod(stock, 1);
-            System.out.println(stockHistories.get(0).getDate());
             assertFalse(DateUtils.isSameDay(stockHistories.get(0).getDate(), date));
         } catch (InsufficientDataException | DataAccessException ex) {
             logger.error("Test failed!", ex);
