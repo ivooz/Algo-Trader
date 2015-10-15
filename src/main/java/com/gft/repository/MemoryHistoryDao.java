@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -39,8 +40,9 @@ public class MemoryHistoryDao implements HistoryDAO {
 
     /**
      * Starts from the first day in history as the 'current day', each invocation shifts the current date forward.
+     *
      * @param stock
-     * @param days including the current day (5 = 4 previous days + today)
+     * @param days  including the current day (5 = 4 previous days + today)
      * @return
      * @throws InsufficientDataException
      * @throws DataAccessException
@@ -51,6 +53,7 @@ public class MemoryHistoryDao implements HistoryDAO {
             DataAccessException, InvalidArgumentException {
         if (historyList == null) {
             historyList = dataDownloadService.downloadHistoricalData(stock);
+            historyList.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
             logger.info("Saving downloaded history");
             stockHistoryRepository.save(historyList);
         }

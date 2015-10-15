@@ -31,8 +31,9 @@ public class DailyUpdateServiceImpl implements DailyUpdateService {
 
     @Override
     public void updateStocks() {
+        final Date today = new Date();
         stockRepository.findAll().parallelStream().forEach(stock -> {
-            statisticsUpdateService.updateStatistics(stock, new Date(), databaseHistoryDao);
+            statisticsUpdateService.updateStatistics(stock, today , databaseHistoryDao);
         });
     }
 }

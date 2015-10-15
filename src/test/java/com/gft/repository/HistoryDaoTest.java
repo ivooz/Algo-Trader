@@ -7,7 +7,6 @@ import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
 import com.sun.javaws.exceptions.InvalidArgumentException;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,9 +20,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
+import static junit.framework.Assert.*;
 import static junit.framework.TestCase.assertNotNull;
 
 /**
@@ -67,7 +64,7 @@ public class HistoryDaoTest {
     public void testMemoryDaoIntervalSafeguard() {
         for(int i=0; i<10;i++) {
             try {
-                List<StockHistory> sh = memoryHistoryDao.obtainStockHistoryForPeriod(stock,11);
+                List<StockHistory> historyList = memoryHistoryDao.obtainStockHistoryForPeriod(stock,11);
                 //Fail if not thrown
                 fail();
             } catch (InvalidArgumentException | InsufficientDataException | DataAccessException ex) {
@@ -87,11 +84,11 @@ public class HistoryDaoTest {
         List<StockHistory> stockHistories = null;
         try {
             memoryHistoryDao.obtainStockHistoryForPeriod(stock,1);
-            stockHistories = databaseHistoryDao.obtainStockHistoryForPeriod(stock,10);
+            stockHistories = databaseHistoryDao.obtainStockHistoryForPeriod(stock, 10);
         } catch (InvalidArgumentException | InsufficientDataException | DataAccessException ex) {
             logger.error("Test failed!",ex);
             fail();
         }
-        assertEquals(10,stockHistories.size());
+        assertEquals(10, stockHistories.size());
     }
 }
