@@ -4,7 +4,7 @@ import com.gft.config.Application;
 import com.gft.model.db.Stock;
 import com.gft.repository.data.AlgorithmRepository;
 import com.gft.repository.data.StockRepository;
-import com.gft.service.creating.NewTickerHinter;
+import com.gft.service.downloading.NewTickerHinter;
 import com.gft.service.parsing.ParsingException;
 import org.junit.Test;
 import org.junit.runner.RunWith;

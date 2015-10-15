@@ -28,6 +28,7 @@ public class StockCsvConverter {
 
     public List<String> readAllAvailableStocks() throws ParsingException {
         logger.info("Reading List of All Tickers from CSV file");
+
         List<String> availableTickers = new ArrayList<String>();
         final String[] header = new String[]{"Ticker", null, null, null, null, null, null, null, null};
         final CellProcessor[] processors = new CellProcessor[]{new NotNull(), null, null, null, null, null, null, null, null};

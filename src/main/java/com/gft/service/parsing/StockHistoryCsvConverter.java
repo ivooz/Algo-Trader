@@ -26,7 +26,7 @@ public class StockHistoryCsvConverter {
     private static final Logger logger = LoggerFactory.getLogger(StockHistoryCsvConverter.class);
 
     private static final CellProcessor[] PROCESSORS = new CellProcessor[]{
-            new ParseDate("yyyy-mm-dd"), // Date
+            new ParseDate("yyyy-MM-dd"), // Date
             new ParseBigDecimal(), // Open
             new ParseBigDecimal(), // High
             new ParseBigDecimal(), // Low

@@ -1,4 +1,4 @@
-package com.gft.service.creating;
+package com.gft.service.downloading;
 
 import com.gft.repository.data.StockRepository;
 import com.gft.service.parsing.ParsingException;

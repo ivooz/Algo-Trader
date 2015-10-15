@@ -24,7 +24,6 @@ public class SimpleMovingAverage implements PredictionAlgorithm {
 	}
 	
 	public SimpleMovingAverage() {
-
 	}
 	
 	public Action predict(Date date, Stock stock, HistoryDAO historyDAO){
