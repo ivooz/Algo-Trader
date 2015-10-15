@@ -1,5 +1,6 @@
 package com.gft.service.updating;
 
+import com.gft.aspect.Log;
 import com.gft.model.db.Stock;
 import com.gft.repository.data.StockHistoryRepository;
 import com.gft.service.DataAccessException;
@@ -24,6 +25,7 @@ public class StockUpdateService {
      *
      * @param stock
      */
+    @Log
     public void updateStock(Stock stock) throws DataAccessException {
         stockHistoryRepository.save(downloadService.downloadCurrentData(stock));
     }

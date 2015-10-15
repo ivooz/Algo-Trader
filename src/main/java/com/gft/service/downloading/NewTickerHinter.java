@@ -1,5 +1,7 @@
 package com.gft.service.downloading;
 
+import com.gft.aspect.Log;
+import com.gft.aspect.LogNoArgs;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.parsing.ParsingException;
 import com.gft.service.parsing.StockCsvConverter;
@@ -26,6 +28,7 @@ public class NewTickerHinter {
         return stockRepository.findTickers();
     }
 
+    @LogNoArgs
     public String hintNotPickedTickers() throws ParsingException {
         List<String> availableTickers = stockCsvConverter.readAllAvailableStocks();
         availableTickers.removeAll(getTickersAdded());

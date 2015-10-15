@@ -54,14 +54,6 @@ public class HistoryDaoTest {
     }
 
     @Test
-    public void testProperInjection() {
-        assertNotNull(databaseHistoryDao);
-        assertTrue(databaseHistoryDao instanceof DatabaseHistoryDao);
-        assertNotNull(memoryHistoryDao);
-        assertTrue(memoryHistoryDao instanceof MemoryHistoryDao);
-    }
-
-    @Test
     public void testMemoryDaoIntervalSafeguard() {
         for(int i=0; i<10;i++) {
             try {

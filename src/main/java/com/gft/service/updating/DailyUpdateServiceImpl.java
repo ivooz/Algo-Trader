@@ -1,5 +1,6 @@
 package com.gft.service.updating;
 
+import com.gft.aspect.Log;
 import com.gft.repository.DatabaseHistoryDao;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
@@ -35,9 +36,9 @@ public class DailyUpdateServiceImpl implements DailyUpdateService {
     @Autowired
     StockUpdateService stockUpdateService;
 
+    @Log
     @Override
     public void updateStocks() {
-        logger.info("Starting stock updates");
         final Date today = new Date();
         stockRepository.findAll().parallelStream().forEach(stock -> {
             try {
