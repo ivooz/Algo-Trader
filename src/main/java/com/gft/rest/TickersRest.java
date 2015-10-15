@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gft.service.NewTickerHinter;
+import com.gft.service.downloading.NewTickerHinter;
 import com.gft.service.parsing.ParsingException;
 
 @RestController
