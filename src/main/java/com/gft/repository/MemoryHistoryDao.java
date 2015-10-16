@@ -68,9 +68,9 @@ public class MemoryHistoryDao implements HistoryDAO {
 
     @Log
     @Override
-    public Date getCurrentDate(Stock stock) throws InsufficientDataException, DataAccessException {
+    public StockHistory getCurrentDay(Stock stock) throws InsufficientDataException, DataAccessException {
         historyNullGuard(stock);
-        return historyList.get(timesInvoked).getDate();
+        return historyList.get(timesInvoked);
     }
 
     @Log

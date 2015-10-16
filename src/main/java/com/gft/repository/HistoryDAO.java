@@ -28,7 +28,7 @@ public interface HistoryDAO {
      *
      * @return
      */
-    Date getCurrentDate(Stock stock) throws InsufficientDataException, DataAccessException;
+    StockHistory getCurrentDay(Stock stock) throws InsufficientDataException, DataAccessException;
 
     /**
      * @param stock

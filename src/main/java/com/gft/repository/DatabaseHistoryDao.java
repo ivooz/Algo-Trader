@@ -45,11 +45,11 @@ public class DatabaseHistoryDao implements HistoryDAO {
         return stockHistoryList.get(stock.getTicker()).subList(0, days);
     }
 
-    @Log
+    @LogNoArgs
     @Override
-    public Date getCurrentDate(Stock stock) throws InsufficientDataException, DataAccessException {
+    public StockHistory getCurrentDay(Stock stock) throws InsufficientDataException, DataAccessException {
         historyNullGuard(stock);
-        return stockHistoryList.get(stock.getTicker()).get(0).getDate();
+        return stockHistoryList.get(stock.getTicker()).get(0);
     }
 
     @Log

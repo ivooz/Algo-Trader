@@ -39,7 +39,7 @@ public class NewStockServiceImpl implements NewStockService {
     public void addNewStock(String ticker) throws DataAccessException, InsufficientDataException {
         Stock stock = dataDownloadService.downloadNewStock(ticker);
         for (int i = 0; i < memoryHistoryDao.getHistorySize(stock); i++) {
-            Date historyHead = memoryHistoryDao.getCurrentDate(stock);
+            Date historyHead = memoryHistoryDao.getCurrentDay(stock).getDate();
             updateService.updateStatistics(stock, historyHead, memoryHistoryDao);
         }
     }

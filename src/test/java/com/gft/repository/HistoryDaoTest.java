@@ -18,6 +18,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,9 @@ public class HistoryDaoTest {
     @Before
     public void init() {
         stock.setTicker("MSFT");
+        stock.setAlgorithms(new ArrayList<>());
+        stock.setType("equity");
+        stock.setFullName("Microsoft");
         stockRepository.save(stock);
     }
 
@@ -88,7 +92,7 @@ public class HistoryDaoTest {
     @Test
     public void testCurrentDaysMemoryHistoryDao() {
         try {
-            Date date = memoryHistoryDao.getCurrentDate(stock);
+            Date date = memoryHistoryDao.getCurrentDay(stock).getDate();
             List<StockHistory> stockHistories = memoryHistoryDao.obtainStockHistoryForPeriod(stock, 1);
             assertTrue(DateUtils.isSameDay(stockHistories.get(0).getDate(), date));
             stockHistories = memoryHistoryDao.obtainStockHistoryForPeriod(stock, 1);
@@ -103,7 +107,7 @@ public class HistoryDaoTest {
     public void testCurrentDaysDatabaseHistoryDao() {
         try {
             memoryHistoryDao.obtainStockHistoryForPeriod(stock, 1);
-            assertTrue(DateUtils.isSameDay(databaseHistoryDao.getCurrentDate(stock),
+            assertTrue(DateUtils.isSameDay(databaseHistoryDao.getCurrentDay(stock).getDate(),
                     databaseHistoryDao.obtainStockHistoryForPeriod(stock, 1).get(0).getDate()));
         } catch (InsufficientDataException | DataAccessException ex) {
             logger.error("Test failed!", ex);
