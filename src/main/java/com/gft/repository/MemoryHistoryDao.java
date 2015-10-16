@@ -1,5 +1,7 @@
 package com.gft.repository;
 
+import com.gft.aspect.Log;
+import com.gft.aspect.LogNoArgs;
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
 import com.gft.repository.data.InsufficientDataException;
@@ -46,6 +48,7 @@ public class MemoryHistoryDao implements HistoryDAO {
      * @throws InsufficientDataException
      * @throws DataAccessException
      */
+    @LogNoArgs
     @Override
     public List<StockHistory> obtainStockHistoryForPeriod(Stock stock, int days) throws InsufficientDataException,
             DataAccessException {
@@ -63,12 +66,14 @@ public class MemoryHistoryDao implements HistoryDAO {
         return requestedInterval;
     }
 
+    @Log
     @Override
-    public Date getCurrentDate(Stock stock) throws InsufficientDataException, DataAccessException {
+    public StockHistory getCurrentDay(Stock stock) throws InsufficientDataException, DataAccessException {
         historyNullGuard(stock);
-        return historyList.get(timesInvoked).getDate();
+        return historyList.get(timesInvoked);
     }
 
+    @Log
     @Override
     public int getHistorySize(Stock stock) throws InsufficientDataException, DataAccessException {
         historyNullGuard(stock);
