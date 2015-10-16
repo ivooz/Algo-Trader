@@ -24,14 +24,15 @@ public class NewTickerHinter {
     @Autowired
     StockCsvConverter stockCsvConverter;
 
-    public List<String> getTickersAdded() {
+   
+    public List<String> getTickersOfExistingStocksInDB() {
         return stockRepository.findTickers();
     }
+     
 
-    @LogNoArgs
-    public String hintNotPickedTickers() throws ParsingException {
+    public List<String> hintNotPickedTickers() throws ParsingException {
         List<String> availableTickers = stockCsvConverter.readAllAvailableStocks();
-        availableTickers.removeAll(getTickersAdded());
-        return new Gson().toJson(availableTickers);
+        availableTickers.removeAll(getTickersOfExistingStocksInDB());
+        return availableTickers;
     }
 }
