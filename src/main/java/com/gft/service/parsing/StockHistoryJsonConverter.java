@@ -1,5 +1,7 @@
 package com.gft.service.parsing;
 
+import com.gft.aspect.Log;
+import com.gft.aspect.LogNoArgs;
 import com.gft.model.db.StockHistory;
 import com.jayway.restassured.path.json.JsonPath;
 import org.slf4j.Logger;
@@ -17,8 +19,8 @@ public class StockHistoryJsonConverter {
 
     private static final Logger logger = LoggerFactory.getLogger(StockHistoryJsonConverter.class);
 
+    @LogNoArgs
     public StockHistory fromJson(String json) {
-        logger.info("Converting json into StockHistory object");
         JsonPath jsonPath = new JsonPath(json);
         StockHistory stockHistory = new StockHistory();
         stockHistory.setClosingPrice(new BigDecimal(jsonPath.getDouble("list.resources[0].resource.fields.price")));

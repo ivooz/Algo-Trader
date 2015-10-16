@@ -1,7 +1,8 @@
-package com.gft.service;
+package com.gft.service.downloading;
 
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
+import com.gft.service.DataAccessException;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface DataDownloadService {
      * @return
      */
     public StockHistory downloadCurrentData(Stock stock) throws DataAccessException;
+
+    public Stock downloadNewStock(String ticker) throws DataAccessException;
 }
