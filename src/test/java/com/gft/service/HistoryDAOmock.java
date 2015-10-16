@@ -72,8 +72,8 @@ public class HistoryDAOmock implements HistoryDAO {
 	}
 
 	@Override
-	public Date getCurrentDate(Stock stock) throws InsufficientDataException, DataAccessException {
-		return new Date();
+	public StockHistory getCurrentDay(Stock stock) throws InsufficientDataException, DataAccessException {
+		return null;
 	}
 
 	@Override

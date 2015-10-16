@@ -1,5 +1,6 @@
 package com.gft.scheduling;
 
+import com.gft.aspect.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,6 +22,7 @@ public class StockUpdateJob {
      * Runs every day at midnight
      * //TODO take stock market opening and closing time into account
      */
+    @Log
     @Scheduled(cron="0 0 0 * * *")
     public void updateStockData() {
         logger.info("Invoking daily stock update");

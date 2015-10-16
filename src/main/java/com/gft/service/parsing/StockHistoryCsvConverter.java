@@ -1,5 +1,7 @@
 package com.gft.service.parsing;
 
+import com.gft.aspect.Log;
+import com.gft.aspect.LogNoArgs;
 import com.gft.model.db.StockHistory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +40,8 @@ public class StockHistoryCsvConverter {
     private static final String[] FIELD_MAPPING = {"date","openingPrice","highPrice","lowPrice","closingPrice","volume",null};
     public static final String FAILED_TO_READ_CSV = "Failed to read CSV";
 
+    @LogNoArgs
     public List<StockHistory> convertToStockHistory(String csv) throws ParsingException {
-        logger.info("Converting CSV into list of StockHistory");
         ArrayList<StockHistory> historyList = new ArrayList<>();
         try(ICsvBeanReader beanReader = new CsvBeanReader(new StringReader(csv), CsvPreference.STANDARD_PREFERENCE)) {
             String[] header = beanReader.getHeader(true);

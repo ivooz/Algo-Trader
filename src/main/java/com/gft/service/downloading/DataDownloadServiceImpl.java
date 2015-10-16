@@ -1,5 +1,7 @@
 package com.gft.service.downloading;
 
+import com.gft.aspect.Log;
+import com.gft.aspect.LogNoArgs;
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
 import com.gft.service.DataAccessException;
@@ -50,9 +52,9 @@ public class DataDownloadServiceImpl implements DataDownloadService {
 
     private StringBuilder urlBuilder = new StringBuilder();
 
+    @LogNoArgs
     @Override
     public List<StockHistory> downloadHistoricalData(Stock stock) throws DataAccessException {
-        logger.info("Obtaining historical data");
         try {
             List<StockHistory> historyList = stockHistoryCsvConverter.convertToStockHistory(
                     loadStockInfo(historyUrlPrefix, historyUrlSuffix, stock.getTicker()));
@@ -64,9 +66,9 @@ public class DataDownloadServiceImpl implements DataDownloadService {
         }
     }
 
+    @Log
     @Override
     public StockHistory downloadCurrentData(Stock stock) throws DataAccessException {
-        logger.info("Obtaining current stock data");
         try {
             StockHistory stockHistory = jsonConverter.fromJson(loadStockInfo(currentDataUrlPrefix,
                     currentDataUrlSuffix, stock.getTicker()));
@@ -78,9 +80,9 @@ public class DataDownloadServiceImpl implements DataDownloadService {
         }
     }
 
+    @Log
     @Override
     public Stock downloadNewStock(String ticker) throws DataAccessException {
-        logger.info("Obtaining new stock data");
         try {
             Stock stock = stockJsonConverter.fromJson(loadStockInfo(currentDataUrlPrefix, currentDataUrlSuffix, ticker));
             return stock;

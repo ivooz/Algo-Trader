@@ -6,6 +6,8 @@ import com.gft.repository.data.AlgorithmRepository;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.downloading.NewTickerHinter;
 import com.gft.service.parsing.ParsingException;
+import com.google.gson.Gson;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -52,7 +54,7 @@ public class TickerHinterTest {
 		stockRepository.flush();
 		String json = null;
 		try {
-			json = tickerHinter.hintNotPickedTickers();
+			json = new Gson().toJson(tickerHinter.hintNotPickedTickers()) ;
 		} catch (ParsingException ex) {
 			logger.error("TEST FAILED",ex);
 			fail();
