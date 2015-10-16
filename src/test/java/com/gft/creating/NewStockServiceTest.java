@@ -4,7 +4,6 @@ import com.gft.component.ListAlgorithmWrapper;
 import com.gft.config.Application;
 import com.gft.config.HibernateConfig;
 import com.gft.config.WebConfig;
-import com.gft.model.db.Algorithm;
 import com.gft.model.db.Stock;
 import com.gft.repository.data.AlgorithmRepository;
 import com.gft.repository.data.InsufficientDataException;
@@ -18,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.fail;
@@ -44,7 +41,7 @@ public class NewStockServiceTest {
     @Autowired
     AlgorithmRepository algorithmRepository;
 
-    private final String ticker = "MSFT";
+    private final String ticker = "FB";
 
     @Before
     public void init() {

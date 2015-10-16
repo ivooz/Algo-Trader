@@ -2,6 +2,7 @@ package com.gft.service.creating;
 
 import com.gft.aspect.Log;
 import com.gft.model.db.Stock;
+import com.gft.repository.ForwardableHistoryDAO;
 import com.gft.repository.MemoryHistoryDao;
 import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockRepository;
@@ -30,7 +31,7 @@ public class NewStockServiceImpl implements NewStockService {
     DataDownloadService dataDownloadService;
 
     @Autowired
-    MemoryHistoryDao memoryHistoryDao;
+    ForwardableHistoryDAO memoryHistoryDao;
 
     @Autowired
     StatisticsUpdateService updateService;

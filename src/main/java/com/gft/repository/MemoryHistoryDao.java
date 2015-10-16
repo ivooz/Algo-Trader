@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Repository("memoryHistoryDao")
 @Scope(value = WebApplicationContext.SCOPE_REQUEST)
-public class MemoryHistoryDao implements HistoryDAO {
+public class MemoryHistoryDao implements ForwardableHistoryDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(MemoryHistoryDao.class);
 

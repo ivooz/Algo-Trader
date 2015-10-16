@@ -40,8 +40,7 @@ public class HistoryDaoTest {
     HistoryDAO databaseHistoryDao;
 
     @Autowired
-    @Qualifier("memoryHistoryDao")
-    HistoryDAO memoryHistoryDao;
+    ForwardableHistoryDAO memoryHistoryDao;
 
     @Autowired
     StockRepository stockRepository;
