@@ -25,7 +25,6 @@ public class Stock {
 
     public Stock() {
     	algorithms = new ArrayList<>();
-		
 	}
 
 	public List<Algorithm> getAlgorithms() {
