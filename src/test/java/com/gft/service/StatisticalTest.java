@@ -37,9 +37,9 @@ public class StatisticalTest {
 		hdom.setRisingPrice(1000);
 		Stock stock = new Stock();
 		stock.setFullName("KGHM");
-		
-	
 		stock.setTicker("KGH");
+
+	
 		Date date = new Date(2015,10,15);
 		sds.updateStatistics(stock, date, hdom);
 	

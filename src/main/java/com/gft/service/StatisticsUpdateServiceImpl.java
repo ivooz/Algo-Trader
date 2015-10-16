@@ -21,7 +21,8 @@ import com.gft.service.updating.StatisticsUpdateService;
 
 @Service
 public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
-	private static final Logger logger = LoggerFactory.getLogger(StatisticsUpdateService.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(StatisticsUpdateService.class);
 	@Autowired
 	ListAlgorithmWrapper listawrapper;
 
@@ -33,69 +34,80 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 
 		if (stock.getAlgorithms().size() == 0) {
 
-			setAlgorithms(stock);
+			assignAlgorithmstoNewAddedStock(stock);
 		}
 		Iterator<Algorithm> it = stock.getAlgorithms().iterator();
 		while (it.hasNext()) {
 			Algorithm algorithm = it.next();
-	
-			Action action = listawrapper.getSimpleMovingAverages()
-					.get(algorithm.getName()).predict(date, stock, historyDAO);
 
-		
+			Action action = listawrapper.getAlgorithms()
+					.get(algorithm.getName()).predict(date, stock, historyDAO);
 
 			if (action == Action.BUY) {
 
-				if (algorithm.getPriceBought().equals(BigDecimal.ZERO)) {
-
-					try {
-						logger.info("Obtaining info from HistoryDAO");
-						price = historyDAO.obtainStockHistoryForPeriod(stock, 1)
-								.get(0).getClosingPrice();
-					} catch (InsufficientDataException
-							| DataAccessException e) {
-						logger.error(Access_exception);					}
-					algorithm.setPriceBought(price);
-				}
-
+				actionBuy(stock, historyDAO, algorithm);
 			}
 			if (action == Action.SELL) {
 
-				if (!(algorithm.getPriceBought().equals(BigDecimal.ZERO))) {
-					try {
-						logger.info("Obtaining info from HistoryDAO");
-						price = historyDAO.obtainStockHistoryForPeriod(stock, 1)
-								.get(0).getClosingPrice();
-
-					} catch (InsufficientDataException
-							| DataAccessException e) {
-						logger.error(Access_exception);	
-					}
-					BigDecimal price_bought = algorithm.getPriceBought();
-
-					double gain = price.doubleValue()
-							- price_bought.doubleValue();
-
-					gain = gain / price_bought.doubleValue();
-
-					algorithm.setPriceBought(BigDecimal.ZERO);
-					algorithm.setAbsoluteGain(
-							algorithm.getAbsoluteGain() + gain);
-
-					algorithm.setAggregateGain(
-							algorithm.getAggregateGain() * (gain));
-
-				}
+				actionSell(stock, historyDAO, algorithm);
 
 			}
 
 		}
+		
 	}
-	public void setAlgorithms(Stock stock) {
+	private void assignAlgorithmstoNewAddedStock(Stock stock) {
 		List<Algorithm> algorithms = new ArrayList<>();
-		listawrapper.getSimpleMovingAverages().values().forEach(
+		listawrapper.getAlgorithms().values().forEach(
 				algo -> algorithms.add(new Algorithm(stock, algo.getName())));
 		stock.setAlgorithms(algorithms);
 
 	}
+	private static void actionBuy(Stock stock, HistoryDAO historyDAO,
+			Algorithm algorithm) {
+		BigDecimal price = null;
+
+		if (algorithm.getPriceBought().equals(BigDecimal.ZERO)) {
+
+			try {
+				logger.info("Obtaining info from HistoryDAO");
+				price = historyDAO.obtainStockHistoryForPeriod(stock, 1).get(0)
+						.getClosingPrice();
+			} catch (InsufficientDataException | DataAccessException e) {
+				logger.error(Access_exception);
+			}
+			algorithm.setPriceBought(price);
+		}
+
+	}
+	private static void actionSell(Stock stock, HistoryDAO historyDAO,
+			Algorithm algorithm) {
+		BigDecimal price = null;
+
+		if (!(algorithm.getPriceBought().equals(BigDecimal.ZERO))) {
+			try {
+				logger.info("Obtaining info from HistoryDAO");
+				price = historyDAO.obtainStockHistoryForPeriod(stock, 1).get(0)
+						.getClosingPrice();
+
+			} catch (InsufficientDataException | DataAccessException e) {
+				logger.error(Access_exception);
+			}
+
+			double gain = calculateGain(price.doubleValue(),
+					algorithm.getPriceBought().doubleValue());
+			algorithm.setPriceBought(BigDecimal.ZERO);
+			algorithm.setAbsoluteGain(algorithm.getAbsoluteGain() + gain);
+
+			algorithm.setAggregateGain(algorithm.getAggregateGain() * (gain));
+
+		}
+	}
+	private static double calculateGain(double price, double price_bought) {
+		double gain = price - price_bought;
+
+		gain = gain / price_bought;
+		return gain;
+	}
+
 }

@@ -19,10 +19,15 @@ public class Algorithm {
     public Algorithm(Stock stock, String name) {
         this.stock = stock;
         this.name = name;
+        this.absoluteGain=0;
+    	this.aggregateGain=1.0;
+    	this.priceBought=BigDecimal.ZERO;
     }
 
     public Algorithm() {
-
+    	this.absoluteGain=0;
+    	this.aggregateGain=1.0;
+    	this.priceBought=BigDecimal.ZERO;
     }
 
     public Stock getStock() {

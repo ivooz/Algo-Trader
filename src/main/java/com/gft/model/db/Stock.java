@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +23,12 @@ public class Stock {
     private List<Algorithm> algorithms;
     private String type;
 
-    public List<Algorithm> getAlgorithms() {
+    public Stock() {
+    	algorithms = new ArrayList<>();
+		
+	}
+
+	public List<Algorithm> getAlgorithms() {
         return algorithms;
     }
 
