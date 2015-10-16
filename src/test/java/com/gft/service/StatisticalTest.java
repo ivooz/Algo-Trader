@@ -30,8 +30,7 @@ public class StatisticalTest {
 	@Autowired
 	StatisticsUpdateServiceImpl sds;
 	@Test
-	public void testThatAlgorithmBuys()
-	{
+	public void testThatAlgorithmBuys() {
 
 		HistoryDAOmock hdom = new HistoryDAOmock();
 		hdom.setRisingPrice(1000);
@@ -39,49 +38,48 @@ public class StatisticalTest {
 		stock.setFullName("KGHM");
 		stock.setTicker("KGH");
 
-	
-		Date date = new Date(2015,10,15);
+		Date date = new Date(2015, 10, 15);
 		sds.updateStatistics(stock, date, hdom);
-	
-Assert.assertFalse(stock.getAlgorithms().get(0).getPriceBought().equals(0));
-	
-}
+
+		Assert.assertFalse(
+				stock.getAlgorithms().get(0).getPriceBought().equals(0));
+
+	}
 	@Test
-	public void testThatAlgorithmSells()
-	{
+	public void testThatAlgorithmSells() {
 		HistoryDAOmock hdom = new HistoryDAOmock();
 		hdom.setRisingPrice(1000);
 		HistoryDAOmock hdom1 = new HistoryDAOmock();
 		hdom1.setDecrisingPrice(1000);
 		Stock stock = new Stock();
 		stock.setFullName("KGHM");
-		
-	
+
 		stock.setTicker("KGH");
-		Date date = new Date(2015,10,15);
+		Date date = new Date(2015, 10, 15);
 		sds.updateStatistics(stock, date, hdom);
 		sds.updateStatistics(stock, date, hdom1);
-		
-		Assert.assertTrue(stock.getAlgorithms().get(0).getPriceBought().equals(BigDecimal.ZERO));
-}
+
+		Assert.assertTrue(stock.getAlgorithms().get(0).getPriceBought()
+				.equals(BigDecimal.ZERO));
+	}
 	@Test
-	public void testThatAlgorithmEarns()
-	{
+	public void testThatAlgorithmEarns() {
 		HistoryDAOmock hdom = new HistoryDAOmock();
 		hdom.setRisingPrice(1000);
 		HistoryDAOmock hdom1 = new HistoryDAOmock();
 		hdom1.setDecrisingPrice(1000);
 		Stock stock = new Stock();
 		stock.setFullName("KGHM");
-		
-	
+
 		stock.setTicker("KGH");
-		Date date = new Date(2015,10,15);
+		Date date = new Date(2015, 10, 15);
 		sds.updateStatistics(stock, date, hdom);
-	
+
 		sds.updateStatistics(stock, date, hdom1);
-	
-		Assert.assertEquals(1.0,stock.getAlgorithms().get(0).getAbsoluteGain());
-		Assert.assertEquals(1.0,stock.getAlgorithms().get(0).getAggregateGain());
-}
+
+		Assert.assertEquals(1.0,
+				stock.getAlgorithms().get(0).getAbsoluteGain());
+		Assert.assertEquals(1.0,
+				stock.getAlgorithms().get(0).getAggregateGain());
+	}
 }
