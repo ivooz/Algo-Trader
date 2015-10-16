@@ -80,4 +80,9 @@ public class HistoryDAOmock implements HistoryDAO {
 	public int getHistorySize(Stock stock) throws InsufficientDataException, DataAccessException {
 		return 0;
 	}
+
+	@Override
+	public void forwardHistory() {
+
+	}
 }

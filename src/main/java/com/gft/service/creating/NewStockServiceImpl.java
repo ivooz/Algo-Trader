@@ -4,6 +4,7 @@ import com.gft.aspect.Log;
 import com.gft.model.db.Stock;
 import com.gft.repository.MemoryHistoryDao;
 import com.gft.repository.data.InsufficientDataException;
+import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
 import com.gft.service.downloading.DataDownloadService;
 import com.gft.service.updating.StatisticsUpdateService;
@@ -34,13 +35,20 @@ public class NewStockServiceImpl implements NewStockService {
     @Autowired
     StatisticsUpdateService updateService;
 
+    @Autowired
+    StockRepository stockRepository;
+
     @Log
     @Override
     public void addNewStock(String ticker) throws DataAccessException, InsufficientDataException {
         Stock stock = dataDownloadService.downloadNewStock(ticker);
+        stockRepository.save(stock);
+        Date historyHead;
         for (int i = 0; i < memoryHistoryDao.getHistorySize(stock); i++) {
-            Date historyHead = memoryHistoryDao.getCurrentDay(stock).getDate();
+            historyHead = memoryHistoryDao.getCurrentDay(stock).getDate();
             updateService.updateStatistics(stock, historyHead, memoryHistoryDao);
+            memoryHistoryDao.forwardHistory();
         }
+        stockRepository.save(stock);
     }
 }

@@ -37,4 +37,9 @@ public interface HistoryDAO {
      * @throws DataAccessException
      */
     int getHistorySize(Stock stock) throws InsufficientDataException, DataAccessException;
+
+    /**
+     * Pushes history into the future by one day
+     */
+    void forwardHistory();
 }

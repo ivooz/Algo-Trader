@@ -1,9 +1,6 @@
 package com.gft.model.db;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +13,10 @@ import java.util.List;
 public class Stock {
 
     @Id
-    @Column(name="Ticker", unique=true)
+    @Column(name="ticker", unique=true)
     private String ticker;
     private String fullName;
-    @OneToMany(targetEntity=Algorithm.class)
+    @OneToMany(targetEntity=Algorithm.class, cascade = CascadeType.ALL)
     private List<Algorithm> algorithms;
     private String type;
 

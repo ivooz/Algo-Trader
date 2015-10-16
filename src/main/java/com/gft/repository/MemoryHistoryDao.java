@@ -1,7 +1,5 @@
 package com.gft.repository;
 
-import com.gft.aspect.Log;
-import com.gft.aspect.LogNoArgs;
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
 import com.gft.repository.data.InsufficientDataException;
@@ -15,7 +13,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +34,7 @@ public class MemoryHistoryDao implements HistoryDAO {
     @Autowired
     private StockHistoryRepository stockHistoryRepository;
 
-    private int timesInvoked = 0;
+    private int currentDay = 0;
 
     /**
      * Starts from the first day in history as the 'current day', each invocation shifts the current date forward.
@@ -48,7 +45,6 @@ public class MemoryHistoryDao implements HistoryDAO {
      * @throws InsufficientDataException
      * @throws DataAccessException
      */
-    @LogNoArgs
     @Override
     public List<StockHistory> obtainStockHistoryForPeriod(Stock stock, int days) throws InsufficientDataException,
             DataAccessException {
@@ -56,28 +52,28 @@ public class MemoryHistoryDao implements HistoryDAO {
         if (days <= 0) {
             throw new DataAccessException("Requested interval cannot be smaller than 1!");
         }
-        if (timesInvoked - days + 1 < 0) {
-            logger.error(INSUFFICIENT_INTERVAL);
-            timesInvoked++;
+        if (currentDay - days + 1 < 0) {
             throw new InsufficientDataException(INSUFFICIENT_INTERVAL);
         }
-        List<StockHistory> requestedInterval = historyList.subList(timesInvoked - days + 1, timesInvoked + 1);
-        timesInvoked++;
+        List<StockHistory> requestedInterval = historyList.subList(currentDay - days + 1, currentDay + 1);
         return requestedInterval;
     }
 
-    @Log
     @Override
     public StockHistory getCurrentDay(Stock stock) throws InsufficientDataException, DataAccessException {
         historyNullGuard(stock);
-        return historyList.get(timesInvoked);
+        return historyList.get(currentDay);
     }
 
-    @Log
     @Override
     public int getHistorySize(Stock stock) throws InsufficientDataException, DataAccessException {
         historyNullGuard(stock);
         return historyList.size();
+    }
+
+    @Override
+    public void forwardHistory() {
+        currentDay++;
     }
 
     private void historyNullGuard(Stock stock) throws DataAccessException {
@@ -88,6 +84,4 @@ public class MemoryHistoryDao implements HistoryDAO {
             stockHistoryRepository.save(historyList);
         }
     }
-
-
 }

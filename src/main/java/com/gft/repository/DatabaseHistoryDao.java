@@ -59,6 +59,10 @@ public class DatabaseHistoryDao implements HistoryDAO {
         return stockHistoryList.get(stock.getTicker()).size();
     }
 
+    @Override
+    public void forwardHistory() {
+    }
+
     private void historyNullGuard(Stock stock) {
         if (!stockHistoryList.containsKey(stock.getTicker())) {
             stockHistoryList.put(stock.getTicker(), stockHistoryRepository.findByStockOrderByDateDesc(stock));

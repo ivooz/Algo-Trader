@@ -6,7 +6,6 @@ import com.gft.repository.HistoryDAO;
 import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.updating.StatisticsUpdateService;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
