@@ -25,7 +25,7 @@ public class HistoryDAOmock implements HistoryDAO {
 		Calendar firstDay = GregorianCalendar.getInstance();
 		firstDay.add(Calendar.DAY_OF_YEAR, -days);
 		
-		double startPrice = 33.0;
+		double startPrice = 1.0;
 		long volume = 100l;
 		
 		Stock stock = new Stock();
@@ -46,7 +46,7 @@ public class HistoryDAOmock implements HistoryDAO {
 		Calendar firstDay = GregorianCalendar.getInstance();
 		firstDay.add(Calendar.DAY_OF_YEAR, -days);
 		
-		double startPrice = 33.0;
+		double startPrice = 2999.0;
 		long volume = 100l;
 		
 		Stock stock = new Stock();
