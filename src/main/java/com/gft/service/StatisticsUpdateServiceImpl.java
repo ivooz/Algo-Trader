@@ -54,7 +54,7 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 			}
 
 		}
-		
+
 	}
 	private void assignAlgorithmstoNewAddedStock(Stock stock) {
 		List<Algorithm> algorithms = new ArrayList<>();
@@ -63,7 +63,7 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 		stock.setAlgorithms(algorithms);
 
 	}
-	private static void actionBuy(Stock stock, HistoryDAO historyDAO,
+	private void actionBuy(Stock stock, HistoryDAO historyDAO,
 			Algorithm algorithm) {
 		BigDecimal price = null;
 
@@ -80,7 +80,7 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 		}
 
 	}
-	private static void actionSell(Stock stock, HistoryDAO historyDAO,
+	private  void actionSell(Stock stock, HistoryDAO historyDAO,
 			Algorithm algorithm) {
 		BigDecimal price = null;
 
@@ -103,7 +103,7 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 
 		}
 	}
-	private static double calculateGain(double price, double price_bought) {
+	private double calculateGain(double price, double price_bought) {
 		double gain = price - price_bought;
 
 		gain = gain / price_bought;
