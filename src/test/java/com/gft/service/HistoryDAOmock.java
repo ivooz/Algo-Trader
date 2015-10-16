@@ -8,6 +8,7 @@ import com.gft.repository.data.InsufficientDataException;
 import java.math.BigDecimal;
 import java.util.*;
 
+@Deprecated
 public class HistoryDAOmock implements HistoryDAO {
 
 	ArrayList<StockHistory> history = new ArrayList<StockHistory>();
@@ -80,4 +81,5 @@ public class HistoryDAOmock implements HistoryDAO {
 	public int getHistorySize(Stock stock) throws InsufficientDataException, DataAccessException {
 		return 0;
 	}
+
 }

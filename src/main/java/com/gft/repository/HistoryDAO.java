@@ -37,4 +37,6 @@ public interface HistoryDAO {
      * @throws DataAccessException
      */
     int getHistorySize(Stock stock) throws InsufficientDataException, DataAccessException;
+
+
 }

@@ -31,12 +31,12 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 
 	public static final String Access_exception = "DATA COULD NOT BE ACCESSED";
 
-	@LogNoArgs
 	@Override
 	public void updateStatistics(Stock stock, Date date, HistoryDAO historyDAO) {
 		BigDecimal price = null;
 		if (stock.getAlgorithms().size() == 0) {
 			assignAlgorithmstoNewAddedStock(stock);
+
 		}
 		Iterator<Algorithm> it = stock.getAlgorithms().iterator();
 		while (it.hasNext()) {
@@ -65,10 +65,13 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 		BigDecimal price = null;
 		if (algorithm.getPriceBought().equals(BigDecimal.ZERO)) {
 			try {
-				logger.info("Obtaining info from HistoryDAO");
 				price = historyDAO.getCurrentDay(stock).getClosingPrice();
 			} catch (InsufficientDataException | DataAccessException e) {
 				logger.error(Access_exception);
+			}
+			try {
+				logger.info(historyDAO.getCurrentDay(stock).getDate() + " Transaciton for " + algorithm.getName() + " B:" + price);
+			} catch (InsufficientDataException | DataAccessException e) {
 			}
 			algorithm.setPriceBought(price);
 		}
@@ -80,16 +83,20 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 
 		if (!(algorithm.getPriceBought().equals(BigDecimal.ZERO))) {
 			try {
-				logger.info("Obtaining info from HistoryDAO");
 				price = historyDAO.getCurrentDay(stock).getClosingPrice();
-
 			} catch (InsufficientDataException | DataAccessException e) {
 				logger.error(Access_exception);
 			}
 			double gain = calculateGain(price.doubleValue(), algorithm.getPriceBought().doubleValue());
+			//TODO FIXIT
+			try {
+				logger.info(historyDAO.getCurrentDay(stock).getDate() + " Transaciton for " + algorithm.getName() + " B:"
+						+ algorithm.getPriceBought().doubleValue() + " S:" + price.doubleValue() + " G: " + gain);
+			} catch (InsufficientDataException | DataAccessException e) {
+			}
 			algorithm.setPriceBought(BigDecimal.ZERO);
 			algorithm.setAbsoluteGain(algorithm.getAbsoluteGain() + gain);
-			algorithm.setAggregateGain(algorithm.getAggregateGain() * (gain));
+			algorithm.setAggregateGain(algorithm.getAggregateGain() * (1 + gain));
 		}
 	}
 
