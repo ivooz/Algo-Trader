@@ -40,7 +40,7 @@ public class NewTickerHintTest {
 		stockRepository.save(stock2);
 
 		RestTemplate restTemplate = new RestTemplate();
-		List<String> apiResponse = restTemplate.getForObject("http://localhost:60001/ExistingStocksInDB", List.class);
+		List<String> apiResponse = restTemplate.getForObject("http://localhost:60001/existingStocksInDB", List.class);
 
 		assertTrue(apiResponse.stream().map(Object::toString).allMatch(s -> s.equals("PKN") || s.equals("KGH")));
 		assertEquals(apiResponse.size(), 2);
@@ -54,7 +54,7 @@ public class NewTickerHintTest {
 		stockRepository.save(stock1);
 
 		RestTemplate restTemplate = new RestTemplate();
-		List<String> apiResponse = restTemplate.getForObject("http://localhost:60001/NotExistingStockInDB", List.class);
+		List<String> apiResponse = restTemplate.getForObject("http://localhost:60001/notExistingStockInDB", List.class);
 
 		assertEquals(false, apiResponse.contains("LOXO"));
 		assertEquals(true, apiResponse.contains("LUNA"));
