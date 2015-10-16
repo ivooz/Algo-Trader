@@ -42,20 +42,21 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 
 			Action action = listawrapper.getAlgorithms()
 					.get(algorithm.getName()).predict(date, stock, historyDAO);
-
-			if (action == Action.BUY) {
+switch(action){
+	case BUY:
 
 				actionBuy(stock, historyDAO, algorithm);
-			}
-			if (action == Action.SELL) {
+			break;
+	case SELL:
 
 				actionSell(stock, historyDAO, algorithm);
-
+break;
 			}
 
 		}
+		}
 
-	}
+	
 	private void assignAlgorithmstoNewAddedStock(Stock stock) {
 		List<Algorithm> algorithms = new ArrayList<>();
 		listawrapper.getAlgorithms().values().forEach(
@@ -80,7 +81,7 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 		}
 
 	}
-	private  void actionSell(Stock stock, HistoryDAO historyDAO,
+	private void actionSell(Stock stock, HistoryDAO historyDAO,
 			Algorithm algorithm) {
 		BigDecimal price = null;
 

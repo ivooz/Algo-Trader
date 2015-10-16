@@ -17,11 +17,10 @@ public class Algorithm {
     private BigDecimal priceBought;
 
     public Algorithm(Stock stock, String name) {
+    	   this();
         this.stock = stock;
         this.name = name;
-        this.absoluteGain=0;
-    	this.aggregateGain=1.0;
-    	this.priceBought=BigDecimal.ZERO;
+ 
     }
 
     public Algorithm() {
