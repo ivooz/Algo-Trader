@@ -42,21 +42,20 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 
 			Action action = listawrapper.getAlgorithms()
 					.get(algorithm.getName()).predict(date, stock, historyDAO);
-switch(action){
-	case BUY:
+			switch (action) {
+				case BUY :
 
-				actionBuy(stock, historyDAO, algorithm);
-			break;
-	case SELL:
+					actionBuy(stock, historyDAO, algorithm);
+					break;
+				case SELL :
 
-				actionSell(stock, historyDAO, algorithm);
-break;
+					actionSell(stock, historyDAO, algorithm);
+					break;
 			}
 
 		}
-		}
+	}
 
-	
 	private void assignAlgorithmstoNewAddedStock(Stock stock) {
 		List<Algorithm> algorithms = new ArrayList<>();
 		listawrapper.getAlgorithms().values().forEach(

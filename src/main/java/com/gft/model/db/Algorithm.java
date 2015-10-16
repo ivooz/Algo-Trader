@@ -6,74 +6,74 @@ import java.math.BigDecimal;
 @Entity
 public class Algorithm {
 
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
-    @ManyToOne(targetEntity=Stock.class)
-    private  Stock stock;
-    private  String name;
-    private double aggregateGain;
-    private double absoluteGain;
-    private BigDecimal priceBought;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	@ManyToOne(targetEntity = Stock.class)
+	private Stock stock;
+	private String name;
+	private double aggregateGain;
+	private double absoluteGain;
+	private BigDecimal priceBought;
 
-    public Algorithm(Stock stock, String name) {
-    	   this();
-        this.stock = stock;
-        this.name = name;
- 
-    }
+	public Algorithm(Stock stock, String name) {
+		this();
+		this.stock = stock;
+		this.name = name;
 
-    public Algorithm() {
-    	this.absoluteGain=0;
-    	this.aggregateGain=1.0;
-    	this.priceBought=BigDecimal.ZERO;
-    }
+	}
 
-    public Stock getStock() {
-        return stock;
-    }
+	public Algorithm() {
+		this.absoluteGain = 0;
+		this.aggregateGain = 1.0;
+		this.priceBought = BigDecimal.ZERO;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public Stock getStock() {
+		return stock;
+	}
 
-    public double getAggregateGain() {
-        return aggregateGain;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setAggregateGain(double aggregateGain) {
-        this.aggregateGain = aggregateGain;
-    }
+	public double getAggregateGain() {
+		return aggregateGain;
+	}
 
-    public double getAbsoluteGain() {
-        return absoluteGain;
-    }
+	public void setAggregateGain(double aggregateGain) {
+		this.aggregateGain = aggregateGain;
+	}
 
-    public void setAbsoluteGain(double absoluteGain) {
-        this.absoluteGain = absoluteGain;
-    }
+	public double getAbsoluteGain() {
+		return absoluteGain;
+	}
 
-    public BigDecimal getPriceBought() {
-        return priceBought;
-    }
+	public void setAbsoluteGain(double absoluteGain) {
+		this.absoluteGain = absoluteGain;
+	}
 
-    public void setPriceBought(BigDecimal priceBought) {
-        this.priceBought = priceBought;
-    }
+	public BigDecimal getPriceBought() {
+		return priceBought;
+	}
 
-    public long getId() {
-        return id;
-    }
+	public void setPriceBought(BigDecimal priceBought) {
+		this.priceBought = priceBought;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setStock(Stock stock) {
-        this.stock = stock;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
