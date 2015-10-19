@@ -1,6 +1,7 @@
 package com.gft.scheduling;
 
 import com.gft.aspect.Log;
+import com.gft.service.updating.DailyUpdateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.gft.service.updating.AlgorithmHistoryUpdateService;
-
-
-
 
 /**
  * Created by iozi on 14/10/2015.
@@ -20,11 +18,10 @@ public class StockUpdateJob {
 
     private static final Logger logger = LoggerFactory.getLogger(StockUpdateJob.class);
 
-    // TODO: uncomment when implemented
-//    @Autowired
-//    DailyUpdateService dailyUpdateService;
-@Autowired
+    @Autowired
+    DailyUpdateService dailyUpdateService;
     AlgorithmHistoryUpdateService scheduledAlgorithmHistorySave;
+
     /**
      * Runs every day at midnight
      * //TODO take stock market opening and closing time into account
@@ -33,8 +30,9 @@ public class StockUpdateJob {
     @Scheduled(cron="0 0 0 * * *")
     public void updateStockData() {
         logger.info("Invoking daily stock update");
-//        dailyUpdateService.updateStocks();
+        dailyUpdateService.updateStocks();
     }
+
     @Log
     @Scheduled(cron="0 0 1 1,7 * *")
     public void saveAlgorithmStats() {

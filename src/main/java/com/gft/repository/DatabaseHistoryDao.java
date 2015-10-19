@@ -23,7 +23,6 @@ import java.util.Map;
  * Used in DailyUpdateService
  */
 @Repository("databaseHistoryDao")
-@Scope(value = WebApplicationContext.SCOPE_REQUEST)
 public class DatabaseHistoryDao implements HistoryDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(DatabaseHistoryDao.class);
