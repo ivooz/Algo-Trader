@@ -14,7 +14,7 @@ public class Algorithm {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	@ManyToOne(targetEntity = Stock.class)
-	
+
 	private Stock stock;
 	private String name;
 	private double aggregateGain;

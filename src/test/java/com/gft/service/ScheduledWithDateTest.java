@@ -1,6 +1,9 @@
 package com.gft.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -57,8 +60,10 @@ public class ScheduledWithDateTest {
 		stockRepo.flush();
 		algRepo.save(alg);
 		algRepo.flush();
-
-		hs.saveAlgorithmStatisticsWithDate(new Date(2012, 7, 7, 3, 13, 55));
+		Calendar cal = Calendar.getInstance();
+		 cal.set(2012,07, 07, 3, 13, 55);
+			Date date = cal.getTime();
+		hs.saveAlgorithmStatisticsWithDate(date);
 
 	}
 	@Test
@@ -66,13 +71,16 @@ public class ScheduledWithDateTest {
 
 		List<AlgorithmHistory> reposlit = shr.findAll();
 		Iterator<AlgorithmHistory> it = reposlit.iterator();
-
+		Calendar cal = Calendar.getInstance();
+		 cal.set(2012,07, 07, 3, 13, 55);
+			Date date = cal.getTime();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		while (it.hasNext()) {
 
 			AlgorithmHistory history = it.next();
 
-			Assert.assertEquals(new Date(2012, 7, 7, 3, 13, 55),
-					history.getDate());
+			Assert.assertEquals(dateFormat.format(date),
+					dateFormat.format(history.getDate()));
 		}
 	}
 }
