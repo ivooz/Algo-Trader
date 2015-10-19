@@ -19,4 +19,5 @@ public interface PredictionAlgorithm {
      * @return
      */
     public Action predict(Date date, Stock stock, HistoryDAO historyDAO);
+    public String getName();
 }

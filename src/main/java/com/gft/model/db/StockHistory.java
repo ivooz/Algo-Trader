@@ -1,15 +1,10 @@
 package com.gft.model.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
-import org.springframework.boot.orm.jpa.EntityScan;
 
 /**
  * Created by iozi on 13/10/2015.
@@ -17,10 +12,11 @@ import org.springframework.boot.orm.jpa.EntityScan;
 
 @Entity
 public class StockHistory {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
     private Date date;
+    @JsonIgnore
     @OneToOne(targetEntity=Stock.class)
     private Stock stock;
     private BigDecimal openingPrice;
@@ -105,5 +101,11 @@ public class StockHistory {
 
     public void setVolume(long volume) {
         this.volume = volume;
-    }
+    }	@Override
+	public String toString() {
+		return "StockHistory [id=" + id + ", date=" + date + ", stock=" + stock + ", openingPrice=" + openingPrice
+				+ ", closingPrice=" + closingPrice + ", lowPrice=" + lowPrice + ", highPrice=" + highPrice + ", volume="
+				+ volume + "]";
+	}
+    
 }

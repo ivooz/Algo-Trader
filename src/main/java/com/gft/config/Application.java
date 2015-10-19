@@ -16,21 +16,22 @@
 
 package com.gft.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gft.component.PredictionAlgorithm;
+import com.gft.component.SimpleMovingAverage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.boot.orm.jpa.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.gft.model.db.Stock;
-import com.gft.repository.data.StockRepository;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableScheduling
@@ -49,5 +50,26 @@ public class Application extends SpringBootServletInitializer {
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(Application.class, args);
+	}
+
+	@Bean(name="simpleMovingAverages")
+	public List<PredictionAlgorithm> getSimpleMovingAverages(){
+		List<Integer> simpleMovingAverageIntervals = Arrays.asList(5, 10, 15, 20, 25, 50, 100, 200);
+		List<PredictionAlgorithm>  simpleMovingAverages = new ArrayList<PredictionAlgorithm>();
+		for(int interval: simpleMovingAverageIntervals){
+			SimpleMovingAverage simpleMovingAverage = new SimpleMovingAverage();
+			simpleMovingAverage.setInterval(interval);
+			simpleMovingAverage.setName("SimpleMovingAverage"+interval);
+			simpleMovingAverages.add(simpleMovingAverage);
+		}
+		return simpleMovingAverages;
+	}
+	
+	@Bean
+	public SimpleMovingAverage simpleMovingAverage(){
+		SimpleMovingAverage simpleMovingAverage = new SimpleMovingAverage();
+		simpleMovingAverage.setInterval(5);
+		simpleMovingAverage.setName("SimpleMovingAverage");
+		return simpleMovingAverage;	
 	}
 }
