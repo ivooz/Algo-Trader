@@ -46,7 +46,9 @@ public class ScheduledWithDateTest {
 		stock.setFullName("MICROSOFT");
 		stock.setTicker("MSFT");
 		stock.setType("equity");
-
+		shr.deleteAll();
+		stockRepo.deleteAll();
+		algRepo.deleteAll();
 		Algorithm alg = new Algorithm();
 
 		alg.setName("Srednia");
@@ -60,6 +62,7 @@ public class ScheduledWithDateTest {
 		stockRepo.flush();
 		algRepo.save(alg);
 		algRepo.flush();
+
 		Calendar cal = Calendar.getInstance();
 		 cal.set(2012,07, 07, 3, 13, 55);
 			Date date = cal.getTime();
@@ -78,7 +81,7 @@ public class ScheduledWithDateTest {
 		while (it.hasNext()) {
 
 			AlgorithmHistory history = it.next();
-
+	
 			Assert.assertEquals(dateFormat.format(date),
 					dateFormat.format(history.getDate()));
 		}
