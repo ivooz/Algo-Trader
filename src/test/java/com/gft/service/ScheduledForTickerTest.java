@@ -29,7 +29,7 @@ import junit.framework.Assert;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Application.class})
 @WebAppConfiguration
-public class ScheduledWithDateTest {
+public class ScheduledForTickerTest {
 	@Autowired
 	StockRepository stockRepo;
 	@Autowired
@@ -65,11 +65,11 @@ public class ScheduledWithDateTest {
 		Calendar cal = Calendar.getInstance();
 		cal.set(2012, 07, 07, 3, 13, 55);
 		Date date = cal.getTime();
-		hs.saveAlgorithmStatisticsWithDate(date);
+		hs.saveAlgorithmStatisticsForSpecificTicker(date, "MSFT");
 
 	}
 	@Test
-	public void TestIfSavesWithDateforTicker() {
+	public void TestIfSavesWithDate() {
 
 		List<AlgorithmHistory> reposlit = shr.findAll();
 		Iterator<AlgorithmHistory> it = reposlit.iterator();
@@ -83,6 +83,9 @@ public class ScheduledWithDateTest {
 
 			Assert.assertEquals(dateFormat.format(date),
 					dateFormat.format(history.getDate()));
+			Assert.assertEquals("MSFT",
+					history.getAlgorithm().getStock().getTicker());
+
 		}
 	}
 }
