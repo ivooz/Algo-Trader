@@ -5,7 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.Ignore;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.gft.config.Application;
 import com.gft.model.db.Stock;
+import com.gft.repository.data.AlgorithmRepository;
+import com.gft.repository.data.StockHistoryRepository;
 import com.gft.repository.data.StockRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,10 +28,24 @@ public class NewTickerHintTest {
 
 	@Autowired
 	StockRepository stockRepository;
+	
+	@Autowired
+	StockHistoryRepository stockHistoryRepository;
+
+	@After
+	public void clean() {
+		stockRepository.deleteAll();
+	}
+	
+	@Before
+	public void beforeClean(){
+		stockHistoryRepository.deleteAll();
+		stockRepository.deleteAll();
+	}
 
 	@Test
-	@Ignore
 	public void cheeckingRestExistingStocksInDB() {
+
 		Stock stock1 = new Stock();
 		stock1.setTicker("KGH");
 		stock1.setFullName("KGHM");
@@ -44,6 +61,7 @@ public class NewTickerHintTest {
 
 		assertTrue(apiResponse.stream().map(Object::toString).allMatch(s -> s.equals("PKN") || s.equals("KGH")));
 		assertEquals(apiResponse.size(), 2);
+
 	}
 
 	@Test
@@ -58,6 +76,8 @@ public class NewTickerHintTest {
 
 		assertEquals(false, apiResponse.contains("LOXO"));
 		assertEquals(true, apiResponse.contains("LUNA"));
+
+		stockRepository.deleteAll();
 	}
 
 }
