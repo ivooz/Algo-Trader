@@ -1,10 +1,13 @@
 package com.gft.parsing;
 
-import com.gft.config.Application;
-import com.gft.model.db.Stock;
-import com.gft.model.db.StockHistory;
-import com.gft.service.DataAccessException;
-import com.gft.service.downloading.DataDownloadService;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,10 +16,11 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import com.gft.config.Application;
+import com.gft.model.db.Stock;
+import com.gft.model.db.StockHistory;
+import com.gft.service.DataAccessException;
+import com.gft.service.downloading.DataDownloadService;
 
 /**
  * Created by iozi on 13/10/2015.

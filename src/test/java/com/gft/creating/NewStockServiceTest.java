@@ -1,5 +1,18 @@
 package com.gft.creating;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.TestCase.fail;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.validator.PublicClassValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+
 import com.gft.component.ListAlgorithmWrapper;
 import com.gft.config.Application;
 import com.gft.config.HibernateConfig;
@@ -10,16 +23,6 @@ import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
 import com.gft.service.creating.NewStockService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.fail;
 
 /**
  * Created by iozi on 16/10/2015.
@@ -58,6 +61,14 @@ public class NewStockServiceTest {
         Stock stock = stockRepository.findByIdAndFetchAlgorithmsEagerly(ticker);
         assertEquals(listAlgorithmWrapper.getAlgorithms().size(), stock.getAlgorithms().size());
     }
+    
+//    @After
+//    public void clean(){
+//    	algorithmRepository.deleteAll();
+//    	stockRepository.deleteAll();
+//    	
+//    	
+//    }
 
 
 }

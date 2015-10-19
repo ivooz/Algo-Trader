@@ -13,11 +13,31 @@ public class AlgorithmHistory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private final Date date;
+	private  Date date;
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public void setAlgorithm(Algorithm algorithm) {
+		this.algorithm = algorithm;
+	}
+
+	public void setAggregateGain(double aggregateGain) {
+		this.aggregateGain = aggregateGain;
+	}
+
+	public void setAbsoluteGain(double absoluteGain) {
+		this.absoluteGain = absoluteGain;
+	}
+
+	public AlgorithmHistory() {
+		super();
+	}
+
 	@OneToOne(targetEntity = Algorithm.class)
-	private final Algorithm algorithm;
-	private final double aggregateGain;
-	private final double absoluteGain;
+	private Algorithm algorithm;
+	private  double aggregateGain;
+	private  double absoluteGain;
 	public long getId() {
 		return id;
 	}

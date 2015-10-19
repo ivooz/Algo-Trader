@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.gft.config.Application;
 import com.gft.model.db.Stock;
+import com.gft.repository.data.AlgorithmRepository;
+import com.gft.repository.data.StockHistoryRepository;
 import com.gft.repository.data.StockRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,9 +28,18 @@ public class NewTickerHintTest {
 
 	@Autowired
 	StockRepository stockRepository;
+	
+	@Autowired
+	StockHistoryRepository stockHistoryRepository;
 
 	@After
 	public void clean() {
+		stockRepository.deleteAll();
+	}
+	
+	@Before
+	public void beforeClean(){
+		stockHistoryRepository.deleteAll();
 		stockRepository.deleteAll();
 	}
 
