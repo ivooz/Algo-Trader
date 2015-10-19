@@ -8,6 +8,7 @@ import com.gft.repository.data.InsufficientDataException;
 import java.math.BigDecimal;
 import java.util.*;
 
+@Deprecated
 public class HistoryDAOmock implements HistoryDAO {
 
 	ArrayList<StockHistory> history = new ArrayList<StockHistory>();
@@ -25,7 +26,7 @@ public class HistoryDAOmock implements HistoryDAO {
 		Calendar firstDay = GregorianCalendar.getInstance();
 		firstDay.add(Calendar.DAY_OF_YEAR, -days);
 		
-		double startPrice = 33.0;
+		double startPrice = 1.0;
 		long volume = 100l;
 		
 		Stock stock = new Stock();
@@ -46,7 +47,7 @@ public class HistoryDAOmock implements HistoryDAO {
 		Calendar firstDay = GregorianCalendar.getInstance();
 		firstDay.add(Calendar.DAY_OF_YEAR, -days);
 		
-		double startPrice = 33.0;
+		double startPrice = 2999.0;
 		long volume = 100l;
 		
 		Stock stock = new Stock();
@@ -80,4 +81,5 @@ public class HistoryDAOmock implements HistoryDAO {
 	public int getHistorySize(Stock stock) throws InsufficientDataException, DataAccessException {
 		return 0;
 	}
+
 }

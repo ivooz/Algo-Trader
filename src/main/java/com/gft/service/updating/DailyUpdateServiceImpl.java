@@ -2,6 +2,7 @@ package com.gft.service.updating;
 
 import com.gft.aspect.Log;
 import com.gft.repository.DatabaseHistoryDao;
+import com.gft.repository.HistoryDAO;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ public class DailyUpdateServiceImpl implements DailyUpdateService {
 
     @Autowired
     @Qualifier("databaseHistoryDao")
-    DatabaseHistoryDao databaseHistoryDao;
+    HistoryDAO databaseHistoryDao;
 
     @Autowired
     StockUpdateService stockUpdateService;
