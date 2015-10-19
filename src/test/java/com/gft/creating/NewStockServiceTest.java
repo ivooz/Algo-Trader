@@ -3,9 +3,11 @@ package com.gft.creating;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.fail;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.validator.PublicClassValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -59,6 +61,5 @@ public class NewStockServiceTest {
         Stock stock = stockRepository.findByIdAndFetchAlgorithmsEagerly(ticker);
         assertEquals(listAlgorithmWrapper.getAlgorithms().size(), stock.getAlgorithms().size());
     }
-
-
+    
 }
