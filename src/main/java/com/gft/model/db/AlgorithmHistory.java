@@ -1,12 +1,7 @@
 package com.gft.model.db;
 
+import javax.persistence.*;
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 /**
  * Created by iozi on 13/10/2015.
@@ -18,11 +13,31 @@ public class AlgorithmHistory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private final Date date;
+	private  Date date;
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public void setAlgorithm(Algorithm algorithm) {
+		this.algorithm = algorithm;
+	}
+
+	public void setAggregateGain(double aggregateGain) {
+		this.aggregateGain = aggregateGain;
+	}
+
+	public void setAbsoluteGain(double absoluteGain) {
+		this.absoluteGain = absoluteGain;
+	}
+
+	public AlgorithmHistory() {
+		super();
+	}
+
 	@OneToOne(targetEntity = Algorithm.class)
-	private final Algorithm algorithm;
-	private final double aggregateGain;
-	private final double absoluteGain;
+	private Algorithm algorithm;
+	private  double aggregateGain;
+	private  double absoluteGain;
 	public long getId() {
 		return id;
 	}
@@ -36,7 +51,7 @@ public class AlgorithmHistory {
 	}
 
 	public AlgorithmHistory(Algorithm algorithm, Date date,
-			double aggregateGain, double absoluteGain) {
+							double aggregateGain, double absoluteGain) {
 		this.algorithm = algorithm;
 		this.date = date;
 		this.aggregateGain = aggregateGain;

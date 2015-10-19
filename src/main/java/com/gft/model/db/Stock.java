@@ -1,10 +1,11 @@
 package com.gft.model.db;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -14,15 +15,26 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Stock {
-	@Id
-	@Column(name="Ticker", unique=true)
+
+
+    @Id
+    @Column(name="ticker", unique=true)
     private String ticker;
     private String fullName;
-    @OneToMany(targetEntity=Algorithm.class)
+    @OneToMany(targetEntity=Algorithm.class, cascade = CascadeType.ALL)
     private List<Algorithm> algorithms;
-    //TODO OneToMany Relation with algorithm
+    private String type;
 
-    public List<Algorithm> getAlgorithms() {
+  
+
+
+
+	public Stock() {
+		algorithms = new ArrayList<>();
+
+	}
+
+	public List<Algorithm> getAlgorithms() {
 		return algorithms;
 	}
 
@@ -31,19 +43,33 @@ public class Stock {
 	}
 
 	public String getFullName() {
-        return fullName;
-    }
+		return fullName;
+	}
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 
-    public String getTicker() {
-        return ticker;
-    }
- 
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
-    }
+	public String getTicker() {
+		return ticker;
+	}
+
+	public void setTicker(String ticker) {
+		this.ticker = ticker;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	@Override
+	public String toString() {
+		return "Stock [ticker=" + ticker + ", fullName=" + fullName
+				+ ", algorithms=" + algorithms + "]";
+	}
 
 }

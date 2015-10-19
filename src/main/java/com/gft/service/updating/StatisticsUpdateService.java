@@ -1,4 +1,4 @@
-package com.gft.service;
+package com.gft.service.updating;
 
 import com.gft.model.db.Stock;
 import com.gft.repository.HistoryDAO;
@@ -11,7 +11,7 @@ import java.util.Date;
 public interface StatisticsUpdateService {
 
     /**
-     * Updates algorith standings for a given stock in a give day
+     * Updates algorithm standings for a given stock in a give day
      * @param stock
      * @param date
      * @param historyDAO source of history records

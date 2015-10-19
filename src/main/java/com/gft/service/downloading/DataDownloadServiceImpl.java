@@ -1,10 +1,14 @@
-package com.gft.service;
+package com.gft.service.downloading;
 
+import com.gft.aspect.Log;
+import com.gft.aspect.LogNoArgs;
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
+import com.gft.service.DataAccessException;
 import com.gft.service.parsing.ParsingException;
 import com.gft.service.parsing.StockHistoryCsvConverter;
 import com.gft.service.parsing.StockHistoryJsonConverter;
+import com.gft.service.parsing.StockJsonConverter;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,14 +47,17 @@ public class DataDownloadServiceImpl implements DataDownloadService {
     @Autowired
     private StockHistoryJsonConverter jsonConverter;
 
+    @Autowired
+    private StockJsonConverter stockJsonConverter;
+
     private StringBuilder urlBuilder = new StringBuilder();
 
+    @LogNoArgs
     @Override
     public List<StockHistory> downloadHistoricalData(Stock stock) throws DataAccessException {
-        logger.info("Obtaining historical data");
         try {
             List<StockHistory> historyList = stockHistoryCsvConverter.convertToStockHistory(
-                    loadStockInfo(historyUrlPrefix,historyUrlSuffix,stock));
+                    loadStockInfo(historyUrlPrefix, historyUrlSuffix, stock.getTicker()));
             historyList.parallelStream().forEach(h -> h.setStock(stock));
             return historyList;
         } catch (IOException | ParsingException ex) {
@@ -59,12 +66,12 @@ public class DataDownloadServiceImpl implements DataDownloadService {
         }
     }
 
+    @Log
     @Override
     public StockHistory downloadCurrentData(Stock stock) throws DataAccessException {
-        logger.info("Obtaining current stock data");
         try {
             StockHistory stockHistory = jsonConverter.fromJson(loadStockInfo(currentDataUrlPrefix,
-                    currentDataUrlSuffix,stock));
+                    currentDataUrlSuffix, stock.getTicker()));
             stockHistory.setStock(stock);
             return stockHistory;
         } catch (IOException ex) {
@@ -73,9 +80,21 @@ public class DataDownloadServiceImpl implements DataDownloadService {
         }
     }
 
-    private String loadStockInfo(String prefix, String suffix, Stock stock) throws IOException {
+    @Log
+    @Override
+    public Stock downloadNewStock(String ticker) throws DataAccessException {
+        try {
+            Stock stock = stockJsonConverter.fromJson(loadStockInfo(currentDataUrlPrefix, currentDataUrlSuffix, ticker));
+            return stock;
+        } catch (IOException ex) {
+            logger.error("Failed to obtain new stock data", ex);
+            throw new DataAccessException(ex);
+        }
+    }
+
+    private String loadStockInfo(String prefix, String suffix, String ticker) throws IOException {
         urlBuilder.setLength(0);
-        URL stockDataUrl = new URL(urlBuilder.append(prefix).append(stock.getTicker()).append(suffix).toString());
+        URL stockDataUrl = new URL(urlBuilder.append(prefix).append(ticker).append(suffix).toString());
         try(InputStream contentStream = stockDataUrl.openStream()) {
             return IOUtils.toString(contentStream);
         }
