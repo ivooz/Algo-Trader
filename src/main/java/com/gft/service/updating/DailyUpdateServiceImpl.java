@@ -19,7 +19,6 @@ import java.util.Date;
  * Created by iozi on 14/10/2015.
  */
 @Service
-@Scope(value =  WebApplicationContext.SCOPE_REQUEST)
 public class DailyUpdateServiceImpl implements DailyUpdateService {
 
     private static final Logger logger = LoggerFactory.getLogger(DailyUpdateServiceImpl.class);

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface HistoryDAO {
 
-    public static final String INSUFFICIENT_INTERVAL = "Requested interval is bigger than available history";
+    String INSUFFICIENT_INTERVAL = "Requested interval is bigger than available history";
 
     /**
      *
