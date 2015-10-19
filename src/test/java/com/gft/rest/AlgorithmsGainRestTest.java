@@ -1,8 +1,10 @@
 package com.gft.rest;
 
+import static org.junit.Assert.assertEquals;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
-
+import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,8 +28,14 @@ public class AlgorithmsGainRestTest {
 	@Autowired
 	StockRepository stockRepository;
 	@Autowired
-	AlgorithmRepository algorithmRepository; 
-	
+	AlgorithmRepository algorithmRepository;
+
+	@After
+	public void clean() {
+		algorithmRepository.deleteAll();
+		stockRepository.deleteAll();
+	}
+
 	@Test
 	public void algorithmsGainRestTest() {
 		Stock testStock = new Stock();
@@ -44,14 +52,14 @@ public class AlgorithmsGainRestTest {
 		algo.setPriceBought(new BigDecimal(100.1));
 		algorithmRepository.save(algo);
 
-	//	ArrayList<Algorithm> algorithmList = (ArrayList<Algorithm>) algorithmRepository.findByStock(testStock);
-		
 		RestTemplate restTemplate = new RestTemplate();
 		ArrayList<Object> apiResponse = restTemplate.getForObject("http://localhost:60001/algorithms/KGH",
 				ArrayList.class);
-		
-		System.out.println(apiResponse.toString());
-		
+
+		assertEquals(true, apiResponse.toString().contains("ticker=KGH"));
+		assertEquals(true, apiResponse.toString().contains("MACD"));
+		assertEquals(false, apiResponse.toString().contains("id"));
+
 	}
 
 }

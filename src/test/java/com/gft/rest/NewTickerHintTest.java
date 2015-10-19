@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.junit.Ignore;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +26,14 @@ public class NewTickerHintTest {
 	@Autowired
 	StockRepository stockRepository;
 
+	@After
+	public void clean() {
+		stockRepository.deleteAll();
+	}
+
 	@Test
-	@Ignore
 	public void cheeckingRestExistingStocksInDB() {
+
 		Stock stock1 = new Stock();
 		stock1.setTicker("KGH");
 		stock1.setFullName("KGHM");
@@ -44,6 +49,7 @@ public class NewTickerHintTest {
 
 		assertTrue(apiResponse.stream().map(Object::toString).allMatch(s -> s.equals("PKN") || s.equals("KGH")));
 		assertEquals(apiResponse.size(), 2);
+
 	}
 
 	@Test
@@ -58,6 +64,8 @@ public class NewTickerHintTest {
 
 		assertEquals(false, apiResponse.contains("LOXO"));
 		assertEquals(true, apiResponse.contains("LUNA"));
+
+		stockRepository.deleteAll();
 	}
 
 }
