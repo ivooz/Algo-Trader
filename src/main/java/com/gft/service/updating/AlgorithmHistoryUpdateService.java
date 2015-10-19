@@ -26,8 +26,9 @@ public class AlgorithmHistoryUpdateService {
 	@Autowired
 	AlgorithmRepository algorithmRepo;
 	public void saveAlgorithmStatistics() {
-		 saveAlgorithmStatisticsWithDate(DateUtils.truncate(new Date(), java.util.Calendar.DAY_OF_MONTH));
-	
+		saveAlgorithmStatisticsWithDate(DateUtils.truncate(new Date(),
+				java.util.Calendar.DAY_OF_MONTH));
+
 	}
 	public void saveAlgorithmStatisticsWithDate(Date date) {
 		List<AlgorithmHistory> listOfHistories = new ArrayList<>();
@@ -52,6 +53,31 @@ public class AlgorithmHistoryUpdateService {
 				listOfHistories.add(algorithmHistory);
 			}
 		}
+		algorithmHistoryRepo.save(listOfHistories);
+		algorithmHistoryRepo.flush();
+	}
+	public void saveAlgorithmStatisticsForSpecificTicker(Date date,
+			String Ticker) {
+		List<AlgorithmHistory> listOfHistories = new ArrayList<>();
+		Stock stock = stockRepo.findByIdAndFetchAlgorithmsEagerly("MSFT");
+
+		Iterator<Algorithm> stockAlgorithms = stock.getAlgorithms().iterator();
+		while (stockAlgorithms.hasNext()) {
+			Algorithm algorithm = stockAlgorithms.next();
+
+			AlgorithmHistory algorithmHistory = new AlgorithmHistory(algorithm,
+					date, algorithm.getAggregateGain(),
+					algorithm.getAbsoluteGain());
+			algorithm.setAbsoluteGain(0);
+			algorithm.setAggregateGain(0);
+			algorithm.setPriceBought(BigDecimal.ZERO);
+			algorithmRepo.save(algorithm);
+			algorithmRepo.flush();
+			algorithmRepo.save(algorithm);
+			algorithmRepo.flush();
+			listOfHistories.add(algorithmHistory);
+		}
+
 		algorithmHistoryRepo.save(listOfHistories);
 		algorithmHistoryRepo.flush();
 	}
