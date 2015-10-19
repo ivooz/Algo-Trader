@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.gft.service.updating.AlgorithmHistoryUpdateService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,30 +24,36 @@ import com.gft.model.db.Stock;
 import com.gft.repository.data.AlgorithmHistoryRepository;
 import com.gft.repository.data.AlgorithmRepository;
 import com.gft.repository.data.StockRepository;
-import com.gft.service.updating.ScheduledAlgorithmHistorySave;
 
 import junit.framework.Assert;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Application.class})
 @WebAppConfiguration
 public class ScheduledForTickerTest {
+
 	@Autowired
-	StockRepository stockRepo;
+	StockRepository stockRepository;
 	@Autowired
-	AlgorithmRepository algRepo;
+	AlgorithmRepository algorithmRepository;
 	@Autowired
-	ScheduledAlgorithmHistorySave hs;
+	AlgorithmHistoryUpdateService historyUpdateService;
 	@Autowired
-	AlgorithmHistoryRepository shr;
+	AlgorithmHistoryRepository algorithmHistoryRepository;
+
+	Date savedDate;
+
+	@Before
+	public void clean() {
+		algorithmHistoryRepository.deleteAll();
+	}
 
 	@Before
 	public void init() {
-
 		Stock stock = new Stock();
 		stock.setFullName("MICROSOFT");
 		stock.setTicker("MSFT");
 		stock.setType("equity");
-		shr.deleteAll();
+		algorithmHistoryRepository.deleteAll();
 
 		Algorithm alg = new Algorithm();
 
@@ -57,21 +64,21 @@ public class ScheduledForTickerTest {
 		List<Algorithm> algs = new ArrayList<>();
 		algs.add(alg);
 		stock.setAlgorithms(algs);
-		stockRepo.save(stock);
-		stockRepo.flush();
-		algRepo.save(alg);
-		algRepo.flush();
+		stockRepository.save(stock);
+		stockRepository.flush();
+		algorithmRepository.save(alg);
+		algorithmRepository.flush();
 
 		Calendar cal = Calendar.getInstance();
 		cal.set(2012, 07, 07, 3, 13, 55);
-		Date date = cal.getTime();
-		hs.saveAlgorithmStatisticsForSpecificTicker(date, "MSFT");
+		savedDate = cal.getTime();
 
 	}
+
 	@Test
 	public void TestIfSavesWithDate() {
-
-		List<AlgorithmHistory> reposlit = shr.findAll();
+		historyUpdateService.saveAlgorithmStatistics(savedDate, "MSFT");
+		List<AlgorithmHistory> reposlit = algorithmHistoryRepository.findAll();
 		Iterator<AlgorithmHistory> it = reposlit.iterator();
 		Calendar cal = Calendar.getInstance();
 		cal.set(2012, 07, 07, 3, 13, 55);

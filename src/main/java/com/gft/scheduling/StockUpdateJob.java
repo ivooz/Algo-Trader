@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.gft.aspect.Log;
-import com.gft.service.updating.ScheduledAlgorithmHistorySave;
+import com.gft.service.updating.AlgorithmHistoryUpdateService;
 
 
 
@@ -25,7 +24,7 @@ public class StockUpdateJob {
 //    @Autowired
 //    DailyUpdateService dailyUpdateService;
 @Autowired
-ScheduledAlgorithmHistorySave scheduledAlgorithmHistorySave;
+    AlgorithmHistoryUpdateService scheduledAlgorithmHistorySave;
     /**
      * Runs every day at midnight
      * //TODO take stock market opening and closing time into account
