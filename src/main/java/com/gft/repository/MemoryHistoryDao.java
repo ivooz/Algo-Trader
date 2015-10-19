@@ -1,43 +1,29 @@
 package com.gft.repository;
 
-import java.util.List;
-import java.util.List;
-
-import com.gft.aspect.LogNoArgs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.context.WebApplicationContext;
-
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
 import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockHistoryRepository;
 import com.gft.service.DataAccessException;
 import com.gft.service.downloading.DataDownloadService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- * Used in NewStockService
- * <p>
- * Created by iozi on 14/10/2015.
- */
-@Repository("memoryHistoryDao")
-@Scope("prototype")
+import java.util.List;
+
 public class MemoryHistoryDao implements ForwardableHistoryDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(MemoryHistoryDao.class);
 
     private List<StockHistory> historyList;
-
-    @Autowired
-    DataDownloadService dataDownloadService;
-
-    @Autowired
-    private StockHistoryRepository stockHistoryRepository;
-
     private int currentDay = 0;
+    private final DataDownloadService dataDownloadService;
+    private final StockHistoryRepository stockHistoryRepository;
+
+    public MemoryHistoryDao(DataDownloadService dataDownloadService, StockHistoryRepository stockHistoryRepository) {
+        this.dataDownloadService = dataDownloadService;
+        this.stockHistoryRepository = stockHistoryRepository;
+    }
 
     /**
      * Starts from the first day in history as the 'current day', each invocation shifts the current date forward.
@@ -49,7 +35,6 @@ public class MemoryHistoryDao implements ForwardableHistoryDAO {
      * @throws DataAccessException
      */
     @Override
-    @LogNoArgs
     public List<StockHistory> obtainStockHistoryForPeriod(Stock stock, int days) throws InsufficientDataException,
             DataAccessException {
         historyNullGuard(stock);

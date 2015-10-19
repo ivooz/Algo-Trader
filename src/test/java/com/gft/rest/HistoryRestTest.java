@@ -61,11 +61,8 @@ public class HistoryRestTest {
 
 		ArrayList<Object> apiResponse = restTemplate.getForObject("http://localhost:60001/history/KGH",
 				ArrayList.class);
-
-		assertEquals(true, apiResponse.toString().contains("fullName=KGHM"));
-		assertEquals(true, apiResponse.toString().contains("ticker=KGH"));
+		System.out.println(apiResponse.toString());
 		assertEquals(true, apiResponse.toString().contains("closingPrice=47.4"));
-		assertEquals(false, apiResponse.toString().contains("fullName=LOTOS"));
 
 	}
 

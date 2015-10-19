@@ -1,14 +1,13 @@
 package com.gft.repository;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-import static junit.framework.TestCase.fail;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import com.gft.config.Application;
+import com.gft.model.db.Stock;
+import com.gft.model.db.StockHistory;
+import com.gft.repository.data.InsufficientDataException;
+import com.gft.repository.data.StockHistoryRepository;
+import com.gft.repository.data.StockRepository;
+import com.gft.service.DataAccessException;
+import com.gft.service.downloading.DataDownloadService;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,12 +20,11 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.gft.config.Application;
-import com.gft.model.db.Stock;
-import com.gft.model.db.StockHistory;
-import com.gft.repository.data.InsufficientDataException;
-import com.gft.repository.data.StockRepository;
-import com.gft.service.DataAccessException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static junit.framework.TestCase.*;
 
 /**
  * Created by iozi on 14/10/2015.
@@ -39,10 +37,15 @@ public class HistoryDaoTest {
     private static final Logger logger = LoggerFactory.getLogger(HistoryDaoTest.class);
 
     @Autowired
+    DataDownloadService dataDownloadService;
+
+    @Autowired
+    StockHistoryRepository stockHistoryRepository;
+
+    @Autowired
     @Qualifier("databaseHistoryDao")
     HistoryDAO databaseHistoryDao;
 
-    @Autowired
     ForwardableHistoryDAO memoryHistoryDao;
 
     @Autowired
@@ -52,6 +55,7 @@ public class HistoryDaoTest {
 
     @Before
     public void init() {
+        memoryHistoryDao = new MemoryHistoryDao(dataDownloadService,stockHistoryRepository);
         stock.setTicker("MSFT");
         stock.setAlgorithms(new ArrayList<>());
         stock.setType("equity");

@@ -1,84 +1,54 @@
 package com.gft.service.updating;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.gft.model.db.Algorithm;
 import com.gft.model.db.AlgorithmHistory;
 import com.gft.model.db.Stock;
 import com.gft.repository.data.AlgorithmHistoryRepository;
 import com.gft.repository.data.AlgorithmRepository;
+import com.gft.repository.data.StockHistoryRepository;
 import com.gft.repository.data.StockRepository;
+import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 @Service
 public class AlgorithmHistoryUpdateService {
 
 	@Autowired
-	AlgorithmHistoryRepository algorithmHistoryRepo;
+	StockRepository stockRepository;
 	@Autowired
-	StockRepository stockRepo;
+	AlgorithmRepository algorithmRepository;
 	@Autowired
-	AlgorithmRepository algorithmRepo;
+	AlgorithmHistoryRepository algorithmHistoryRepository;
+
 	public void saveAlgorithmStatistics() {
-		saveAlgorithmStatisticsWithDate(DateUtils.truncate(new Date(),
-				java.util.Calendar.DAY_OF_MONTH));
-
+		algorithmHistoryRepository.save(saveAlgorithmStatisticsWithDate(stockRepository.findAllAndFetchAllAlgorithmsEagerly(),
+				DateUtils.truncate(new Date(), java.util.Calendar.DAY_OF_MONTH)));
 	}
-	public void saveAlgorithmStatisticsWithDate(Date date) {
-		List<AlgorithmHistory> listOfHistories = new ArrayList<>();
-		Iterator<Stock> it = stockRepo.findAllAndFetchAllAlgorithmsEagerly()
-				.iterator();
-		while (it.hasNext()) {
-			Iterator<Algorithm> stockAlgorithms = it.next().getAlgorithms()
-					.iterator();
-			while (stockAlgorithms.hasNext()) {
-				Algorithm algorithm = stockAlgorithms.next();
 
-				AlgorithmHistory algorithmHistory = new AlgorithmHistory(
-						algorithm, date, algorithm.getAggregateGain(),
-						algorithm.getAbsoluteGain());
-				algorithm.setAbsoluteGain(0);
-				algorithm.setAggregateGain(0);
-				algorithm.setPriceBought(BigDecimal.ZERO);
-				algorithmRepo.save(algorithm);
-				algorithmRepo.flush();
-				algorithmRepo.save(algorithm);
-				algorithmRepo.flush();
-				listOfHistories.add(algorithmHistory);
-			}
-		}
-		algorithmHistoryRepo.save(listOfHistories);
-		algorithmHistoryRepo.flush();
+	public void saveAlgorithmStatistics(Date date, String ticker) {
+		algorithmHistoryRepository.save(saveAlgorithmStatisticsWithDate(Arrays.asList(
+				stockRepository.findByIdAndFetchAlgorithmsEagerly(ticker)), date));
 	}
-	public void saveAlgorithmStatisticsForSpecificTicker(Date date,
-			String Ticker) {
-		List<AlgorithmHistory> listOfHistories = new ArrayList<>();
-		Stock stock = stockRepo.findByIdAndFetchAlgorithmsEagerly("MSFT");
 
-		Iterator<Algorithm> stockAlgorithms = stock.getAlgorithms().iterator();
-		while (stockAlgorithms.hasNext()) {
-			Algorithm algorithm = stockAlgorithms.next();
-
-			AlgorithmHistory algorithmHistory = new AlgorithmHistory(algorithm,
-					date, algorithm.getAggregateGain(),
-					algorithm.getAbsoluteGain());
-			algorithm.setAbsoluteGain(0);
-			algorithm.setAggregateGain(0);
-			algorithm.setPriceBought(BigDecimal.ZERO);
-			algorithmRepo.save(algorithm);
-			algorithmRepo.flush();
-			algorithmRepo.save(algorithm);
-			algorithmRepo.flush();
-			listOfHistories.add(algorithmHistory);
-		}
-
-		algorithmHistoryRepo.save(listOfHistories);
-		algorithmHistoryRepo.flush();
+	private List<AlgorithmHistory> saveAlgorithmStatisticsWithDate(List<Stock> stocks, Date date) {
+		List<AlgorithmHistory> algorithmHistories = new ArrayList<>();
+		algorithmRepository.save(stocks.stream()
+						.map(Stock::getAlgorithms)
+						.flatMap(l -> l.stream())
+						.map(algorithm -> {
+							algorithmHistories.add(new AlgorithmHistory(algorithm, date,algorithm.getAggregateGain(),
+									algorithm.getAbsoluteGain()));
+							algorithm.setAbsoluteGain(0);
+							algorithm.setAggregateGain(0);
+							return algorithm;
+						}).collect(Collectors.toList())
+		);
+		return algorithmHistories;
 	}
 }

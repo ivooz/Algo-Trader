@@ -33,7 +33,6 @@ public class DatabaseHistoryDao implements HistoryDAO {
 
     private Map<String, List<StockHistory>> stockHistoryList = new HashMap<>();
 
-    @LogNoArgs
     @Override
     public List<StockHistory> obtainStockHistoryForPeriod(Stock stock, int days) throws InsufficientDataException {
         historyNullGuard(stock);
@@ -45,14 +44,12 @@ public class DatabaseHistoryDao implements HistoryDAO {
         return stockHistoryList.get(stock.getTicker()).subList(0, days);
     }
 
-    @LogNoArgs
     @Override
     public StockHistory getCurrentDay(Stock stock) throws InsufficientDataException, DataAccessException {
         historyNullGuard(stock);
         return stockHistoryList.get(stock.getTicker()).get(0);
     }
 
-    @Log
     @Override
     public int getHistorySize(Stock stock) throws InsufficientDataException, DataAccessException {
         historyNullGuard(stock);

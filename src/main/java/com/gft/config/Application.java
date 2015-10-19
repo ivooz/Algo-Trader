@@ -41,7 +41,6 @@ import java.util.List;
 @EnableJpaRepositories("com.gft")
 @EnableTransactionManagement
 @EntityScan("com.gft")
-@Scope(value = "prototype", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Application extends SpringBootServletInitializer {
 
 	@Override

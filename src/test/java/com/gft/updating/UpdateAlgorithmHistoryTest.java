@@ -12,6 +12,8 @@ import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
 import com.gft.service.creating.NewStockService;
+import junit.framework.Assert;
+import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,18 +44,24 @@ public class UpdateAlgorithmHistoryTest {
 
     private final static String ticker = "FB";
 
+    @Before
+    public void clean() {
+        algorithmHistoryRepository.deleteAll();
+    }
+
     @Test
     public void testAddingNewTicker() {
         try {
-            newStockService.addNewStock("FB");
+            newStockService.addNewStock(ticker);
             algorithmHistoryRepository.findAll().stream().forEach(h -> {
                 Calendar calendar = Calendar.getInstance();
-                
+                calendar.setTime(h.getDate());
+                int month = calendar.get(Calendar.MONTH);
+                TestCase.assertTrue(month == Calendar.JANUARY || month == Calendar.JULY);
             });
         } catch (DataAccessException | InsufficientDataException e) {
             e.printStackTrace();
+            fail();
         }
     }
-
-
 }
