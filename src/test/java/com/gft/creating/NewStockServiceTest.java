@@ -62,13 +62,4 @@ public class NewStockServiceTest {
         assertEquals(listAlgorithmWrapper.getAlgorithms().size(), stock.getAlgorithms().size());
     }
     
-//    @After
-//    public void clean(){
-//    	algorithmRepository.deleteAll();
-//    	stockRepository.deleteAll();
-//    	
-//    	
-//    }
-
-
 }
