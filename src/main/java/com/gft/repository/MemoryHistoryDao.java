@@ -3,6 +3,7 @@ package com.gft.repository;
 import java.util.List;
 import java.util.List;
 
+import com.gft.aspect.LogNoArgs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import com.gft.service.downloading.DataDownloadService;
  * Created by iozi on 14/10/2015.
  */
 @Repository("memoryHistoryDao")
-@Scope(value = WebApplicationContext.SCOPE_REQUEST)
+@Scope("prototype")
 public class MemoryHistoryDao implements ForwardableHistoryDAO {
 
     private static final Logger logger = LoggerFactory.getLogger(MemoryHistoryDao.class);
@@ -48,6 +49,7 @@ public class MemoryHistoryDao implements ForwardableHistoryDAO {
      * @throws DataAccessException
      */
     @Override
+    @LogNoArgs
     public List<StockHistory> obtainStockHistoryForPeriod(Stock stock, int days) throws InsufficientDataException,
             DataAccessException {
         historyNullGuard(stock);

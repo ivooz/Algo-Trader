@@ -27,10 +27,8 @@ public class StockHistoryRest {
 	@LogNoArgs
 	@RequestMapping(value = "/history/{ticker}")
 	public List<StockHistory> getStockHistory(@PathVariable("ticker") String ticker) {
-
 		List<StockHistory> historyOfStock = new ArrayList<StockHistory>(
 				stockHistoryRepository.findByStockOrderByDateDesc(stockRepository.findOne(ticker)));
-
 		return historyOfStock;
 	}
 }

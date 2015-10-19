@@ -19,7 +19,7 @@ import com.gft.model.db.Stock;
 import com.gft.repository.data.AlgorithmHistoryRepository;
 import com.gft.repository.data.AlgorithmRepository;
 import com.gft.repository.data.StockRepository;
-import com.gft.service.updating.ScheduledAlgorithmHistorySave;
+import com.gft.service.updating.AlgorithmHistoryUpdateService;
 
 import junit.framework.Assert;
 
@@ -32,7 +32,7 @@ public class ScheduledSaveTest {
 	@Autowired
 	AlgorithmRepository algRepo;
 	@Autowired
-	ScheduledAlgorithmHistorySave hs;
+	AlgorithmHistoryUpdateService hs;
 	@Autowired
 	AlgorithmHistoryRepository shr;
 	@Before

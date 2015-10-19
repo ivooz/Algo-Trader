@@ -17,7 +17,7 @@ import com.gft.repository.data.AlgorithmHistoryRepository;
 import com.gft.repository.data.AlgorithmRepository;
 import com.gft.repository.data.StockRepository;
 @Service
-public class ScheduledAlgorithmHistorySave {
+public class AlgorithmHistoryUpdateService {
 
 	@Autowired
 	AlgorithmHistoryRepository algorithmHistoryRepo;
