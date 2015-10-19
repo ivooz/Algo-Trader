@@ -1,14 +1,7 @@
 package com.gft.service.creating;
 
-import com.gft.aspect.Log;
-import com.gft.model.db.Stock;
-import com.gft.repository.ForwardableHistoryDAO;
-import com.gft.repository.MemoryHistoryDao;
-import com.gft.repository.data.InsufficientDataException;
-import com.gft.repository.data.StockRepository;
-import com.gft.service.DataAccessException;
-import com.gft.service.downloading.DataDownloadService;
-import com.gft.service.updating.StatisticsUpdateService;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +9,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Date;
+import com.gft.aspect.Log;
+import com.gft.model.db.Stock;
+import com.gft.repository.ForwardableHistoryDAO;
+import com.gft.repository.data.InsufficientDataException;
+import com.gft.repository.data.StockRepository;
+import com.gft.service.DataAccessException;
+import com.gft.service.downloading.DataDownloadService;
+import com.gft.service.updating.StatisticsUpdateService;
 
 /**
  * Created by iozi on 15/10/2015.

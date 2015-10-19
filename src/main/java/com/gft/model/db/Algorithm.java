@@ -1,6 +1,10 @@
 package com.gft.model.db;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.jpamodelgen.xml.jaxb.CascadeType;
+
 import java.math.BigDecimal;
 
 @Entity
@@ -10,6 +14,7 @@ public class Algorithm {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	@ManyToOne(targetEntity = Stock.class)
+	
 	private Stock stock;
 	private String name;
 	private double aggregateGain;

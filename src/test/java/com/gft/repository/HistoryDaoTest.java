@@ -1,11 +1,14 @@
 package com.gft.repository;
 
-import com.gft.config.Application;
-import com.gft.model.db.Stock;
-import com.gft.model.db.StockHistory;
-import com.gft.repository.data.InsufficientDataException;
-import com.gft.repository.data.StockRepository;
-import com.gft.service.DataAccessException;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.fail;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,12 +21,12 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import static junit.framework.Assert.*;
-import static junit.framework.TestCase.*;
+import com.gft.config.Application;
+import com.gft.model.db.Stock;
+import com.gft.model.db.StockHistory;
+import com.gft.repository.data.InsufficientDataException;
+import com.gft.repository.data.StockRepository;
+import com.gft.service.DataAccessException;
 
 /**
  * Created by iozi on 14/10/2015.

@@ -1,12 +1,9 @@
 package com.gft.service;
 
-import com.gft.config.Application;
-import com.gft.model.db.Stock;
-import com.gft.repository.data.AlgorithmRepository;
-import com.gft.repository.data.StockRepository;
-import com.gft.service.downloading.NewTickerHinter;
-import com.gft.service.parsing.ParsingException;
-import com.google.gson.Gson;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +15,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import static junit.framework.Assert.*;
+import com.gft.config.Application;
+import com.gft.model.db.Stock;
+import com.gft.repository.data.AlgorithmRepository;
+import com.gft.repository.data.StockRepository;
+import com.gft.service.downloading.NewTickerHinter;
+import com.gft.service.parsing.ParsingException;
+import com.google.gson.Gson;
 
 /**
  * Created by iozi on 06/10/2015.

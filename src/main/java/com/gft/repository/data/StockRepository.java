@@ -19,8 +19,13 @@ public interface StockRepository extends JpaRepository<Stock, String> {
 	public static final String Querys = "SELECT s.ticker FROM Stock s";
 	@Query(Querys)
 	@Fetch(FetchMode.SELECT)
-	List<String> findTickers();
+	public List<String> findTickers();
+
 
 	@Query("SELECT s FROM Stock s LEFT JOIN FETCH s.algorithms al WHERE s.ticker = (:ticker)")
 	Stock findByIdAndFetchAlgorithmsEagerly(@Param("ticker") String ticker);
+
+	@Query("SELECT s FROM Stock s LEFT JOIN FETCH s.algorithms al ")
+	List<Stock> findAllAndFetchAllAlgorithmsEagerly();
+
 }
