@@ -14,7 +14,7 @@ import java.util.List;
 
 public class SimpleMovingAverage implements PredictionAlgorithm {
 
-	int interval;
+	private int interval;
 	private String name;
 
 	public SimpleMovingAverage(int interval) {
