@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,32 +26,8 @@ public class ScheduledAlgorithmHistorySave {
 	@Autowired
 	AlgorithmRepository algorithmRepo;
 	public void saveAlgorithmStatistics() {
-		List<AlgorithmHistory> listOfHistories = new ArrayList<>();
-		Iterator<Stock> it = stockRepo.findAllAndFetchAllAlgorithmsEagerly()
-				.iterator();
-		while (it.hasNext()) {
-			Iterator<Algorithm> stockAlgorithms = it.next().getAlgorithms()
-					.iterator();
-			while (stockAlgorithms.hasNext()) {
-				Algorithm algorithm = stockAlgorithms.next();
-				Date today = new Date();
-				today.setHours(0);
-				today.setMinutes(0);
-				today.setSeconds(0);
-				AlgorithmHistory algorithmHistory = new AlgorithmHistory(
-						algorithm, today, algorithm.getAggregateGain(),
-						algorithm.getAbsoluteGain());
-
-				algorithm.setAbsoluteGain(0);
-				algorithm.setAggregateGain(0);
-				algorithm.setPriceBought(BigDecimal.ZERO);
-				algorithmRepo.save(algorithm);
-				algorithmRepo.flush();
-				listOfHistories.add(algorithmHistory);
-			}
-		}
-		algorithmHistoryRepo.save(listOfHistories);
-		algorithmHistoryRepo.flush();
+		 saveAlgorithmStatisticsWithDate(DateUtils.truncate(new Date(), java.util.Calendar.DAY_OF_MONTH));
+	
 	}
 	public void saveAlgorithmStatisticsWithDate(Date date) {
 		List<AlgorithmHistory> listOfHistories = new ArrayList<>();
@@ -65,9 +42,11 @@ public class ScheduledAlgorithmHistorySave {
 				AlgorithmHistory algorithmHistory = new AlgorithmHistory(
 						algorithm, date, algorithm.getAggregateGain(),
 						algorithm.getAbsoluteGain());
-
-				algorithm = new Algorithm(algorithm.getStock(),
-						algorithm.getName());
+				algorithm.setAbsoluteGain(0);
+				algorithm.setAggregateGain(0);
+				algorithm.setPriceBought(BigDecimal.ZERO);
+				algorithmRepo.save(algorithm);
+				algorithmRepo.flush();
 				algorithmRepo.save(algorithm);
 				algorithmRepo.flush();
 				listOfHistories.add(algorithmHistory);
