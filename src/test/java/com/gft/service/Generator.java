@@ -1,11 +1,11 @@
 package com.gft.service;
 
-import com.gft.model.db.Algorithm;
-import com.gft.model.db.Stock;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import com.gft.model.db.Algorithm;
+import com.gft.model.db.Stock;
 
 public class Generator {
 
