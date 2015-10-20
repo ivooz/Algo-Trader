@@ -1,7 +1,15 @@
 package com.gft.model.db;
 
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Created by iozi on 13/10/2015.
@@ -13,10 +21,11 @@ public class AlgorithmHistory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm a z")
 	private  Date date;
 
 	@ManyToOne(targetEntity = Algorithm.class)
+	@JsonIgnore
 	private Algorithm algorithm;
 
 	private  double aggregateGain;
