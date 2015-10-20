@@ -73,7 +73,9 @@ public class ScheduledWithDateTest {
 		Calendar cal = Calendar.getInstance();
 		cal.set(2012, 07, 07, 3, 13, 55);
 		Date date = cal.getTime();
-		algorithmHistoryUpdateService.saveAlgorithmStatistics(date, TICKER);
+		Stock stock1 = new Stock();
+		stock1.setTicker(TICKER);
+		algorithmHistoryUpdateService.saveAlgorithmStatistics(date, stock1);
 	}
 
 	@Test

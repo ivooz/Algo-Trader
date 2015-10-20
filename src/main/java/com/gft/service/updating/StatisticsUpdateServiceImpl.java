@@ -27,20 +27,15 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 
 	private static final Logger logger = LoggerFactory.getLogger(StatisticsUpdateService.class);
 	private static final Logger transactionsLogger = LoggerFactory.getLogger("transactions");
-	@Autowired
-	ListAlgorithmWrapper listawrapper;
 
 	@Autowired
-	StockRepository stockRepository;
+	ListAlgorithmWrapper listawrapper;
 
 	public static final String Access_exception = "DATA COULD NOT BE ACCESSED";
 
 	@Override
 	public void updateStatistics(Stock stock, Date date, HistoryDAO historyDAO) {
 		BigDecimal price = null;
-		if (stock.getAlgorithms().size() == 0) {
-			assignAlgorithmstoNewAddedStock(stock);
-		}
 		Iterator<Algorithm> it = stock.getAlgorithms().iterator();
 		while (it.hasNext()) {
 			Algorithm algorithm = it.next();
@@ -54,14 +49,8 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 				break;
 			}
 		}
-		stockRepository.save(stock);
 	}
 
-	private void assignAlgorithmstoNewAddedStock(Stock stock) {
-		List<Algorithm> algorithms = new ArrayList<>();
-		listawrapper.getAlgorithms().values().forEach(algo -> algorithms.add(new Algorithm(stock, algo.getName())));
-		stock.setAlgorithms(algorithms);
-	}
 
 	private void actionBuy(Stock stock, HistoryDAO historyDAO, Algorithm algorithm) {
 		BigDecimal price = null;

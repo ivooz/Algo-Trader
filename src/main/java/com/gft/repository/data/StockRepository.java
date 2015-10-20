@@ -23,7 +23,7 @@ public interface StockRepository extends JpaRepository<Stock, String> {
 	@Query("SELECT s FROM Stock s LEFT JOIN FETCH s.algorithms al WHERE s.ticker = (:ticker)")
 	Stock findByIdAndFetchAlgorithmsEagerly(@Param("ticker") String ticker);
 
-	@Query("SELECT s FROM Stock s LEFT JOIN FETCH s.algorithms al ")
+	@Query("SELECT s FROM Stock s LEFT JOIN FETCH s.algorithms")
 	List<Stock> findAllAndFetchAllAlgorithmsEagerly();
 
 }

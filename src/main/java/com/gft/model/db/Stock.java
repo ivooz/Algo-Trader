@@ -27,6 +27,9 @@ public class Stock {
 
     private String type;
 
+	public Stock() {
+	}
+
 	public String getTicker() {
 		return ticker;
 	}
