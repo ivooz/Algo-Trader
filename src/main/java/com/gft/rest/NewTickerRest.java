@@ -3,6 +3,7 @@ package com.gft.rest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gft.aspect.Log;
@@ -25,27 +26,24 @@ public class NewTickerRest {
     StockRepository stockRepo;
 
     @Log
-    @RequestMapping(value = "/stock/{ticker}")
+    @RequestMapping(value = "/stock/{ticker}", method = RequestMethod.GET)
     public Stock getStockHistory(@PathVariable("ticker") String ticker) {
+        return stockRepo.findOne(ticker);
+    }
 
+    @Log
+    @RequestMapping(value = "/stock/{ticker}", method = RequestMethod.POST)
+    public Stock posttockHistory(@PathVariable("ticker") String ticker) {
         try {
-            if(stockRepo.exists(ticker))
-            {
-            return stockRepo.findOne(ticker);
-            	
+            if (stockRepo.exists(ticker)) {
+                return stockRepo.findOne(ticker);
+            } else {
+                newStockService.addNewStock(ticker);
             }
-            else{
-            	
-            	newStockService.addNewStock(ticker);
-            	
-            }
-        } catch (InsufficientDataException e) {
+        } catch (InsufficientDataException | DataAccessException e) {
             //TODO Exception handling
             e.printStackTrace();
-        } catch (DataAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        }
         return stockRepo.findOne(ticker);
     }
 }
