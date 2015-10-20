@@ -27,6 +27,7 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 
 	private static final Logger logger = LoggerFactory.getLogger(StatisticsUpdateService.class);
 	private static final Logger transactionsLogger = LoggerFactory.getLogger("transactions");
+
 	@Autowired
 	ListAlgorithmWrapper listawrapper;
 
@@ -54,7 +55,6 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 				break;
 			}
 		}
-		stockRepository.save(stock);
 	}
 
 	private void assignAlgorithmstoNewAddedStock(Stock stock) {
