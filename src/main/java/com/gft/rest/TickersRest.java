@@ -20,13 +20,13 @@ public class TickersRest {
 	NewTickerHinter tickerHinter;
 	
 	@Log
-	@RequestMapping(value = "/existingStocksInDB", method = RequestMethod.GET)
+	@RequestMapping(value = "/tickers", method = RequestMethod.GET)
 	public List<String> getTickersOfExistingStocks() {
 		return tickerHinter.getTickersOfExistingStocksInDB();
 	}
 
 	@LogNoArgs
-	@RequestMapping(value = "/notExistingStockInDB", method = RequestMethod.GET)
+	@RequestMapping(value = "/tickersAvailable", method = RequestMethod.GET)
 	public List<String> getTickersOfNotExistingStocks() {
 		try {
 			return tickerHinter.hintNotPickedTickers();

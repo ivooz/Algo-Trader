@@ -57,6 +57,7 @@ public class NewStockServiceImpl implements NewStockService {
         Date historyHead =  memoryHistoryDao.getCurrentDay(stock).getDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(historyHead);
+        
         int nextUpdate = cal.get(Calendar.MONTH) < Calendar.JULY ? Calendar.JULY : Calendar.JANUARY;
         for (int i = 0; i < memoryHistoryDao.getHistorySize(stock); i++) {
             historyHead = memoryHistoryDao.getCurrentDay(stock).getDate();
@@ -65,6 +66,7 @@ public class NewStockServiceImpl implements NewStockService {
                 historyUpdateService.saveAlgorithmStatistics(historyHead,stock.getTicker());
                 nextUpdate = (nextUpdate+6)%12;
             }
+        
             updateService.updateStatistics(stock, historyHead, memoryHistoryDao);
             memoryHistoryDao.forwardHistory();
         }
