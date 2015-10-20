@@ -62,8 +62,7 @@ public class NewStockServiceImpl implements NewStockService {
             historyHead = memoryHistoryDao.getCurrentDay(stock).getDate();
             cal.setTime(historyHead);
             if(cal.get(Calendar.MONTH) == nextUpdate ) {
-                //TODO pass stock/ticker
-//                historyUpdateService.saveAlgorithmStatisticsWithDate(historyHead);
+                historyUpdateService.saveAlgorithmStatistics(historyHead,stock.getTicker());
                 nextUpdate = (nextUpdate+6)%12;
             }
             updateService.updateStatistics(stock, historyHead, memoryHistoryDao);
