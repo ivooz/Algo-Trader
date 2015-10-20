@@ -46,7 +46,6 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 		}
 	}
 
-
 	private void actionBuy(Stock stock, HistoryDAO historyDAO, Algorithm algorithm) {
 		BigDecimal price = null;
 		if (algorithm.getPriceBought().equals(BigDecimal.ZERO)) {
@@ -56,8 +55,9 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 				logger.error(Access_exception);
 			}
 			try {
-				transactionsLogger.info(historyDAO.getCurrentDay(stock).getDate() + " Transaciton for "
-						+ algorithm.getName() + " B:" + price);
+				transactionsLogger.info(new StringBuilder().append(historyDAO.getCurrentDay(stock).getDate())
+						.append(" Transaction for ").append(algorithm.getName()).append(" bought ")
+						.append(stock.getTicker()).append(" for ").append(price).toString());
 			} catch (InsufficientDataException | DataAccessException e) {
 			}
 			algorithm.setPriceBought(price);
@@ -77,9 +77,11 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 			double gain = calculateGain(price.doubleValue(), algorithm.getPriceBought().doubleValue());
 			// TODO FIXIT
 			try {
-				transactionsLogger.info(historyDAO.getCurrentDay(stock).getDate() + " Transaciton for "
-						+ algorithm.getName() + " B:" + algorithm.getPriceBought().doubleValue() + " S:"
-						+ price.doubleValue() + " G: " + gain);
+				transactionsLogger.info(new StringBuilder().append(historyDAO.getCurrentDay(stock).getDate())
+						.append(" Transaction for ").append(algorithm.getName()).append(" sold ").append(stock.getTicker())
+						.append(" for ").append(price.doubleValue()).append(" which was bought for ")
+						.append(algorithm.getPriceBought().doubleValue()).append(" and earned ")
+						.append(gain).append("%.").toString());
 			} catch (InsufficientDataException | DataAccessException e) {
 			}
 			algorithm.setPriceBought(BigDecimal.ZERO);
