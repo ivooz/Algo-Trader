@@ -25,7 +25,7 @@ import com.gft.service.updating.StatisticsUpdateService;
 public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 
 	private static final Logger logger = LoggerFactory.getLogger(StatisticsUpdateService.class);
-
+	private static final Logger transactionsLogger = LoggerFactory.getLogger("transactions");
 	@Autowired
 	ListAlgorithmWrapper listawrapper;
 
@@ -41,23 +41,21 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 		Iterator<Algorithm> it = stock.getAlgorithms().iterator();
 		while (it.hasNext()) {
 			Algorithm algorithm = it.next();
-			Action action = listawrapper.getAlgorithms()
-					.get(algorithm.getName()).predict(date, stock, historyDAO);
+			Action action = listawrapper.getAlgorithms().get(algorithm.getName()).predict(date, stock, historyDAO);
 			switch (action) {
-				case BUY :
-					actionBuy(stock, historyDAO, algorithm);
-					break;
-				case SELL :
-					actionSell(stock, historyDAO, algorithm);
-					break;
+			case BUY:
+				actionBuy(stock, historyDAO, algorithm);
+				break;
+			case SELL:
+				actionSell(stock, historyDAO, algorithm);
+				break;
 			}
 		}
 	}
 
 	private void assignAlgorithmstoNewAddedStock(Stock stock) {
 		List<Algorithm> algorithms = new ArrayList<>();
-		listawrapper.getAlgorithms().values().forEach(
-				algo -> algorithms.add(new Algorithm(stock, algo.getName())));
+		listawrapper.getAlgorithms().values().forEach(algo -> algorithms.add(new Algorithm(stock, algo.getName())));
 		stock.setAlgorithms(algorithms);
 	}
 
@@ -70,15 +68,15 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 				logger.error(Access_exception);
 			}
 			try {
-				logger.info(historyDAO.getCurrentDay(stock).getDate() + " Transaciton for " + algorithm.getName() + " B:" + price);
+				transactionsLogger.info(historyDAO.getCurrentDay(stock).getDate() + " Transaciton for "
+						+ algorithm.getName() + " B:" + price);
 			} catch (InsufficientDataException | DataAccessException e) {
 			}
 			algorithm.setPriceBought(price);
 		}
 	}
 
-	private void actionSell(Stock stock, HistoryDAO historyDAO,
-			Algorithm algorithm) {
+	private void actionSell(Stock stock, HistoryDAO historyDAO, Algorithm algorithm) {
 		BigDecimal price = null;
 
 		if (!(algorithm.getPriceBought().equals(BigDecimal.ZERO))) {
@@ -86,12 +84,14 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 				price = historyDAO.getCurrentDay(stock).getClosingPrice();
 			} catch (InsufficientDataException | DataAccessException e) {
 				logger.error(Access_exception);
+
 			}
 			double gain = calculateGain(price.doubleValue(), algorithm.getPriceBought().doubleValue());
-			//TODO FIXIT
+			// TODO FIXIT
 			try {
-				logger.info(historyDAO.getCurrentDay(stock).getDate() + " Transaciton for " + algorithm.getName() + " B:"
-						+ algorithm.getPriceBought().doubleValue() + " S:" + price.doubleValue() + " G: " + gain);
+				transactionsLogger.info(historyDAO.getCurrentDay(stock).getDate() + " Transaciton for "
+						+ algorithm.getName() + " B:" + algorithm.getPriceBought().doubleValue() + " S:"
+						+ price.doubleValue() + " G: " + gain);
 			} catch (InsufficientDataException | DataAccessException e) {
 			}
 			algorithm.setPriceBought(BigDecimal.ZERO);
