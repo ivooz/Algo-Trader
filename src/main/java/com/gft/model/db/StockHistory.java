@@ -1,5 +1,7 @@
 package com.gft.model.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -14,6 +16,7 @@ public class StockHistory {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
     private Date date;
+    @JsonIgnore
     @OneToOne(targetEntity=Stock.class)
     private Stock stock;
     private BigDecimal openingPrice;

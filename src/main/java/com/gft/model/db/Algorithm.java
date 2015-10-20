@@ -6,6 +6,8 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.jpamodelgen.xml.jaxb.CascadeType;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Algorithm {
@@ -14,8 +16,9 @@ public class Algorithm {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	@ManyToOne(targetEntity = Stock.class)
-
 	private Stock stock;
+	@OneToMany(fetch = FetchType.LAZY, cascade = javax.persistence.CascadeType.ALL)
+	private List<AlgorithmHistory> algorithmHistories;
 	private String name;
 	private double aggregateGain;
 	private double absoluteGain;
@@ -80,5 +83,13 @@ public class Algorithm {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<AlgorithmHistory> getAlgorithmHistories() {
+		return algorithmHistories;
+	}
+
+	public void setAlgorithmHistories(List<AlgorithmHistory> algorithmHistories) {
+		this.algorithmHistories = algorithmHistories;
 	}
 }

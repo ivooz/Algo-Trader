@@ -3,15 +3,17 @@ package com.gft.service;
 import com.gft.config.Application;
 import com.gft.model.db.Stock;
 import com.gft.repository.HistoryDAO;
+import com.gft.repository.MemoryHistoryDao;
 import com.gft.repository.data.InsufficientDataException;
+import com.gft.repository.data.StockHistoryRepository;
 import com.gft.repository.data.StockRepository;
+import com.gft.service.downloading.DataDownloadService;
 import com.gft.service.updating.StatisticsUpdateService;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -31,8 +33,12 @@ public class StatisticalTest {
     StatisticsUpdateService sds;
 
     @Autowired
-    @Qualifier("memoryHistoryDao")
-    HistoryDAO historyDAO;
+    DataDownloadService dataDownloadService;
+
+    @Autowired
+    StockHistoryRepository stockHistoryRepository;
+
+    HistoryDAO memoryHistoryDao;
 
     @Autowired
     StockRepository stockRepository;
@@ -41,12 +47,13 @@ public class StatisticalTest {
 
     @Before
     public void init() {
+        memoryHistoryDao = new MemoryHistoryDao(dataDownloadService,stockHistoryRepository);
         stock = new Stock();
         stock.setTicker("MSFT");
         stockRepository.save(stock);
         for (int i = 0; i < 500; i++) {
             try {
-                historyDAO.obtainStockHistoryForPeriod(stock, 1);
+                memoryHistoryDao.obtainStockHistoryForPeriod(stock, 1);
             } catch (InsufficientDataException | DataAccessException ex) {
             }
         }
@@ -56,8 +63,8 @@ public class StatisticalTest {
     @Test
     public void testIntegrationWithMemoryHistory() {
         try {
-            Date date = historyDAO.getCurrentDay(stock).getDate();
-            sds.updateStatistics(stock, date, historyDAO);
+            Date date = memoryHistoryDao.getCurrentDay(stock).getDate();
+            sds.updateStatistics(stock, date, memoryHistoryDao);
             assertTrue(stock.getAlgorithms().size()>0);
         } catch (InsufficientDataException | DataAccessException e) {
             fail();
