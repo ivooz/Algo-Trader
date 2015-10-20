@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gft.aspect.Log;
+import com.gft.model.db.Stock;
 import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
@@ -25,12 +26,12 @@ public class NewTickerRest {
 
     @Log
     @RequestMapping(value = "/stock/{ticker}")
-    public String getStockHistory(@PathVariable("ticker") String ticker) {
-    	Gson gson = new Gson();
+    public Stock getStockHistory(@PathVariable("ticker") String ticker) {
+
         try {
             if(stockRepo.exists(ticker))
             {
-            return gson.toJson(stockRepo.FindStockWithoutAlgorithms(ticker));
+            return stockRepo.findOne(ticker);
             	
             }
             else{
@@ -45,6 +46,6 @@ public class NewTickerRest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return gson.toJson(stockRepo.FindStockWithoutAlgorithms(ticker));
+        return stockRepo.findOne(ticker);
     }
 }

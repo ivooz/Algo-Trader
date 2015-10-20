@@ -18,12 +18,12 @@ public interface AlgorithmRepository extends JpaRepository<Algorithm, String> {
 	
 	@Query("SELECT  a.stock, a.name, a.aggregateGain, a.absoluteGain, a.priceBought FROM Algorithm a WHERE a.stock = (:stock)")
 	public List<String> findByStock(@Param("stock")Stock stock);
-	@Query("SELECT  a.stock.ticker, a.name, a.aggregateGain, a.absoluteGain, a.priceBought FROM Algorithm a WHERE a.name = (:name)")
-	public List<String> findByName(@Param("name")String name);
-	@Query("SELECT  a.stock.ticker, a.name, a.aggregateGain, a.absoluteGain, a.priceBought FROM Algorithm a WHERE a.stock.ticker = (:Stockname)")
-	public List<String> findByTicker(@Param("Stockname")String ticker);
-	@Query("SELECT  a.stock.ticker, a.name, a.aggregateGain, a.absoluteGain, a.priceBought FROM Algorithm a WHERE a.name = (:name) AND a.stock.ticker =(:ticker)")
-	public List<String> findByNameandTicker(@Param("name")String name,@Param("ticker")String ticker);
+	@Query("SELECT a FROM Algorithm a WHERE a.name = (:name)")
+	public Algorithm findByName(@Param("name")String name);
+	@Query("SELECT  a FROM Algorithm a WHERE a.stock.ticker = (:Stockname)")
+	public List<Algorithm> findByTicker(@Param("Stockname")String ticker);
+	@Query("SELECT  a FROM Algorithm a WHERE a.name = (:name) AND a.stock.ticker =(:ticker)")
+	public Algorithm findByNameandTicker(@Param("name")String name,@Param("ticker")String ticker);
 
 
 	@Query("SELECT a FROM Algorithm a LEFT JOIN FETCH a.algorithmHistories WHERE a.stock.ticker = (:ticker)")

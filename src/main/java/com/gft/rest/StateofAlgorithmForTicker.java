@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gft.model.db.Algorithm;
 import com.gft.repository.data.AlgorithmRepository;
 import com.gft.repository.data.StockRepository;
 import com.google.gson.Gson;
@@ -15,13 +16,12 @@ public class StateofAlgorithmForTicker {
 	AlgorithmRepository algorithmRepository;
 	@Autowired
 	StockRepository stockRepository;
-	
-	@RequestMapping(value="/algorithm/{name}/{ticker}")
-	public String getGeinOfAlgorithms(@PathVariable("name")String name,@PathVariable("ticker")String ticker){
-		
-		Gson gson = new Gson();
-		
-		
-	return gson.toJson(algorithmRepository.findByNameandTicker(name, ticker));
-}
+
+	@RequestMapping(value = "/algorithm/{name}/{ticker}")
+	public Algorithm getGeinOfAlgorithms(@PathVariable("name") String name,
+			@PathVariable("ticker") String ticker) {
+
+
+		return algorithmRepository.findByNameandTicker(name, ticker);
+	}
 }

@@ -18,7 +18,7 @@ public class TickersRest {
 
 	@Autowired
 	NewTickerHinter tickerHinter;
-	
+
 	@Log
 	@RequestMapping(value = "/tickers", method = RequestMethod.GET)
 	public List<String> getTickersOfExistingStocks() {

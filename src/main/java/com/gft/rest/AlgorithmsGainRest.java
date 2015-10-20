@@ -18,20 +18,16 @@ import com.google.gson.Gson;
 
 @RestController
 public class AlgorithmsGainRest {
-	
+
 	@Autowired
 	AlgorithmRepository algorithmRepository;
 	@Autowired
 	StockRepository stockRepository;
-	
 
-	@RequestMapping(value="/algorithm/{name}")
-	public String getGeinOfAlgorithms(@PathVariable("name")String name){
-		
-		Gson gson = new Gson();
-		
-		
-	return gson.toJson(algorithmRepository.findByName(name));
+	@RequestMapping(value = "/algorithm/{name}")
+	public Algorithm getGeinOfAlgorithms(@PathVariable("name") String name) {
+
+		return algorithmRepository.findByName(name);
 
 	}
 }

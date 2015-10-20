@@ -14,7 +14,7 @@ import com.gft.model.db.Stock;
  */
 public interface AlgorithmHistoryRepository extends JpaRepository<AlgorithmHistory, Long> {
 
-	@Query("SELECT  a.algorithm.name, a.aggregateGain, a.absoluteGain, a.date FROM AlgorithmHistory a WHERE a.algorithm.name = (:name) AND a.algorithm.stock.ticker = (:ticker)")
-	public List<String> findByTickerAndAlgorithmName(@Param("name")String name,@Param("ticker")String ticker);
+	@Query("SELECT a FROM AlgorithmHistory a WHERE a.algorithm.name = (:name) AND a.algorithm.stock.ticker = (:ticker)")
+	public List<AlgorithmHistory> findByTickerAndAlgorithmName(@Param("name")String name,@Param("ticker")String ticker);
 
 }

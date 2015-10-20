@@ -31,5 +31,5 @@ public interface StockRepository extends JpaRepository<Stock, String> {
 	String FindStockWithoutAlgorithms(@Param("ticker") String ticker);
 	@Query("SELECT s.ticker, s.fullName, s.type FROM Stock s")
 	List<String> FindStocksWithoutAlgorithms();
-	
+
 }

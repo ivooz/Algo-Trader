@@ -53,7 +53,7 @@ public class AlgorithmsGainRestTest {
 		algorithmRepository.save(algo);
 
 		RestTemplate restTemplate = new RestTemplate();
-		ArrayList<Object> apiResponse = restTemplate.getForObject("http://localhost:60001/algorithm/MACD",
+		ArrayList<Object> apiResponse = restTemplate.getForObject("http://localhost:60001/stock/KGH/algorithms",
 				ArrayList.class);
 
 		System.out.println(apiResponse.toString());
