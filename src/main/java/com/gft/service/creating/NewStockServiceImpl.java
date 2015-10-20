@@ -1,7 +1,7 @@
 package com.gft.service.creating;
 
 import com.gft.aspect.Log;
-import com.gft.component.ListAlgorithmWrapper;
+import com.gft.component.PredicitonAlgorithmsWrapper;
 import com.gft.model.db.Algorithm;
 import com.gft.model.db.Stock;
 import com.gft.repository.MemoryHistoryDao;
@@ -40,7 +40,7 @@ public class NewStockServiceImpl implements NewStockService {
     StockRepository stockRepository;
 
     @Autowired
-    ListAlgorithmWrapper listawrapper;
+    PredicitonAlgorithmsWrapper listawrapper;
 
     @Autowired
     StockHistoryRepository stockHistoryRepository;
@@ -62,6 +62,7 @@ public class NewStockServiceImpl implements NewStockService {
         Date historyHead =  memoryHistoryDao.getCurrentDay(stock).getDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(historyHead);
+        
         int nextUpdate = cal.get(Calendar.MONTH) < Calendar.JULY ? Calendar.JULY : Calendar.JANUARY;
         for (int i = 0; i < memoryHistoryDao.getHistorySize(stock); i++) {
             historyHead = memoryHistoryDao.getCurrentDay(stock).getDate();
@@ -70,6 +71,7 @@ public class NewStockServiceImpl implements NewStockService {
                 historyUpdateService.saveAlgorithmStatistics(historyHead,stock);
                 nextUpdate = (nextUpdate+6)%12;
             }
+        
             updateService.updateStatistics(stock, historyHead, memoryHistoryDao);
             memoryHistoryDao.forwardHistory();
         }

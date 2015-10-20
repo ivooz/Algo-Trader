@@ -3,17 +3,15 @@ package com.gft.creating;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.fail;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.validator.PublicClassValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.gft.component.ListAlgorithmWrapper;
+import com.gft.component.PredicitonAlgorithmsWrapper;
 import com.gft.config.Application;
 import com.gft.config.HibernateConfig;
 import com.gft.config.WebConfig;
@@ -39,7 +37,7 @@ public class NewStockServiceTest {
     StockRepository stockRepository;
 
     @Autowired
-    ListAlgorithmWrapper listAlgorithmWrapper;
+    PredicitonAlgorithmsWrapper listAlgorithmWrapper;
 
     @Autowired
     AlgorithmRepository algorithmRepository;

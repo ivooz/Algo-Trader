@@ -1,26 +1,21 @@
 package com.gft.service.updating;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 
-import com.gft.aspect.LogNoArgs;
-import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gft.component.ListAlgorithmWrapper;
+import com.gft.component.PredicitonAlgorithmsWrapper;
 import com.gft.model.Action;
 import com.gft.model.db.Algorithm;
 import com.gft.model.db.Stock;
 import com.gft.repository.HistoryDAO;
 import com.gft.repository.data.InsufficientDataException;
-import com.gft.service.updating.StatisticsUpdateService;
 
 @Service
 public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
@@ -29,7 +24,7 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 	private static final Logger transactionsLogger = LoggerFactory.getLogger("transactions");
 
 	@Autowired
-	ListAlgorithmWrapper listawrapper;
+	PredicitonAlgorithmsWrapper listawrapper;
 
 	public static final String Access_exception = "DATA COULD NOT BE ACCESSED";
 
@@ -51,7 +46,6 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 		}
 	}
 
-
 	private void actionBuy(Stock stock, HistoryDAO historyDAO, Algorithm algorithm) {
 		BigDecimal price = null;
 		if (algorithm.getPriceBought().equals(BigDecimal.ZERO)) {
@@ -61,8 +55,9 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 				logger.error(Access_exception);
 			}
 			try {
-				transactionsLogger.info(historyDAO.getCurrentDay(stock).getDate() + " Transaciton for "
-						+ algorithm.getName() + " B:" + price);
+				transactionsLogger.info(new StringBuilder().append(historyDAO.getCurrentDay(stock).getDate())
+						.append(" Transaction for ").append(algorithm.getName()).append(" bought ")
+						.append(stock.getTicker()).append(" for ").append(price).toString());
 			} catch (InsufficientDataException | DataAccessException e) {
 			}
 			algorithm.setPriceBought(price);
@@ -82,9 +77,11 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 			double gain = calculateGain(price.doubleValue(), algorithm.getPriceBought().doubleValue());
 			// TODO FIXIT
 			try {
-				transactionsLogger.info(historyDAO.getCurrentDay(stock).getDate() + " Transaciton for "
-						+ algorithm.getName() + " B:" + algorithm.getPriceBought().doubleValue() + " S:"
-						+ price.doubleValue() + " G: " + gain);
+				transactionsLogger.info(new StringBuilder().append(historyDAO.getCurrentDay(stock).getDate())
+						.append(" Transaction for ").append(algorithm.getName()).append(" sold ").append(stock.getTicker())
+						.append(" for ").append(price.doubleValue()).append(" which was bought for ")
+						.append(algorithm.getPriceBought().doubleValue()).append(" and earned ")
+						.append(gain).append("%.").toString());
 			} catch (InsufficientDataException | DataAccessException e) {
 			}
 			algorithm.setPriceBought(BigDecimal.ZERO);

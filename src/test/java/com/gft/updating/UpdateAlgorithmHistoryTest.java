@@ -1,10 +1,8 @@
 package com.gft.updating;
 
-import com.gft.component.ListAlgorithmWrapper;
 import com.gft.config.Application;
 import com.gft.config.HibernateConfig;
 import com.gft.config.WebConfig;
-import com.gft.model.db.Algorithm;
 import com.gft.model.db.AlgorithmHistory;
 import com.gft.model.db.Stock;
 import com.gft.repository.data.AlgorithmHistoryRepository;
@@ -14,8 +12,6 @@ import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
 import com.gft.service.creating.NewStockService;
 import com.gft.service.updating.AlgorithmHistoryUpdateService;
-import junit.framework.Assert;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +20,6 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 

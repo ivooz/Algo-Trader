@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Created by iozi on 13/10/2015.
  */
@@ -21,13 +23,16 @@ public class Stock {
     private String ticker;
 
     private String fullName;
-
     @OneToMany(targetEntity=Algorithm.class, cascade = CascadeType.ALL)
-    private List<Algorithm> algorithms = new ArrayList<>();
-
+    @JsonIgnore
+    private List<Algorithm> algorithms;
     private String type;
 
+
+
+
 	public Stock() {
+		algorithms=new ArrayList<>();
 	}
 
 	public String getTicker() {
