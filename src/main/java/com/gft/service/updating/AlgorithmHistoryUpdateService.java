@@ -35,9 +35,8 @@ public class AlgorithmHistoryUpdateService {
 				DateUtils.truncate(new Date(), java.util.Calendar.DAY_OF_MONTH)));
 	}
 
-	public void saveAlgorithmStatistics(Date date, String ticker) {
-		algorithmHistoryRepository.save(saveAlgorithmStatisticsWithDate(Arrays.asList(
-				stockRepository.findByIdAndFetchAlgorithmsEagerly(ticker)), date));
+	public void saveAlgorithmStatistics(Date date, Stock stock) {
+		algorithmHistoryRepository.save(saveAlgorithmStatisticsWithDate(Arrays.asList(stock), date));
 	}
 
 	private List<AlgorithmHistory> saveAlgorithmStatisticsWithDate(List<Stock> stocks, Date date) {
@@ -49,7 +48,7 @@ public class AlgorithmHistoryUpdateService {
 							algorithmHistories.add(new AlgorithmHistory(algorithm, date,algorithm.getAggregateGain(),
 									algorithm.getAbsoluteGain()));
 							algorithm.setAbsoluteGain(0);
-							algorithm.setAggregateGain(0);
+							algorithm.setAggregateGain(1);
 							return algorithm;
 						}).collect(Collectors.toList())
 		);
