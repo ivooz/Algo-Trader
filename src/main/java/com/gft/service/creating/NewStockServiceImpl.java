@@ -1,6 +1,8 @@
 package com.gft.service.creating;
 
 import com.gft.aspect.Log;
+import com.gft.component.ListAlgorithmWrapper;
+import com.gft.model.db.Algorithm;
 import com.gft.model.db.Stock;
 import com.gft.repository.MemoryHistoryDao;
 import com.gft.repository.data.InsufficientDataException;
@@ -15,8 +17,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by iozi on 15/10/2015.
@@ -36,7 +40,7 @@ public class NewStockServiceImpl implements NewStockService {
     StockRepository stockRepository;
 
     @Autowired
-    DataDownloadService downloadService;
+    ListAlgorithmWrapper listawrapper;
 
     @Autowired
     StockHistoryRepository stockHistoryRepository;
@@ -54,6 +58,7 @@ public class NewStockServiceImpl implements NewStockService {
         MemoryHistoryDao memoryHistoryDao = new MemoryHistoryDao(dataDownloadService,stockHistoryRepository);
         Stock stock = dataDownloadService.downloadNewStock(ticker);
         stockRepository.save(stock);
+        assignAlgorithmstoNewAddedStock(stock);
         Date historyHead =  memoryHistoryDao.getCurrentDay(stock).getDate();
         Calendar cal = Calendar.getInstance();
         cal.setTime(historyHead);
@@ -62,12 +67,19 @@ public class NewStockServiceImpl implements NewStockService {
             historyHead = memoryHistoryDao.getCurrentDay(stock).getDate();
             cal.setTime(historyHead);
             if(cal.get(Calendar.MONTH) == nextUpdate ) {
-                historyUpdateService.saveAlgorithmStatistics(historyHead,stock.getTicker());
+                historyUpdateService.saveAlgorithmStatistics(historyHead,stock);
                 nextUpdate = (nextUpdate+6)%12;
             }
             updateService.updateStatistics(stock, historyHead, memoryHistoryDao);
             memoryHistoryDao.forwardHistory();
         }
         stockRepository.save(stock);
+    }
+
+
+    private void assignAlgorithmstoNewAddedStock(Stock stock) {
+        List<Algorithm> algorithms = new ArrayList<>();
+        listawrapper.getAlgorithms().values().forEach(algo -> algorithms.add(new Algorithm(stock, algo.getName())));
+        stock.setAlgorithms(algorithms);
     }
 }
