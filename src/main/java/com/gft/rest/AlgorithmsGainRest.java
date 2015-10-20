@@ -23,9 +23,7 @@ public class AlgorithmsGainRest {
 	
 	@RequestMapping(value="/algorithms/{ticker}")
 	public List<String> getGeinOfAlgorithms(@PathVariable("ticker")String ticker){
-		
 		ArrayList<String> algorithmList =  (ArrayList<String>)algorithmRepository.findByStock(stockRepository.findOne(ticker));
-		
 		return algorithmList;
 	}
 }

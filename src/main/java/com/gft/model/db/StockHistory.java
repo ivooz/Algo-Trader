@@ -24,9 +24,13 @@ public class StockHistory {
     private Stock stock;
 
     private BigDecimal openingPrice;
+
     private BigDecimal closingPrice;
+
     private BigDecimal lowPrice;
+
     private BigDecimal highPrice;
+
     private long volume;
 
     public StockHistory() {
@@ -55,61 +59,61 @@ public class StockHistory {
         return date;
     }
 
-    public Stock getStock() {
-        return stock;
-    }
-
-    public BigDecimal getOpeningPrice() {
-        return openingPrice;
-    }
-
-    public BigDecimal getClosingPrice() {
-        return closingPrice;
-    }
-
-    public BigDecimal getLowPrice() {
-        return lowPrice;
-    }
-
-    public BigDecimal getHighPrice() {
-        return highPrice;
-    }
-
-    public long getVolume() {
-        return volume;
-    }
-
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Stock getStock() {
+        return stock;
     }
 
     public void setStock(Stock stock) {
         this.stock = stock;
     }
 
+    public BigDecimal getOpeningPrice() {
+        return openingPrice;
+    }
+
     public void setOpeningPrice(BigDecimal openingPrice) {
         this.openingPrice = openingPrice;
+    }
+
+    public BigDecimal getClosingPrice() {
+        return closingPrice;
     }
 
     public void setClosingPrice(BigDecimal closingPrice) {
         this.closingPrice = closingPrice;
     }
 
+    public BigDecimal getLowPrice() {
+        return lowPrice;
+    }
+
     public void setLowPrice(BigDecimal lowPrice) {
         this.lowPrice = lowPrice;
+    }
+
+    public BigDecimal getHighPrice() {
+        return highPrice;
     }
 
     public void setHighPrice(BigDecimal highPrice) {
         this.highPrice = highPrice;
     }
 
+    public long getVolume() {
+        return volume;
+    }
+
     public void setVolume(long volume) {
         this.volume = volume;
-    }	@Override
-	public String toString() {
+    }
+
+    public String toString() {
 		return "StockHistory [id=" + id + ", date=" + date + ", stock=" + stock + ", openingPrice=" + openingPrice
 				+ ", closingPrice=" + closingPrice + ", lowPrice=" + lowPrice + ", highPrice=" + highPrice + ", volume="
 				+ volume + "]";
 	}
-    
 }

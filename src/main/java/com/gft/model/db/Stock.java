@@ -23,21 +23,16 @@ public class Stock {
     private String fullName;
 
     @OneToMany(targetEntity=Algorithm.class, cascade = CascadeType.ALL)
-    private List<Algorithm> algorithms;
+    private List<Algorithm> algorithms = new ArrayList<>();
 
     private String type;
 
-	public Stock() {
-		algorithms = new ArrayList<>();
-
+	public String getTicker() {
+		return ticker;
 	}
 
-	public List<Algorithm> getAlgorithms() {
-		return algorithms;
-	}
-
-	public void setAlgorithms(List<Algorithm> algorithms) {
-		this.algorithms = algorithms;
+	public void setTicker(String ticker) {
+		this.ticker = ticker;
 	}
 
 	public String getFullName() {
@@ -48,12 +43,12 @@ public class Stock {
 		this.fullName = fullName;
 	}
 
-	public String getTicker() {
-		return ticker;
+	public List<Algorithm> getAlgorithms() {
+		return algorithms;
 	}
 
-	public void setTicker(String ticker) {
-		this.ticker = ticker;
+	public void setAlgorithms(List<Algorithm> algorithms) {
+		this.algorithms = algorithms;
 	}
 
 	public String getType() {

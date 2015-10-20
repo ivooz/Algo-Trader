@@ -25,7 +25,6 @@ public class TickersRest {
 		return tickerHinter.getTickersOfExistingStocksInDB();
 	}
 
-
 	@LogNoArgs
 	@RequestMapping(value = "/notExistingStockInDB", method = RequestMethod.GET)
 	public List<String> getTickersOfNotExistingStocks() {
@@ -35,5 +34,4 @@ public class TickersRest {
 			return new ArrayList<String>();
 		}
 	}
-
 }

@@ -33,5 +33,4 @@ public class StockHistoryJsonConverter {
         stockHistory.setDate(new Date());
         return stockHistory;
     }
-
 }
