@@ -24,4 +24,8 @@ public interface AlgorithmRepository extends JpaRepository<Algorithm, String> {
 	public List<String> findByTicker(@Param("Stockname")String ticker);
 	@Query("SELECT  a.stock.ticker, a.name, a.aggregateGain, a.absoluteGain, a.priceBought FROM Algorithm a WHERE a.name = (:name) AND a.stock.ticker =(:ticker)")
 	public List<String> findByNameandTicker(@Param("name")String name,@Param("ticker")String ticker);
+
+
+	@Query("SELECT a FROM Algorithm a LEFT JOIN FETCH a.algorithmHistories WHERE a.stock.ticker = (:ticker)")
+	List<Algorithm> findByStockTicker(@Param("ticker") String ticker);
 }
