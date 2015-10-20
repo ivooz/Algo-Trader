@@ -1,26 +1,21 @@
 package com.gft.service.updating;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 
-import com.gft.aspect.LogNoArgs;
-import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gft.component.ListAlgorithmWrapper;
+import com.gft.component.PredicitonAlgorithmsWrapper;
 import com.gft.model.Action;
 import com.gft.model.db.Algorithm;
 import com.gft.model.db.Stock;
 import com.gft.repository.HistoryDAO;
 import com.gft.repository.data.InsufficientDataException;
-import com.gft.service.updating.StatisticsUpdateService;
 
 @Service
 public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
@@ -29,7 +24,7 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 	private static final Logger transactionsLogger = LoggerFactory.getLogger("transactions");
 
 	@Autowired
-	ListAlgorithmWrapper listawrapper;
+	PredicitonAlgorithmsWrapper listawrapper;
 
 	public static final String Access_exception = "DATA COULD NOT BE ACCESSED";
 

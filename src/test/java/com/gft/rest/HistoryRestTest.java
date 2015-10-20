@@ -59,7 +59,7 @@ public class HistoryRestTest {
 		stockHistoryRepository.save(stockHistory);
 		RestTemplate restTemplate = new RestTemplate();
 
-		ArrayList<Object> apiResponse = restTemplate.getForObject("http://localhost:60001/KGH/history",
+		ArrayList<Object> apiResponse = restTemplate.getForObject("http://localhost:60001/history/KGH",
 				ArrayList.class);
 		System.out.println(apiResponse.toString());
 		assertEquals(true, apiResponse.toString().contains("closingPrice=47.4"));

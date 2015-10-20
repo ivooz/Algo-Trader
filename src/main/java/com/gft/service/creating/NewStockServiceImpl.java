@@ -1,7 +1,7 @@
 package com.gft.service.creating;
 
 import com.gft.aspect.Log;
-import com.gft.component.ListAlgorithmWrapper;
+import com.gft.component.PredicitonAlgorithmsWrapper;
 import com.gft.model.db.Algorithm;
 import com.gft.model.db.Stock;
 import com.gft.repository.MemoryHistoryDao;
@@ -40,7 +40,7 @@ public class NewStockServiceImpl implements NewStockService {
     StockRepository stockRepository;
 
     @Autowired
-    ListAlgorithmWrapper listawrapper;
+    PredicitonAlgorithmsWrapper listawrapper;
 
     @Autowired
     StockHistoryRepository stockHistoryRepository;

@@ -5,11 +5,11 @@ import java.util.*;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ListAlgorithmWrapper {
+public class PredicitonAlgorithmsWrapper {
 
 	private HashMap<String, PredictionAlgorithm> algorithms;
 
-	public ListAlgorithmWrapper() {
+	public PredicitonAlgorithmsWrapper() {
 		this.algorithms = new HashMap<>();
 		List<Integer> averagesInterval = Arrays.asList(5, 10, 15, 20, 25, 50, 100, 200, 1000);
 		for (int interval : averagesInterval) {

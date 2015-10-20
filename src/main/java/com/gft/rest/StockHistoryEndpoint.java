@@ -1,23 +1,19 @@
 package com.gft.rest;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import com.gft.aspect.LogNoArgs;
+import com.gft.model.db.StockHistory;
+import com.gft.repository.data.StockHistoryRepository;
+import com.gft.repository.data.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gft.aspect.LogNoArgs;
-import com.gft.model.db.Stock;
-import com.gft.model.db.StockHistory;
-import com.gft.repository.data.StockHistoryRepository;
-import com.gft.repository.data.StockRepository;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
-public class StockHistoryRest {
+public class StockHistoryEndpoint {
 
 	@Autowired
 	StockHistoryRepository stockHistoryRepository;
@@ -25,7 +21,7 @@ public class StockHistoryRest {
 	StockRepository stockRepository;
 
 	@LogNoArgs
-	@RequestMapping(value = "/{ticker}/history")
+	@RequestMapping(value = "/history/{ticker}")
 	public List<StockHistory> getStockHistory(@PathVariable("ticker") String ticker) {
 		List<StockHistory> historyOfStock = new ArrayList<StockHistory>(
 				stockHistoryRepository.findByStockOrderByDateDesc(stockRepository.findOne(ticker)));
