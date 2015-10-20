@@ -1,13 +1,17 @@
 package com.gft.model.db;
 
-import javax.persistence.*;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.jpamodelgen.xml.jaxb.CascadeType;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Algorithm {
@@ -20,6 +24,7 @@ public class Algorithm {
 	private Stock stock;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = javax.persistence.CascadeType.ALL)
+	@JsonIgnore
 	private List<AlgorithmHistory> algorithmHistories;
 
 	private String name;
@@ -30,16 +35,16 @@ public class Algorithm {
 
 	private BigDecimal priceBought;
 
-	public Algorithm(Stock stock, String name) {
-		this();
-		this.stock = stock;
-		this.name = name;
-	}
-
 	public Algorithm() {
 		this.absoluteGain = 0;
 		this.aggregateGain = 1.0;
 		this.priceBought = BigDecimal.ZERO;
+	}
+
+	public Algorithm(Stock stock, String name) {
+		this();
+		this.stock = stock;
+		this.name = name;
 	}
 
 	public long getId() {

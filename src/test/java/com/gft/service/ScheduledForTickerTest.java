@@ -77,7 +77,7 @@ public class ScheduledForTickerTest {
 
 	@Test
 	public void TestIfSavesWithDate() {
-		historyUpdateService.saveAlgorithmStatistics(savedDate, "MSFT");
+		historyUpdateService.saveAlgorithmStatistics(savedDate, stockRepository.findByIdAndFetchAlgorithmsEagerly("MSFT"));
 		List<AlgorithmHistory> reposlit = algorithmHistoryRepository.findAll();
 		Iterator<AlgorithmHistory> it = reposlit.iterator();
 		Calendar cal = Calendar.getInstance();
