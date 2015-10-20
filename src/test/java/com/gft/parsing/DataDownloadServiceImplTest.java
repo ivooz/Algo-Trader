@@ -58,7 +58,6 @@ public class DataDownloadServiceImplTest {
                 assertNotNull(stockHistory.getClosingPrice());
                 assertNotNull(stockHistory.getLowPrice());
                 assertNotNull(stockHistory.getHighPrice());
-                assertNotEquals(0, stockHistory.getVolume());
             } catch (DataAccessException e) {
                 e.printStackTrace();
                 fail();

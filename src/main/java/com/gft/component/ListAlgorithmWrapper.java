@@ -19,6 +19,14 @@ public class ListAlgorithmWrapper {
 			this.algorithms.put(simpleMovingAverage.getName(),
 					simpleMovingAverage);
 		}
+		
+//		for(int i = 0; i < simpleMovingAverageIntervals; i++){
+//			for(int j = )
+//		}
+//		
+//		
+		
+
 	}
 
 	public Map<String, PredictionAlgorithm> getAlgorithms() {
