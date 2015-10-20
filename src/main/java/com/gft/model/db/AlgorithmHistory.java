@@ -16,7 +16,7 @@ public class AlgorithmHistory {
 
 	private  Date date;
 
-	@OneToOne(targetEntity = Algorithm.class)
+	@ManyToOne(targetEntity = Algorithm.class)
 	private Algorithm algorithm;
 
 	private  double aggregateGain;
