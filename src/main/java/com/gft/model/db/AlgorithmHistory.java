@@ -13,22 +13,9 @@ public class AlgorithmHistory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+
 	private  Date date;
-	public void setDate(Date date) {
-		this.date = date;
-	}
 
-	public void setAlgorithm(Algorithm algorithm) {
-		this.algorithm = algorithm;
-	}
-
-	public void setAggregateGain(double aggregateGain) {
-		this.aggregateGain = aggregateGain;
-	}
-
-	public void setAbsoluteGain(double absoluteGain) {
-		this.absoluteGain = absoluteGain;
-	}
 
 	public AlgorithmHistory() {
 		super();
@@ -42,13 +29,7 @@ public class AlgorithmHistory {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
 
-	public Algorithm getAlgorithm() {
-		return algorithm;
-	}
 
 	public AlgorithmHistory(Algorithm algorithm, Date date,
 							double aggregateGain, double absoluteGain) {
@@ -57,18 +38,4 @@ public class AlgorithmHistory {
 		this.aggregateGain = aggregateGain;
 		this.absoluteGain = absoluteGain;
 	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public double getAggregateGain() {
-		return aggregateGain;
-	}
-
-	public double getAbsoluteGain() {
-		return absoluteGain;
-	}
-
-
 }

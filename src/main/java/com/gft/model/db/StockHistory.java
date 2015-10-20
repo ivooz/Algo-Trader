@@ -12,13 +12,17 @@ import java.util.Date;
 
 @Entity
 public class StockHistory {
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
+
     private Date date;
+
     @JsonIgnore
     @OneToOne(targetEntity=Stock.class)
     private Stock stock;
+
     private BigDecimal openingPrice;
     private BigDecimal closingPrice;
     private BigDecimal lowPrice;

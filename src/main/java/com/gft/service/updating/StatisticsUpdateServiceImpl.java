@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.gft.aspect.LogNoArgs;
+import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,9 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 	@Autowired
 	ListAlgorithmWrapper listawrapper;
 
+	@Autowired
+	StockRepository stockRepository;
+
 	public static final String Access_exception = "DATA COULD NOT BE ACCESSED";
 
 	@Override
@@ -36,7 +40,6 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 		BigDecimal price = null;
 		if (stock.getAlgorithms().size() == 0) {
 			assignAlgorithmstoNewAddedStock(stock);
-
 		}
 		Iterator<Algorithm> it = stock.getAlgorithms().iterator();
 		while (it.hasNext()) {
@@ -51,6 +54,7 @@ public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {
 				break;
 			}
 		}
+		stockRepository.save(stock);
 	}
 
 	private void assignAlgorithmstoNewAddedStock(Stock stock) {

@@ -16,18 +16,16 @@ import javax.persistence.OneToMany;
 @Entity
 public class Stock {
 
-
     @Id
     @Column(name="ticker", unique=true)
     private String ticker;
+
     private String fullName;
+
     @OneToMany(targetEntity=Algorithm.class, cascade = CascadeType.ALL)
     private List<Algorithm> algorithms;
+
     private String type;
-
-  
-
-
 
 	public Stock() {
 		algorithms = new ArrayList<>();

@@ -15,10 +15,13 @@ public class Algorithm {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+
 	@ManyToOne(targetEntity = Stock.class)
 	private Stock stock;
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = javax.persistence.CascadeType.ALL)
 	private List<AlgorithmHistory> algorithmHistories;
+
 	private String name;
 	private double aggregateGain;
 	private double absoluteGain;
@@ -28,7 +31,6 @@ public class Algorithm {
 		this();
 		this.stock = stock;
 		this.name = name;
-
 	}
 
 	public Algorithm() {
