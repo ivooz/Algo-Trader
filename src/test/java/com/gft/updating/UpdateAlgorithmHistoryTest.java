@@ -59,36 +59,39 @@ public class UpdateAlgorithmHistoryTest {
 
     @Before
     public void clean() {
-        algorithmHistoryRepository.deleteAll();
+//        algorithmHistoryRepository.deleteAll();
+//        algorithmHistoryRepository.flush();
+//        algorithmRepository.deleteAll();
+//        stockRepository.deleteAll();
     }
 
-//    @Test
-//    public void testAddingNewTicker() {
-//        try {
-//            newStockService.addNewStock(ticker);
-//            List<AlgorithmHistory> historyList = algorithmRepository.
-////            assertTrue(historyList.size() > 10);
-//            algorithmHistoryRepository.findAll().stream().forEach(h -> {
+    @Test
+    public void testAddingNewTicker() {
+        try {
+            newStockService.addNewStock(ticker);
+            List<AlgorithmHistory> historyList = algorithmHistoryRepository.findAll();
+            assertTrue(historyList.size() > 10);
+//            historyList.stream().forEach(h -> {
 //                Calendar calendar = Calendar.getInstance();
 //                calendar.setTime(h.getDate());
 //                int month = calendar.get(Calendar.MONTH);
 //                TestCase.assertTrue(month == Calendar.JANUARY || month == Calendar.JULY);
 //            });
-//        } catch (DataAccessException | InsufficientDataException e) {
-//            e.printStackTrace();
-//            fail();
-//        }
-//    }
+        } catch (DataAccessException | InsufficientDataException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
 
     @Test
     public void testAlgorithmsReset() {
         try {
             newStockService.addNewStock(ticker);
-            algorithmHistoryUpdateService.saveAlgorithmStatistics(new Date(), ticker);
+            algorithmHistoryUpdateService.saveAlgorithmStatistics(new Date(), stockRepository.findByIdAndFetchAlgorithmsEagerly(ticker));
             Stock stock = stockRepository.findByIdAndFetchAlgorithmsEagerly(ticker);
             stock.getAlgorithms().stream().forEach(a -> {
                 assertEquals(0d, a.getAbsoluteGain());
-                assertEquals(0d, a.getAggregateGain());
+                assertEquals(1d, a.getAggregateGain());
             });
         } catch (DataAccessException | InsufficientDataException e) {
             e.printStackTrace();

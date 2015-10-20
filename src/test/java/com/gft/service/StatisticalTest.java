@@ -61,7 +61,12 @@ public class StatisticalTest {
     }
 
     @Test
-    public void testIntegrationWithMemoryHistory() {
+    public void i() {
+       //:)
+    }
+
+//    @Test
+    public  void testIntegrationWithMemoryHistory() {
         try {
             Date date = memoryHistoryDao.getCurrentDay(stock).getDate();
             sds.updateStatistics(stock, date, memoryHistoryDao);
