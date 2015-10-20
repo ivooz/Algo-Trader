@@ -15,7 +15,7 @@ import com.gft.model.Action;
 import com.gft.model.db.Algorithm;
 import com.gft.model.db.Stock;
 import com.gft.repository.HistoryDAO;
-import com.gft.repository.data.InsufficientDataException;
+import com.gft.repository.InsufficientDataException;
 
 @Service
 public class StatisticsUpdateServiceImpl implements StatisticsUpdateService {

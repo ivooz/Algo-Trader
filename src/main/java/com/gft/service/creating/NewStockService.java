@@ -1,6 +1,6 @@
 package com.gft.service.creating;
 
-import com.gft.repository.data.InsufficientDataException;
+import com.gft.repository.InsufficientDataException;
 import com.gft.service.DataAccessException;
 
 /**

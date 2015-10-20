@@ -2,10 +2,8 @@ package com.gft.repository;
 
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
-import com.gft.repository.data.InsufficientDataException;
 import com.gft.service.DataAccessException;
 
-import java.util.Date;
 import java.util.List;
 
 /**
