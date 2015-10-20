@@ -34,7 +34,6 @@ public class Algorithm {
 		this();
 		this.stock = stock;
 		this.name = name;
-
 	}
 
 	public Algorithm() {

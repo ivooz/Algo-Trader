@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Calendar;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -53,6 +54,8 @@ public class UpdateAlgorithmHistoryTest {
     public void testAddingNewTicker() {
         try {
             newStockService.addNewStock(ticker);
+            List<AlgorithmHistory> historyList = algorithmHistoryRepository.findAll();
+            TestCase.assertTrue(historyList.size() > 10);
             algorithmHistoryRepository.findAll().stream().forEach(h -> {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(h.getDate());

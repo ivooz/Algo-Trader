@@ -58,4 +58,11 @@ public class Stock {
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	@Override
+	public String toString() {
+		return "Stock [ticker=" + ticker + ", fullName=" + fullName
+				+ ", algorithms=" + algorithms + "]";
+	}
+
 }
