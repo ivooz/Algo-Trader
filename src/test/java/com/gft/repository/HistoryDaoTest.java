@@ -3,7 +3,6 @@ package com.gft.repository;
 import com.gft.config.Application;
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
-import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockHistoryRepository;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;

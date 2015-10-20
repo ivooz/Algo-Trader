@@ -10,7 +10,7 @@ import java.util.List;
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
 import com.gft.repository.HistoryDAO;
-import com.gft.repository.data.InsufficientDataException;
+import com.gft.repository.InsufficientDataException;
 
 @Deprecated
 public class HistoryDAOmock implements HistoryDAO {

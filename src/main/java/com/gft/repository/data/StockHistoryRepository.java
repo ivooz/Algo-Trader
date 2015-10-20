@@ -14,4 +14,6 @@ import java.util.List;
 public interface StockHistoryRepository extends JpaRepository<StockHistory, Long> {
 
     List<StockHistory> findByStockOrderByDateDesc(Stock stock);
+
+    void deleteByStock(Stock stock);
 }
