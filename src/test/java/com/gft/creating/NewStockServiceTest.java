@@ -17,7 +17,7 @@ import com.gft.config.HibernateConfig;
 import com.gft.config.WebConfig;
 import com.gft.model.db.Stock;
 import com.gft.repository.data.AlgorithmRepository;
-import com.gft.repository.data.InsufficientDataException;
+import com.gft.repository.InsufficientDataException;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
 import com.gft.service.creating.NewStockService;

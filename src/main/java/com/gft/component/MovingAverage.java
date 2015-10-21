@@ -4,7 +4,7 @@ import com.gft.model.Action;
 import com.gft.model.db.Stock;
 import com.gft.model.db.StockHistory;
 import com.gft.repository.HistoryDAO;
-import com.gft.repository.data.InsufficientDataException;
+import com.gft.repository.InsufficientDataException;
 import com.gft.service.DataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

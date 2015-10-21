@@ -5,7 +5,7 @@ import com.gft.component.PredicitonAlgorithmsWrapper;
 import com.gft.model.db.Algorithm;
 import com.gft.model.db.Stock;
 import com.gft.repository.MemoryHistoryDao;
-import com.gft.repository.data.InsufficientDataException;
+import com.gft.repository.InsufficientDataException;
 import com.gft.repository.data.StockHistoryRepository;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
