@@ -14,7 +14,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.gft.component.SimpleMovingAverage;
+import com.gft.component.MovingAverage;
 import com.gft.config.Application;
 import com.gft.model.Action;
 import com.gft.model.db.Stock;
@@ -25,11 +25,11 @@ import com.gft.model.db.Stock;
 public class TestingSimpleMovingAverage {
 	
 	@Autowired
-	SimpleMovingAverage simpleMovingAverage;
+	MovingAverage simpleMovingAverage;
 	
 	@Autowired
 	@Qualifier("simpleMovingAverages")
-	ArrayList<SimpleMovingAverage> simpleMovingAverages;
+	ArrayList<MovingAverage> simpleMovingAverages;
 	
 	@Test
 	public void checkingCorrectnessOfSimpleMovingAverageForRaisingPrice() {

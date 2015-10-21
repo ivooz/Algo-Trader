@@ -1,4 +1,4 @@
-package com.gft.repository.data;
+package com.gft.repository;
 
 /**
  * Created by iozi on 14/10/2015.

@@ -34,7 +34,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.gft.component.PredictionAlgorithm;
-import com.gft.component.SimpleMovingAverage;
+import com.gft.component.MovingAverage;
 
 @Configuration
 @EnableScheduling
@@ -60,7 +60,7 @@ public class Application extends SpringBootServletInitializer {
 		List<Integer> simpleMovingAverageIntervals = Arrays.asList(5, 10, 15, 20, 25, 50, 100, 200);
 		List<PredictionAlgorithm>  simpleMovingAverages = new ArrayList<PredictionAlgorithm>();
 		for(int interval: simpleMovingAverageIntervals){
-			SimpleMovingAverage simpleMovingAverage = new SimpleMovingAverage();
+			MovingAverage simpleMovingAverage = new MovingAverage();
 			simpleMovingAverage.setInterval(interval);
 			simpleMovingAverage.setName("SimpleMovingAverage"+interval);
 			simpleMovingAverages.add(simpleMovingAverage);
@@ -69,8 +69,8 @@ public class Application extends SpringBootServletInitializer {
 	}
 	
 	@Bean
-	public SimpleMovingAverage simpleMovingAverage(){
-		SimpleMovingAverage simpleMovingAverage = new SimpleMovingAverage();
+	public MovingAverage simpleMovingAverage(){
+		MovingAverage simpleMovingAverage = new MovingAverage();
 		simpleMovingAverage.setInterval(5);
 		simpleMovingAverage.setName("SimpleMovingAverage");
 		return simpleMovingAverage;	

@@ -20,16 +20,16 @@ public class Stock {
 
     @Id
     @Column(name="ticker", unique=true)
+	@JsonIgnore
     private String ticker;
 
     private String fullName;
+
     @OneToMany(targetEntity=Algorithm.class, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Algorithm> algorithms;
+
     private String type;
-
-
-
 
 	public Stock() {
 		algorithms=new ArrayList<>();

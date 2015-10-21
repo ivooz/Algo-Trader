@@ -3,11 +3,13 @@ package com.gft.rest;
 import com.gft.aspect.Log;
 import com.gft.model.db.Algorithm;
 import com.gft.model.db.Stock;
+import com.gft.repository.InsufficientDataException;
 import com.gft.repository.data.AlgorithmRepository;
-import com.gft.repository.data.InsufficientDataException;
 import com.gft.repository.data.StockRepository;
 import com.gft.service.DataAccessException;
 import com.gft.service.creating.NewStockService;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class StockEndpoint {
 
     @Autowired
     StockRepository stockRepository;
+
+    @Autowired
+    com.gft.service.removing.StockRemovingService stockRemovingService;
 
     @Log
     @RequestMapping(value = "/")
@@ -58,6 +63,12 @@ public class StockEndpoint {
             logger.error("Unable to create new stock!", ex);
         }
         return stockRepository.findOne(ticker);
+    }
+
+    @Log
+    @RequestMapping(value = "/{ticker}", method = RequestMethod.DELETE)
+    public void deleteByTicker(@PathVariable("ticker") String ticker) {
+        stockRemovingService.remove(ticker);
     }
 
     @Log
