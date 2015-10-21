@@ -18,9 +18,11 @@ public class Algorithm {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonIgnore
 	private long id;
 
 	@ManyToOne(targetEntity = Stock.class)
+	@JsonIgnore
 	private Stock stock;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = javax.persistence.CascadeType.ALL)

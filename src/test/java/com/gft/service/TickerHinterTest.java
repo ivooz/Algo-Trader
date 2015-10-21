@@ -31,7 +31,8 @@ import com.google.gson.Gson;
 @WebAppConfiguration
 public class TickerHinterTest {
 
-	private static final Logger logger = LoggerFactory.getLogger(TickerHinterTest.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(TickerHinterTest.class);
 
 	@Autowired
 	private JdbcTemplate namedJdbcTemplate;
@@ -57,9 +58,9 @@ public class TickerHinterTest {
 		stockRepository.flush();
 		String json = null;
 		try {
-			json = new Gson().toJson(tickerHinter.hintNotPickedTickers()) ;
+			json = new Gson().toJson(tickerHinter.hintNotPickedTickers());
 		} catch (ParsingException ex) {
-			logger.error("TEST FAILED",ex);
+			logger.error("TEST FAILED", ex);
 			fail();
 		}
 		assertFalse(json.contains("MSFT"));

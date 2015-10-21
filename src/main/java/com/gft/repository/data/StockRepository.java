@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.gft.model.db.Algorithm;
 import com.gft.model.db.Stock;
+import com.gft.model.db.StockDTO;
 
 /**
  * Created by iozi on 13/10/2015.
@@ -25,11 +26,16 @@ public interface StockRepository extends JpaRepository<Stock, String> {
 	@Query("SELECT s FROM Stock s LEFT JOIN FETCH s.algorithms al WHERE s.ticker = (:ticker)")
 	Stock findByIdAndFetchAlgorithmsEagerly(@Param("ticker") String ticker);
 
-	@Query("SELECT s FROM Stock s LEFT JOIN FETCH s.algorithms")
+	@Query("SELECT DISTINCT s FROM Stock s LEFT JOIN FETCH s.algorithms")
 	List<Stock> findAllAndFetchAllAlgorithmsEagerly();
+
 	@Query("SELECT s.ticker, s.fullName, s.type FROM Stock s WHERE s.ticker = (:ticker)")
 	String FindStockWithoutAlgorithms(@Param("ticker") String ticker);
+
 	@Query("SELECT s.ticker, s.fullName, s.type FROM Stock s")
 	List<String> FindStocksWithoutAlgorithms();
+
+	@Query("SELECT new com.gft.model.db.StockDTO(s.ticker,s.fullName) FROM Stock s")
+	List<StockDTO> FindStocksDTOWithoutAlgorithms();
 
 }
