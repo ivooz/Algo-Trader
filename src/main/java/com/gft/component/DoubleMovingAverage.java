@@ -15,7 +15,7 @@ import com.gft.service.DataAccessException;
 
 @Component
 public class DoubleMovingAverage implements PredictionAlgorithm {
-	
+
 	private int shortInterval;
 	private int longInterval;
 	private String name;
@@ -24,18 +24,19 @@ public class DoubleMovingAverage implements PredictionAlgorithm {
 	public DoubleMovingAverage(int shortInterval, int longInterval, Average average) {
 		String averageName = average.getClass().getSimpleName();
 		String firstPartAverageName = averageName.substring(0, average.findSecoundCapitalLetter(averageName));
-		String secondPartAverageName = averageName.substring(average.findSecoundCapitalLetter(averageName), averageName.length());
+		String secondPartAverageName = averageName.substring(average.findSecoundCapitalLetter(averageName),
+				averageName.length());
 
-		
 		this.longInterval = longInterval;
 		this.shortInterval = shortInterval;
-		name = "Double" + firstPartAverageName + "Moving" +secondPartAverageName + shortInterval + "and" + longInterval;
+		name = "Double" + firstPartAverageName + "Moving" + secondPartAverageName + shortInterval + "and"
+				+ longInterval;
 		this.average = average;
 	}
-	
+
 	public DoubleMovingAverage() {
 	}
-	
+
 	public Action predict(Date date, Stock stock, HistoryDAO historyDAO) {
 
 		List<StockHistory> shortSockList = null;
