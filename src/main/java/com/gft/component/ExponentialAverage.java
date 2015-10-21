@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.gft.model.db.StockHistory;
 
-public class ExponentialAverage {
+public class ExponentialAverage implements Average{
 	
 	public BigDecimal compute(List<StockHistory> listOfStockHistory){
 		

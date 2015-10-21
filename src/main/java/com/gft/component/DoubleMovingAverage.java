@@ -14,24 +14,30 @@ import com.gft.repository.data.InsufficientDataException;
 import com.gft.service.DataAccessException;
 
 @Component
-public class DoubleSimpleMovingAverage implements PredictionAlgorithm {
+public class DoubleMovingAverage implements PredictionAlgorithm {
 	
 	private int shortInterval;
 	private int longInterval;
 	private String name;
+	private Average average;
 
-	public DoubleSimpleMovingAverage(int shortInterval, int longInterval) {
+	public DoubleMovingAverage(int shortInterval, int longInterval, Average average) {
+		String averageName = average.getClass().getSimpleName();
+		String firstPartAverageName = averageName.substring(0, average.findSecoundCapitalLetter(averageName));
+		String secondPartAverageName = averageName.substring(average.findSecoundCapitalLetter(averageName), averageName.length());
+
+		
 		this.longInterval = longInterval;
 		this.shortInterval = shortInterval;
-		name = "DobleSimpleMovingAverage" + shortInterval + "and" + longInterval;
+		name = "Double" + firstPartAverageName + "Moving" +secondPartAverageName + shortInterval + "and" + longInterval;
+		this.average = average;
 	}
 	
-	public DoubleSimpleMovingAverage() {
+	public DoubleMovingAverage() {
 	}
 	
 	public Action predict(Date date, Stock stock, HistoryDAO historyDAO) {
 
-		SimpleAverage simpleAverage = new SimpleAverage();
 		List<StockHistory> shortSockList = null;
 		List<StockHistory> longStockList = null;
 		BigDecimal shortAverage = null;
@@ -44,8 +50,8 @@ public class DoubleSimpleMovingAverage implements PredictionAlgorithm {
 			return Action.HOLD;
 		}
 
-		shortAverage = simpleAverage.compute(shortSockList);
-		longAverage = simpleAverage.compute(longStockList);
+		shortAverage = average.compute(shortSockList);
+		longAverage = average.compute(longStockList);
 
 		if (shortAverage.compareTo(longAverage) == -1) {
 			return Action.SELL;
@@ -54,6 +60,14 @@ public class DoubleSimpleMovingAverage implements PredictionAlgorithm {
 		} else {
 			return Action.HOLD;
 		}
+	}
+
+	public Average getAverage() {
+		return average;
+	}
+
+	public void setAverage(Average average) {
+		this.average = average;
 	}
 
 	public int getShortInterval() {

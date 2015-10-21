@@ -14,32 +14,38 @@ import java.util.Date;
 import java.util.List;
 
 
-public class SimpleMovingAverage implements PredictionAlgorithm {
+public class MovingAverage implements PredictionAlgorithm {
 
-	private static final Logger logger = LoggerFactory.getLogger(SimpleMovingAverage.class);
+	private static final Logger logger = LoggerFactory.getLogger(MovingAverage.class);
 
 	private int interval;
 	private String name;
-
-	public SimpleMovingAverage(int interval) {
+	private Average average;
+	
+	public MovingAverage(int interval, Average average) {
+		String averageName = average.getClass().getSimpleName();
+		String firstPartAverageName = averageName.substring(0, average.findSecoundCapitalLetter(averageName));
+		String secondPartAverageName = averageName.substring(average.findSecoundCapitalLetter(averageName), averageName.length());
+		
 		this.interval = interval;
-		name = "SimpleMovingAverage" + interval;
+		name = firstPartAverageName + "Moving" + secondPartAverageName + interval; 
+		this.average = average;
 	}
 	
-	public SimpleMovingAverage() {
+	public MovingAverage() {
 	}
 	
 	public Action predict(Date date, Stock stock, HistoryDAO historyDAO){
  
-		SimpleAverage simpleAverage = new SimpleAverage();
-		BigDecimal average = null;
+		//SimpleAverage simpleAverage = new SimpleAverage();
+		BigDecimal computedAverage = null;
 		List<StockHistory> listOfStock = null;
 		try {
-			average = simpleAverage.compute(historyDAO.obtainStockHistoryForPeriod(stock, interval));
+			computedAverage = average.compute(historyDAO.obtainStockHistoryForPeriod(stock, interval));
 			listOfStock = historyDAO.obtainStockHistoryForPeriod(stock, interval);
-			if (average.compareTo(listOfStock.get(listOfStock.size() - 1).getClosingPrice()) == -1) { // average is smaller than price
+			if (computedAverage.compareTo(listOfStock.get(listOfStock.size() - 1).getClosingPrice()) == -1) { // average is smaller than price
 				return Action.BUY;
-			} else if (average.compareTo(listOfStock.get(listOfStock.size() - 1).getClosingPrice()) == 1) {
+			} else if (computedAverage.compareTo(listOfStock.get(listOfStock.size() - 1).getClosingPrice()) == 1) {
 				return Action.SELL;
 			}
 		} catch (InsufficientDataException | DataAccessException e) {
