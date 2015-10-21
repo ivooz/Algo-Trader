@@ -13,9 +13,7 @@ import java.util.List;
  * Created by iozi on 13/10/2015.
  */
 @Repository
-public interface StockHistoryRepository
-		extends
-			JpaRepository<StockHistory, Long> {
+public interface StockHistoryRepository extends JpaRepository<StockHistory, Long> {
 
 	List<StockHistory> findByStockOrderByDateDesc(Stock stock);
 
