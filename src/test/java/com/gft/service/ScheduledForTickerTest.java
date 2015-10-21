@@ -26,6 +26,8 @@ import com.gft.repository.data.AlgorithmRepository;
 import com.gft.repository.data.StockRepository;
 
 import junit.framework.Assert;
+import org.springframework.transaction.annotation.Transactional;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {Application.class})
 @WebAppConfiguration
@@ -78,21 +80,16 @@ public class ScheduledForTickerTest {
 	@Test
 	public void TestIfSavesWithDate() {
 		historyUpdateService.saveAlgorithmStatistics(savedDate, stockRepository.findByIdAndFetchAlgorithmsEagerly("MSFT"));
-		List<AlgorithmHistory> reposlit = algorithmHistoryRepository.findAll();
-		Iterator<AlgorithmHistory> it = reposlit.iterator();
+		List<AlgorithmHistory> algorithmHistories = algorithmHistoryRepository.findAll();
+		Iterator<AlgorithmHistory> it = algorithmHistories.iterator();
 		Calendar cal = Calendar.getInstance();
 		cal.set(2012, 07, 07, 3, 13, 55);
 		Date date = cal.getTime();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		while (it.hasNext()) {
-
 			AlgorithmHistory history = it.next();
-
 			Assert.assertEquals(dateFormat.format(date),
 					dateFormat.format(history.getDate()));
-			Assert.assertEquals("MSFT",
-					history.getAlgorithm().getStock().getTicker());
-
 		}
 	}
 }
