@@ -45,13 +45,9 @@ public class TickerEndpoint {
 	public List<StockDTO> getTickersOfNotExistingStocks() {
 		try {
 			return tickerHinter.hintNotPickedTickers();
-
-
 		} catch (ParsingException ex) {
 			logger.error("Unable to obtain available ticker!", ex);
 			return new ArrayList<>();
-
-
 		}
 	}
 }
