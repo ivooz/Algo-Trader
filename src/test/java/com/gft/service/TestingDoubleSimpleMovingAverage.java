@@ -12,7 +12,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.gft.component.DoubleSimpleMovingAverage;
+import com.gft.component.DoubleMovingAverage;
 import com.gft.config.Application;
 import com.gft.model.Action;
 import com.gft.model.db.Stock;
@@ -23,7 +23,7 @@ import com.gft.model.db.Stock;
 public class TestingDoubleSimpleMovingAverage {
 	
 	@Autowired
-	DoubleSimpleMovingAverage  doubleSimpleMovingAverage;
+	DoubleMovingAverage  doubleSimpleMovingAverage;
 	
 	
 	@Test
