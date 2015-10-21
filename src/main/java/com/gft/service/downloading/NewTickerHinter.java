@@ -47,10 +47,8 @@ public class NewTickerHinter {
 					todelete.add(available);
 				}
 			}
-
 		}
 		availableTickers.removeAll(todelete);
-
 		return availableTickers;
 	}
 }
