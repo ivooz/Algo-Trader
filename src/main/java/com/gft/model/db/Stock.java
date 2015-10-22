@@ -20,7 +20,6 @@ public class Stock {
 
     @Id
     @Column(name="ticker", unique=true)
-	@JsonIgnore
     private String ticker;
 
     private String fullName;
